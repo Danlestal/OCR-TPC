@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq, Version=4.2.1510.2205, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\OCR\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -45,21 +49,25 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
     <Compile Include="PDFReaderTests.cs" />
+    <Compile Include="PDFWatcherTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Resources\Cert.pdf" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OCR\OCR.csproj">
-      <Project>{ce6b6406-ed99-497f-a507-663c0eb884fa}</Project>
-      <Name>OCR</Name>
+    <ProjectReference Include="..\OCR\WatcherCmd\WatcherCmd.csproj">
+      <Project>{7967be2d-7fbc-43c5-9e47-07b935408f11}</Project>
+      <Name>WatcherCmd</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

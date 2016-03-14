@@ -1,0 +1,12 @@
+C:\Users\Jorge\Documents\Visual Studio 2015\Projects\OCR-TPC-master\OCR\WatcherCmd\bin\Debug\WatcherCmd.exe.config
+C:\Users\Jorge\Documents\Visual Studio 2015\Projects\OCR-TPC-master\OCR\WatcherCmd\bin\Debug\WatcherCmd.exe
+C:\Users\Jorge\Documents\Visual Studio 2015\Projects\OCR-TPC-master\OCR\WatcherCmd\bin\Debug\WatcherCmd.pdb
+C:\Users\Jorge\Documents\Visual Studio 2015\Projects\OCR-TPC-master\OCR\WatcherCmd\bin\Debug\Common.Logging.Core.dll
+C:\Users\Jorge\Documents\Visual Studio 2015\Projects\OCR-TPC-master\OCR\WatcherCmd\bin\Debug\Common.Logging.dll
+C:\Users\Jorge\Documents\Visual Studio 2015\Projects\OCR-TPC-master\OCR\WatcherCmd\bin\Debug\Common.Logging.pdb
+C:\Users\Jorge\Documents\Visual Studio 2015\Projects\OCR-TPC-master\OCR\WatcherCmd\bin\Debug\Common.Logging.xml
+C:\Users\Jorge\Documents\Visual Studio 2015\Projects\OCR-TPC-master\OCR\WatcherCmd\bin\Debug\Common.Logging.Core.pdb
+C:\Users\Jorge\Documents\Visual Studio 2015\Projects\OCR-TPC-master\OCR\WatcherCmd\bin\Debug\Common.Logging.Core.xml
+C:\Users\Jorge\Documents\Visual Studio 2015\Projects\OCR-TPC-master\OCR\WatcherCmd\obj\Debug\WatcherCmd.csprojResolveAssemblyReference.cache
+C:\Users\Jorge\Documents\Visual Studio 2015\Projects\OCR-TPC-master\OCR\WatcherCmd\obj\Debug\WatcherCmd.exe
+C:\Users\Jorge\Documents\Visual Studio 2015\Projects\OCR-TPC-master\OCR\WatcherCmd\obj\Debug\WatcherCmd.pdb
