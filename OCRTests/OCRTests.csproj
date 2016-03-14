@@ -56,6 +56,12 @@
   <ItemGroup>
     <None Include="Resources\Cert.pdf" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OCR\OCR.csproj">
+      <Project>{ce6b6406-ed99-497f-a507-663c0eb884fa}</Project>
+      <Name>OCR</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
