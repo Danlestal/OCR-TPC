@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OCR", "OCR.csproj", "{CE6B6406-ED99-497F-A507-663C0EB884FA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1C2BF11D-ECBC-4B95-9FE0-3A072B99663A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OCRTests", "..\OCRTests\OCRTests.csproj", "{434EAA42-61C7-4377-ADE3-F2289A5BB699}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{A0E316CC-A49A-4C43-902D-82577E530957}"
+	ProjectSection(SolutionItems) = preProject
+		Funcional.doc = Funcional.doc
+		Readme.txt = Readme.txt
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatcherCmd", "WatcherCmd\WatcherCmd.csproj", "{7967BE2D-7FBC-43C5-9E47-07B935408F11}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CE6B6406-ED99-497F-A507-663C0EB884FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE6B6406-ED99-497F-A507-663C0EB884FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE6B6406-ED99-497F-A507-663C0EB884FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE6B6406-ED99-497F-A507-663C0EB884FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{434EAA42-61C7-4377-ADE3-F2289A5BB699}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{434EAA42-61C7-4377-ADE3-F2289A5BB699}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{434EAA42-61C7-4377-ADE3-F2289A5BB699}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{434EAA42-61C7-4377-ADE3-F2289A5BB699}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7967BE2D-7FBC-43C5-9E47-07B935408F11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7967BE2D-7FBC-43C5-9E47-07B935408F11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7967BE2D-7FBC-43C5-9E47-07B935408F11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7967BE2D-7FBC-43C5-9E47-07B935408F11}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{434EAA42-61C7-4377-ADE3-F2289A5BB699} = {1C2BF11D-ECBC-4B95-9FE0-3A072B99663A}
+	EndGlobalSection
+EndGlobal
