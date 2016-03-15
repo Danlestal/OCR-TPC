@@ -50,10 +50,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="PDFReaderTests.cs" />
+    <Compile Include="PDFToImageConverterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="OcrResources\MsOcrRes.orp" />
+    <None Include="packages.config" />
     <None Include="Resources\Cert.pdf" />
   </ItemGroup>
   <ItemGroup>
