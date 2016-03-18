@@ -12,11 +12,13 @@ namespace OCRTests
     public class OCRTextReaderTests
     {
         [TestMethod]
-        [DeploymentItem(@"C:\programacion\PecanSoft\OCR-TPC\OCRTests\Resources\Cert.png")]
+        [DeploymentItem(@"..\..\..\..\OCR-TPC\OCRTests\Resources\format2.tiff")]
+        [DeploymentItem(@"..\..\..\..\OCR-TPC\OCR\x86", "x86")]
+        [DeploymentItem(@"..\..\..\..\OCR-TPC\OCR\tessdata", "tessdata")]
         public void Read_Success()
         {
             OCR.OCRTextReader reader = new OCR.OCRTextReader();
-            reader.Read("Cert.png");
+            reader.Read("format2.tiff");
         }
     }
 }

@@ -53,10 +53,12 @@
   </Choose>
   <ItemGroup>
     <Compile Include="PDFToImageConverterTests.cs" />
+    <Compile Include="PDFtoTextProccessTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="OCRTextReaderTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="Resources\Cert.pdf" />
   </ItemGroup>
   <ItemGroup>
@@ -66,7 +68,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\cert-sec1.png" />
+    <Content Include="Resources\cert-sec2.png" />
+    <Content Include="Resources\Cert-sec3.png" />
+    <Content Include="Resources\cert-sec4.png" />
     <Content Include="Resources\Cert.png" />
+    <Content Include="Resources\otro.png" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

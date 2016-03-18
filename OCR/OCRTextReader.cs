@@ -7,20 +7,22 @@ namespace OCR
 {
     public class OCRTextReader
     {
-        public void Read(string filepath)
+        public OcrData Read(string filepath)
         {
-            using (var engine = new TesseractEngine(@"C:\programacion\PecanSoft\OCR-TPC\OCR\Tesseract\langdata\spa\", "es", EngineMode.Default))
+            OcrData result = null;
+            using (var engine = new TesseractEngine(@".\tessdata", "spa", EngineMode.Default))
             {
                 using (var img = Pix.LoadFromFile(filepath))
                 {
                     using (var page = engine.Process(img))
                     {
-                        var text = page.GetText();
-                        Console.WriteLine("Mean confidence: {0}", page.GetMeanConfidence());
-                        Console.WriteLine("Text (GetText): \r\n{0}", text);
+                        result = new OcrData(page.GetText(), page.GetMeanConfidence());
                     }
                 }
             }
+
+            return result;
         }
+      
     }
 }
