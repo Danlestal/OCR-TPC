@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using OCR;
+using System.Collections.Generic;
 
 namespace OCRTests
 {
@@ -18,6 +19,11 @@ namespace OCRTests
             PDFToImageConverter.ConvertToImage("Cert.pdf", "format2.tiff", 512, 512);
             OCR.OCRTextReader reader = new OCR.OCRTextReader();
             OcrData data = reader.Read("format2.tiff");
+
+            ContributionPeriodsParser parser = new ContributionPeriodsParser();
+            List<ContributionPeriod> results = parser.Parse(data.Text);
+            Assert.IsTrue(results.Count == 5);
+
         }
     }
 }

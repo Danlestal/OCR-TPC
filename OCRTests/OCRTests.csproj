@@ -75,6 +75,7 @@
     <Content Include="Resources\cert-sec4.png" />
     <Content Include="Resources\Cert.png" />
     <Content Include="Resources\otro.png" />
+    <Content Include="Resources\parsedtext.txt" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

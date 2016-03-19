@@ -57,6 +57,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="ContributionPeriod.cs" />
     <Compile Include="ContributionPeriodsParser.cs" />
     <Compile Include="OcrData.cs" />
