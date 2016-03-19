@@ -12,6 +12,7 @@ namespace OCRTests
     public class OCRTextReaderTests
     {
         [TestMethod]
+        [TestCategory("UnitTest")]
         [DeploymentItem(@"..\..\..\..\OCR-TPC\OCRTests\Resources\format2.tiff")]
         [DeploymentItem(@"..\..\..\..\OCR-TPC\OCR\x86", "x86")]
         [DeploymentItem(@"..\..\..\..\OCR-TPC\OCR\tessdata", "tessdata")]

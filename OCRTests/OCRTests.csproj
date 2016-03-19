@@ -52,6 +52,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="ContributionPeriodsParserTests.cs" />
     <Compile Include="PDFToImageConverterTests.cs" />
     <Compile Include="PDFtoTextProccessTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

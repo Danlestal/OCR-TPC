@@ -9,6 +9,7 @@ namespace OCRTests
     public class PDFToImageConverterTests
     {
         [TestMethod]
+        [TestCategory("UnitTest")]
         [ExpectedException(typeof(FileNotFoundException))]
         public void PDFToImageConverter_Read_Error_FileNotFound()
         {
@@ -16,6 +17,7 @@ namespace OCRTests
         }
 
         [TestMethod]
+        [TestCategory("UnitTest")]
         [DeploymentItem(@"..\..\..\..\OCR-TPC\OCRTests\Resources\Cert.pdf")]
         public void PDFToImageConverter_Read_Success()
         {
