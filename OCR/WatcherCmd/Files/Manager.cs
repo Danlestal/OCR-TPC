@@ -7,23 +7,33 @@ using WatcherCmd.Files.Interface;
 
 namespace WatcherCmd.Files
 {
-    public class Manager
+    public class Manager : IManager
     {
 
-        private readonly IWatcher fileDetecteted;
+        private readonly IWatcher _watcher;
 
-        public Manager (IWatcher fileDetecteted)
+        public Manager(IWatcher watcher)
         {
-            this.fileDetecteted = fileDetecteted;
+            _watcher = watcher;
+            _watcher.Init();
+        }
 
-            fileDetecteted.FileDetected += (sender, args) =>
-            {
+        public void InitializeSystem()
+        {
 
-                //Do Something
-            };
+            _watcher.FileDetected += onFileDetected;
+            _watcher.Init();
 
         }
 
+        private void onFileDetected(object sender, System.IO.FileSystemEventArgs e)
+        {
+            int retries = 3;
+
+            throw new NotImplementedException();
+        }
+
+        
 
     }
 }

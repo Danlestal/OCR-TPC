@@ -13,8 +13,9 @@ namespace WatcherCmd.Files
     public class Watcher : IWatcher
     {
 
-        private static FileSystemWatcher _watcher;
         public event FileSystemEventHandler FileDetected;
+        private static FileSystemWatcher _watcher;
+        
         
         private readonly ILog _logger;
 
@@ -72,6 +73,7 @@ namespace WatcherCmd.Files
             _watcher.InternalBufferSize = 4 * 1024;
             //_watcher.Filter = ".csv";
             _watcher.Created += this.FileDetected;
+            //_watcher.Renamed += this.?;
             _watcher.Error += watcherError;
             _watcher.IncludeSubdirectories = true;
 

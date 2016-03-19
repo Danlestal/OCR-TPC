@@ -15,8 +15,10 @@ namespace OCRTests
 
         public PDFWatcherTest(IWatcher watcher)
         {
+
             this._watcher = watcher;
             this._watcher.FileDetected += this.FileCreated;
+           
         }
 
         //[TestMethod]

@@ -1,10 +1,9 @@
 ﻿using Common.Logging;
 using Ninject;
+using OCR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ServiceProcess;
+using WatcherCmd.Ninject;
 
 namespace WatcherCmd
 {
@@ -19,10 +18,10 @@ namespace WatcherCmd
 
             try
             {
-                var kernel = new StandardKernel(new EDPItalyNijectModule());
+                var kernel = new StandardKernel(new WatcherCmdNinjectModule());
 
 
-                var service = kernel.Get<EDPItalyService>();
+                var service = kernel.Get<OCRService>();
                 ServiceBase.Run(service);
             }
             catch (Exception e)
@@ -30,11 +29,6 @@ namespace WatcherCmd
                 _logger.Error("Exception while launching EDPItalyService", e);
             }
         }
-
-
-
-
-
 
         private static void initLogger()
         {
