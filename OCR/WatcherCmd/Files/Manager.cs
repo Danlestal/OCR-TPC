@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using log4net;
+using System;
 using WatcherCmd.Files.Interface;
 
 namespace WatcherCmd.Files
 {
     public class Manager : IManager
     {
-
+        private readonly ILog _logger;
         private readonly IWatcher _watcher;
 
-        public Manager(IWatcher watcher)
+        public Manager(ILog logger, IWatcher watcher)
         {
+            _logger = logger;
             _watcher = watcher;
             _watcher.Init();
         }

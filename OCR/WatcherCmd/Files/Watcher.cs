@@ -1,13 +1,9 @@
-﻿using Common.Logging;
+﻿using log4net;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WatcherCmd.Files.Interface;
 
-namespace WatcherCmd.Files 
+namespace WatcherCmd.Files
 {
 
     public class Watcher : IWatcher
@@ -32,7 +28,7 @@ namespace WatcherCmd.Files
 
         public void Init()
         {
-            _logger.Info("Initialize Watcher");
+            //_logger.Info("Initialize Watcher");
             prepareWatcherInExceptionSafeMode();
         }
 
@@ -60,10 +56,10 @@ namespace WatcherCmd.Files
             {
                 string error = string.Format("Directory '{0}' not found", directoryPathToWatch);
 
-                _logger.Fatal(error);
+                //_logger.Fatal(error);
                 return;
             }
-            _logger.Info(string.Format("Directory '{0}' found", directoryPathToWatch));
+            //_logger.Info(string.Format("Directory '{0}' found", directoryPathToWatch));
 
 
             _watcher = new FileSystemWatcher();
@@ -79,7 +75,7 @@ namespace WatcherCmd.Files
 
             _watcher.EnableRaisingEvents = true;
 
-            _logger.Info(String.Format("Watcher configured for folder {0}", _watcher.Path));
+            //_logger.Info(String.Format("Watcher configured for folder {0}", _watcher.Path));
         }
 
         private void watcherError(object sender, ErrorEventArgs e)

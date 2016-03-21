@@ -1,4 +1,4 @@
-﻿using Common.Logging;
+﻿using log4net;
 using Ninject;
 using OCR;
 using System;
@@ -22,11 +22,11 @@ namespace WatcherCmd
 
 
                 var service = kernel.Get<OCRService>();
-                ServiceBase.Run(service);
+                //ServiceBase.Run(service);
             }
             catch (Exception e)
             {
-                _logger.Error("Exception while launching EDPItalyService", e);
+                _logger.Error("Exception while launching OCRService", e);
             }
         }
 

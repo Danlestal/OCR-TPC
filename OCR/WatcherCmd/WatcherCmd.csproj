@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>WatcherCmd.Program</StartupObject>
+    <StartupObject>OCR.OCRService</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
@@ -52,7 +52,12 @@
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Quartz, Version=2.3.3.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Quartz.2.3.3\lib\net40\Quartz.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml.Linq" />
@@ -63,10 +68,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\ConfigurationProvider.cs" />
+    <Compile Include="Configuration\IConfigurationProvider.cs" />
+    <Compile Include="Jobs\Dispatcher.cs" />
+    <Compile Include="Jobs\Interfaces\IOCRJobHelper.cs" />
+    <Compile Include="Jobs\WatcherCmdJob.cs" />
+    <Compile Include="Jobs\WatcherCmdJobHelper.cs" />
+    <Compile Include="OCRService.Designer.cs" />
     <Compile Include="Files\Interface\IManager.cs" />
     <Compile Include="Files\Interface\IWatcher.cs" />
     <Compile Include="Files\Manager.cs" />
     <Compile Include="Files\Watcher.cs" />
+    <Compile Include="Jobs\OCRJob.cs" />
+    <Compile Include="Jobs\Interfaces\IOCRJobFactory.cs" />
+    <Compile Include="Jobs\OCRJobFactory.cs" />
     <Compile Include="Ninject\WatcherCmdNinjectModule.cs" />
     <Compile Include="OCRService.cs">
       <SubType>Component</SubType>
@@ -76,7 +91,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="job_scheduling_data_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OCR.csproj">
+      <Project>{ce6b6406-ed99-497f-a507-663c0eb884fa}</Project>
+      <Name>OCR</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,11 +1,9 @@
 ﻿using Ninject;
 using Ninject.Modules;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using WatcherCmd.Configuration;
 using WatcherCmd.Files;
+using WatcherCmd.Files.Interface;
+using WatcherCmd.Jobs;
 
 namespace WatcherCmd.Ninject
 {
@@ -14,7 +12,10 @@ namespace WatcherCmd.Ninject
 
         public override void Load()
         {
-            Bind<Watcher>().To<Watcher>();
+            Bind<ICronDispatcher>().To<Dispatcher>();
+            Bind<IConfigurationProvider>().To<ConfigurationProvider>();
+            Bind<IWatcher>().To<Watcher>();
+            Bind<IManager>().To<Manager>();
         }
 
         public static T GetDependency<T>()
