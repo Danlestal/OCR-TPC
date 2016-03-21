@@ -23,7 +23,6 @@ namespace OCRTests
             ContributionPeriodsParser parser = new ContributionPeriodsParser();
             List<ContributionPeriod> results = parser.Parse(data.Text);
             Assert.IsTrue(results.Count == 5);
-
         }
     }
 }
