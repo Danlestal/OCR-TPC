@@ -1,9 +1,9 @@
 ﻿using System;
 using Quartz;
 using Quartz.Impl;
-using log4net;
 using WatcherCmd.Jobs.Interfaces;
 using WatcherCmd.Configuration;
+using Common.Logging;
 
 namespace WatcherCmd.Jobs
 {

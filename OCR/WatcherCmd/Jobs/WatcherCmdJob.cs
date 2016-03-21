@@ -3,11 +3,11 @@ using WatcherCmd.Files;
 //using EDPItalyWinService.Ftp;
 using WatcherCmd.Ninject;
 //using EDPItalyWinService.Services;
-using log4net;
 using Ninject;
 using Quartz;
 using System;
 using WatcherCmd.Files.Interface;
+using Common.Logging;
 
 namespace WatcherCmd.Jobs
 {

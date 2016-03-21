@@ -1,4 +1,4 @@
-﻿using log4net;
+﻿using Common.Logging;
 using System;
 using WatcherCmd.Files.Interface;
 
@@ -13,14 +13,14 @@ namespace WatcherCmd.Files
         {
             _logger = logger;
             _watcher = watcher;
-            _watcher.Init();
         }
 
         public void InitializeSystem()
         {
 
-            _watcher.FileDetected += onFileDetected;
             _watcher.Init();
+            _watcher.FileDetected += onFileDetected;
+            
 
         }
 
