@@ -1,5 +1,6 @@
 ﻿using Common.Logging;
 using System;
+using System.IO;
 using WatcherCmd.Files.Interface;
 
 namespace WatcherCmd.Files
@@ -18,13 +19,12 @@ namespace WatcherCmd.Files
         public void InitializeSystem()
         {
 
-            _watcher.Init();
             _watcher.FileDetected += onFileDetected;
+            _watcher.Init();
             
-
         }
 
-        private void onFileDetected(object sender, System.IO.FileSystemEventArgs e)
+        private void onFileDetected(object sender, FileSystemEventArgs e)
         {
             int retries = 3;
 

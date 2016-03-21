@@ -16,7 +16,7 @@ namespace OCR
 
         public OCRService()
         {
-               //InitializeComponent();
+         
         }
 
         static void Main(string[] args)
@@ -65,11 +65,11 @@ namespace OCR
 
         protected override void OnStop()
         {
-            //_logger.Info("STOPPED");
-            //if (_dispatcher != null)
-            //    _dispatcher.Dispose();
+            _logger.Info("STOPPED");
+            if (_dispatcher != null)
+                _dispatcher.Dispose();
 
-            //base.OnStop();
+            base.OnStop();
         }
 
         private void initDispatcher()

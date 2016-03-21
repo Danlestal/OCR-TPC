@@ -43,7 +43,7 @@ namespace WatcherCmd.Files
             catch (Exception e)
             {
                 _logger.Error("Exception while preparing FileSystemWatcher", e);
-                //disposeWatcher();
+                disposeWatcher();
             }
         }
 
@@ -67,7 +67,8 @@ namespace WatcherCmd.Files
             _watcher.IncludeSubdirectories = true;
             _watcher.InternalBufferSize = 4 * 1024;
             //_watcher.Filter = ".csv";
-            _watcher.Created += this.FileDetected;
+            _watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName;
+            _watcher.Created += this.FileDetected; 
             //_watcher.Renamed += this.?;
             _watcher.Error += watcherError;
             _watcher.IncludeSubdirectories = true;
@@ -80,6 +81,15 @@ namespace WatcherCmd.Files
         {
             _logger.Warn(String.Format("Error in FileSystemWatcher. Reinitializing watcher. Error {0} {1}", e.GetException().Message, e.ToString()));
             //prepareWatcherInExceptionSafeMode();
+        }
+
+        private void disposeWatcher()
+        {
+            if (_watcher != null)
+            {
+                _logger.Debug("Disposing FileSystemWatcher");
+                _watcher.Dispose();
+            }
         }
 
     }
