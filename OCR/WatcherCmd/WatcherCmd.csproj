@@ -83,9 +83,7 @@
     <Compile Include="Jobs\Interfaces\IOCRJobFactory.cs" />
     <Compile Include="Jobs\OCRJobFactory.cs" />
     <Compile Include="Ninject\WatcherCmdNinjectModule.cs" />
-    <Compile Include="OCRService.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="OCRService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

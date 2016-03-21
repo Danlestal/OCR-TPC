@@ -35,10 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Moq, Version=4.2.1510.2205, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <HintPath>..\OCR\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -56,19 +52,30 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="PDFReaderTests.cs" />
-    <Compile Include="PDFWatcherTest.cs" />
+    <Compile Include="ContributionPeriodsParserTests.cs" />
+    <Compile Include="PDFToImageConverterTests.cs" />
+    <Compile Include="PDFtoTextProccessTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="OCRTextReaderTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="App.config" />
     <None Include="Resources\Cert.pdf" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OCR\WatcherCmd\WatcherCmd.csproj">
-      <Project>{7967be2d-7fbc-43c5-9e47-07b935408f11}</Project>
-      <Name>WatcherCmd</Name>
+    <ProjectReference Include="..\OCR\OCR.csproj">
+      <Project>{ce6b6406-ed99-497f-a507-663c0eb884fa}</Project>
+      <Name>OCR</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\cert-sec1.png" />
+    <Content Include="Resources\cert-sec2.png" />
+    <Content Include="Resources\Cert-sec3.png" />
+    <Content Include="Resources\cert-sec4.png" />
+    <Content Include="Resources\Cert.png" />
+    <Content Include="Resources\otro.png" />
+    <Content Include="Resources\parsedtext.txt" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
