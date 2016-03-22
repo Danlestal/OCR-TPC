@@ -33,10 +33,11 @@ namespace WatcherCmd.Files.Tests
         {
             List<string> receivedEvents = new List<string>();
 
-            Watcher mockWatcher = new Watcher(_logger);
+            var mockWatcher = new Mock<IWatcher>();
+            //var manager = new Manager(mockWatcher.Object);
 
             // arrange
-            this.mockWatcher = new Mock<Watcher>(MockBehavior.Strict);
+            //this.mockWatcher = new Mock<Watcher>(MockBehavior.Strict);
             //this._manager = new Manager(this.mockWatcher.Object);
 
             // act
