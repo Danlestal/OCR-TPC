@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OCR", "OCR.csproj", "{CE6B6406-ED99-497F-A507-663C0EB884FA}"
 EndProject
@@ -18,8 +18,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatcherCmd", "WatcherCmd\WatcherCmd.csproj", "{7967BE2D-7FBC-43C5-9E47-07B935408F11}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OCR-API", "OCR-API\OCR-API.csproj", "{ACAB07A9-3E21-49B1-A2A7-0814EFF28C8F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OCR-DataLayer", "..\OCRDataLayer\OCR-DataLayer.csproj", "{8ADCD956-FFF8-42D4-9C7D-4198F8A76663}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,10 +41,6 @@ Global
 		{ACAB07A9-3E21-49B1-A2A7-0814EFF28C8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACAB07A9-3E21-49B1-A2A7-0814EFF28C8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACAB07A9-3E21-49B1-A2A7-0814EFF28C8F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8ADCD956-FFF8-42D4-9C7D-4198F8A76663}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8ADCD956-FFF8-42D4-9C7D-4198F8A76663}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8ADCD956-FFF8-42D4-9C7D-4198F8A76663}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8ADCD956-FFF8-42D4-9C7D-4198F8A76663}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

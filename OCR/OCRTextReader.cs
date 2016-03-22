@@ -5,7 +5,7 @@ using Tesseract;
 
 namespace OCR
 {
-    public class OCRTextReader
+    public class OcrTextReader
     {
         public OcrData Read(string filepath)
         {

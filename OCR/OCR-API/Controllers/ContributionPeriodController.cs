@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using OCR_API.DTOs;
+using OCR_API.InternalService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,10 @@ namespace OCR_API.Controllers
 {
     public class ContributionPeriodController : ApiController
     {
+
+        private ContributionPeriodInsertService insertionService;
+
+
         // GET: api/ContributionPeriod
         public IEnumerable<string> Get()
         {
@@ -26,8 +31,8 @@ namespace OCR_API.Controllers
         // POST: api/ContributionPeriod
         public void Post([FromBody]string value)
         {
-            JsonConvert.DeserializeObject<ContributionPeriodDTO>(value);
-
+            var dataToInsert = JsonConvert.DeserializeObject<ContributionPeriodDataDTO>(value);
+            insertionService.Insert(dataToInsert);
         }
     }
 }

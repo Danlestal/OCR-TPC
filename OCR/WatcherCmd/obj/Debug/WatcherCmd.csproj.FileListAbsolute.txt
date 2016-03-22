@@ -164,7 +164,6 @@ D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\WatcherCmd.exe
 D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\WatcherCmd.pdb
 D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Common.Logging.Core.dll
 D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Common.Logging.dll
-D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Ninject.dll
 D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\OCR.dll
 D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Quartz.dll
 D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Tesseract.dll
@@ -177,7 +176,6 @@ D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Common.Logging.pdb
 D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Common.Logging.xml
 D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Common.Logging.Core.pdb
 D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Common.Logging.Core.xml
-D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Ninject.xml
 D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Quartz.pdb
 D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Quartz.xml
 D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Tesseract.xml
