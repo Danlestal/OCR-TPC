@@ -65,6 +65,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ContributionPeriodsParserTests.cs" />
+    <Compile Include="HealthCareContributionIdParserTests.cs" />
     <Compile Include="WatcherTests.cs" />
     <Compile Include="PDFToImageConverterTests.cs" />
     <Compile Include="PDFtoTextProccessTests.cs" />

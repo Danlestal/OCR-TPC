@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using OCR_API.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -24,6 +26,8 @@ namespace OCR_API.Controllers
         // POST: api/ContributionPeriod
         public void Post([FromBody]string value)
         {
+            JsonConvert.DeserializeObject<ContributionPeriodDTO>(value);
+
         }
     }
 }
