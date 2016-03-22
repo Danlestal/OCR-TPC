@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatcherCmd", "WatcherCmd\Wa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OCR-API", "OCR-API\OCR-API.csproj", "{ACAB07A9-3E21-49B1-A2A7-0814EFF28C8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OCRDataLayer", "..\OCRDataLayer\OCRDataLayer.csproj", "{8ADCD956-FFF8-42D4-9C7D-4198F8A76663}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OCR-DataLayer", "..\OCRDataLayer\OCR-DataLayer.csproj", "{8ADCD956-FFF8-42D4-9C7D-4198F8A76663}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

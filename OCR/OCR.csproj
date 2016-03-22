@@ -64,6 +64,7 @@
     <Compile Include="OcrData.cs" />
     <Compile Include="OCRTextReader.cs" />
     <Compile Include="PDFToImageConverter.cs" />
+    <Compile Include="PersonContributions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

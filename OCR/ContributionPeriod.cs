@@ -16,7 +16,7 @@ namespace OCR
         public DateTime PeriodStart { get; private set; }
         public DateTime PeriodEnd { get; private set; }
         public double MoneyContribution { get; private set; }
-        
+
         /// <summary>
         /// Converts the object into a Json string.
         /// </summary>
