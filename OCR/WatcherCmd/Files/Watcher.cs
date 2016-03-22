@@ -1,5 +1,7 @@
 ﻿using Common.Logging;
+using Common.Logging.Configuration;
 using System;
+using System.Configuration;
 using System.IO;
 using WatcherCmd.Files.Interface;
 
@@ -11,13 +13,13 @@ namespace WatcherCmd.Files
 
         public event FileSystemEventHandler FileDetected;
         private static FileSystemWatcher _watcher;
-        
-        
-        private readonly ILog _logger;
 
-        public Watcher(ILog logger)
+
+        private static readonly ILog _logger = LogManager.GetLogger(typeof(Watcher));
+
+        public Watcher()
         {
-            _logger = logger;
+            
         }
 
         public bool EnableRaisingEvents
@@ -29,16 +31,18 @@ namespace WatcherCmd.Files
         public void Init()
         {
             _logger.Info("Initialize Watcher");
-            prepareWatcherInExceptionSafeMode();
+            PrepareWatcherInExceptionSafeMode();
         }
 
-        private void prepareWatcherInExceptionSafeMode()
+        private void PrepareWatcherInExceptionSafeMode()
         {
+            _logger.Debug("Preparing FileSystemWatcher");
+
             try
             {
-                _logger.Debug("Preparing FileSystemWatcher");
-                prepareWatcher();
-                _logger.Debug("Done preparing FileSystemWatcher");
+                var appSettings = ConfigurationManager.AppSettings;
+                string directoryPathToWatch = appSettings["directoryPathToWatch"];
+                PrepareWatcher(directoryPathToWatch);
             }
             catch (Exception e)
             {
@@ -47,10 +51,8 @@ namespace WatcherCmd.Files
             }
         }
 
-        private void prepareWatcher()
+        private void PrepareWatcher(string directoryPathToWatch)
         {
-            string directoryPathToWatch = @"C:\Users\Jorge\Documents\Visual Studio 2015\Projects\OCR-TPC-master\OCRTests\Destination";
-
 
             if (!Directory.Exists(directoryPathToWatch))
             {
@@ -68,16 +70,16 @@ namespace WatcherCmd.Files
             _watcher.InternalBufferSize = 4 * 1024;
             //_watcher.Filter = ".csv";
             _watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName;
-            _watcher.Created += this.FileDetected; 
+            _watcher.Created += FileDetected; 
             //_watcher.Renamed += this.?;
-            _watcher.Error += watcherError;
+            _watcher.Error += WatcherError;
             _watcher.IncludeSubdirectories = true;
             _watcher.EnableRaisingEvents = true;
 
             _logger.Info(String.Format("Watcher configured for folder {0}", _watcher.Path));
         }
 
-        private void watcherError(object sender, ErrorEventArgs e)
+        private void WatcherError(object sender, ErrorEventArgs e)
         {
             _logger.Warn(String.Format("Error in FileSystemWatcher. Reinitializing watcher. Error {0} {1}", e.GetException().Message, e.ToString()));
             //prepareWatcherInExceptionSafeMode();

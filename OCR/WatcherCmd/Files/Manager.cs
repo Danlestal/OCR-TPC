@@ -19,12 +19,12 @@ namespace WatcherCmd.Files
         public void InitializeSystem()
         {
 
-            _watcher.FileDetected += onFileDetected;
+            _watcher.FileDetected += OnFileDetected;
             _watcher.Init();
             
         }
 
-        private void onFileDetected(object sender, FileSystemEventArgs e)
+        private void OnFileDetected(object sender, FileSystemEventArgs e)
         {
             int retries = 3;
 
