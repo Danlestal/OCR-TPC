@@ -44,10 +44,6 @@
       <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
       <Private>True</Private>
@@ -74,7 +70,6 @@
     <Compile Include="Jobs\Interfaces\IOCRJobHelper.cs" />
     <Compile Include="Jobs\WatcherCmdJob.cs" />
     <Compile Include="Jobs\WatcherCmdJobHelper.cs" />
-    <Compile Include="OCRService.Designer.cs" />
     <Compile Include="Files\Interface\IManager.cs" />
     <Compile Include="Files\Interface\IWatcher.cs" />
     <Compile Include="Files\Manager.cs" />
@@ -83,12 +78,16 @@
     <Compile Include="Jobs\Interfaces\IOCRJobFactory.cs" />
     <Compile Include="Jobs\OCRJobFactory.cs" />
     <Compile Include="Ninject\WatcherCmdNinjectModule.cs" />
-    <Compile Include="OCRService.cs" />
+    <Compile Include="OCRService.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>

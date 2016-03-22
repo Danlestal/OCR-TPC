@@ -1,4 +1,4 @@
-﻿using log4net;
+﻿using Common.Logging;
 using System;
 using System.IO;
 using WatcherCmd.Files.Interface;
@@ -28,7 +28,7 @@ namespace WatcherCmd.Files
 
         public void Init()
         {
-            //_logger.Info("Initialize Watcher");
+            _logger.Info("Initialize Watcher");
             prepareWatcherInExceptionSafeMode();
         }
 
@@ -43,7 +43,7 @@ namespace WatcherCmd.Files
             catch (Exception e)
             {
                 _logger.Error("Exception while preparing FileSystemWatcher", e);
-                //disposeWatcher();
+                disposeWatcher();
             }
         }
 
@@ -56,32 +56,40 @@ namespace WatcherCmd.Files
             {
                 string error = string.Format("Directory '{0}' not found", directoryPathToWatch);
 
-                //_logger.Fatal(error);
+                _logger.Fatal(error);
                 return;
             }
-            //_logger.Info(string.Format("Directory '{0}' found", directoryPathToWatch));
-
-
+            _logger.Info(string.Format("Directory '{0}' found", directoryPathToWatch));
+            
             _watcher = new FileSystemWatcher();
 
             _watcher.Path = directoryPathToWatch;
             _watcher.IncludeSubdirectories = true;
             _watcher.InternalBufferSize = 4 * 1024;
             //_watcher.Filter = ".csv";
-            _watcher.Created += this.FileDetected;
+            _watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName;
+            _watcher.Created += this.FileDetected; 
             //_watcher.Renamed += this.?;
             _watcher.Error += watcherError;
             _watcher.IncludeSubdirectories = true;
-
             _watcher.EnableRaisingEvents = true;
 
-            //_logger.Info(String.Format("Watcher configured for folder {0}", _watcher.Path));
+            _logger.Info(String.Format("Watcher configured for folder {0}", _watcher.Path));
         }
 
         private void watcherError(object sender, ErrorEventArgs e)
         {
             _logger.Warn(String.Format("Error in FileSystemWatcher. Reinitializing watcher. Error {0} {1}", e.GetException().Message, e.ToString()));
             //prepareWatcherInExceptionSafeMode();
+        }
+
+        private void disposeWatcher()
+        {
+            if (_watcher != null)
+            {
+                _logger.Debug("Disposing FileSystemWatcher");
+                _watcher.Dispose();
+            }
         }
 
     }

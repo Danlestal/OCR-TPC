@@ -35,6 +35,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\OCR\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\OCR\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Moq, Version=4.2.1510.2205, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\OCR\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -54,6 +66,7 @@
   <ItemGroup>
     <Compile Include="ContributionPeriodsParserTests.cs" />
     <Compile Include="HealthCareContributionIdParserTests.cs" />
+    <Compile Include="WatcherTests.cs" />
     <Compile Include="PDFToImageConverterTests.cs" />
     <Compile Include="PDFtoTextProccessTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -61,12 +74,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
     <None Include="Resources\Cert.pdf" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OCR\OCR.csproj">
       <Project>{ce6b6406-ed99-497f-a507-663c0eb884fa}</Project>
       <Name>OCR</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OCR\WatcherCmd\WatcherCmd.csproj">
+      <Project>{7967BE2D-7FBC-43C5-9E47-07B935408F11}</Project>
+      <Name>WatcherCmd</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

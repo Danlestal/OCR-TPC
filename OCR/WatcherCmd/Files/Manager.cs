@@ -1,5 +1,6 @@
-﻿using log4net;
+﻿using Common.Logging;
 using System;
+using System.IO;
 using WatcherCmd.Files.Interface;
 
 namespace WatcherCmd.Files
@@ -13,7 +14,6 @@ namespace WatcherCmd.Files
         {
             _logger = logger;
             _watcher = watcher;
-            _watcher.Init();
         }
 
         public void InitializeSystem()
@@ -21,10 +21,10 @@ namespace WatcherCmd.Files
 
             _watcher.FileDetected += onFileDetected;
             _watcher.Init();
-
+            
         }
 
-        private void onFileDetected(object sender, System.IO.FileSystemEventArgs e)
+        private void onFileDetected(object sender, FileSystemEventArgs e)
         {
             int retries = 3;
 

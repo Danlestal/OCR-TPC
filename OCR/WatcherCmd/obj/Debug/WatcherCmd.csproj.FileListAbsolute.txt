@@ -31,3 +31,106 @@ C:\Users\Jorge\Documents\GitHub\OCR-TPC\OCR\WatcherCmd\obj\Debug\WatcherCmd.cspr
 C:\Users\Jorge\Documents\GitHub\OCR-TPC\OCR\WatcherCmd\obj\Debug\WatcherCmd.exe
 C:\Users\Jorge\Documents\GitHub\OCR-TPC\OCR\WatcherCmd\obj\Debug\WatcherCmd.pdb
 C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\obj\Debug\WatcherCmd.csprojResolveAssemblyReference.cache
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\WatcherCmd.exe.config
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\obj\Debug\WatcherCmd.exe
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\obj\Debug\WatcherCmd.pdb
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\tessdata\spa.cube-unicharset
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\tessdata\spa.cube-word-dawg
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\tessdata\spa.cube.bigrams
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\tessdata\spa.cube.fold
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\tessdata\spa.cube.lm
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\tessdata\spa.cube.nn
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\tessdata\spa.cube.params
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\tessdata\spa.cube.size
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\tessdata\spa.cube.word-freq
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\tessdata\spa.numbers
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\tessdata\spa.params-model
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\tessdata\spa.punc
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\tessdata\spa.traineddata
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\tessdata\spa.training_text
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\tessdata\spa.training_text.bigram_freqs
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\tessdata\spa.training_text.unigram_freqs
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\tessdata\spa.unicharambigs
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\tessdata\spa.word.bigrams
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\tessdata\spa.wordlist
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\tessdata\spa_old.traineddata
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\x64\liblept172.dll
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\x64\libtesseract304.dll
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\x86\liblept172.dll
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\x86\libtesseract304.dll
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\WatcherCmd.exe
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\WatcherCmd.pdb
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\Common.Logging.Core.dll
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\Common.Logging.dll
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\Ninject.dll
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\OCR.dll
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\Quartz.dll
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\Tesseract.dll
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\Spire.Pdf.dll
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\Newtonsoft.Json.dll
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\Spire.License.dll
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\Microsoft.mshtml.dll
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\OCR.pdb
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\Common.Logging.pdb
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\Common.Logging.xml
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\Common.Logging.Core.pdb
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\Common.Logging.Core.xml
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\Ninject.xml
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\Quartz.pdb
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\Quartz.xml
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\Tesseract.xml
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\Spire.Pdf.xml
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\Newtonsoft.Json.xml
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\bin\Debug\Spire.License.xml
+C:\Nueva carpeta\OCR\OCR\WatcherCmd\obj\Debug\WatcherCmd.csprojResolveAssemblyReference.cache
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\tessdata\spa.cube-unicharset
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\tessdata\spa.cube-word-dawg
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\tessdata\spa.cube.bigrams
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\tessdata\spa.cube.fold
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\tessdata\spa.cube.lm
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\tessdata\spa.cube.nn
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\tessdata\spa.cube.params
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\tessdata\spa.cube.size
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\tessdata\spa.cube.word-freq
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\tessdata\spa.numbers
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\tessdata\spa.params-model
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\tessdata\spa.punc
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\tessdata\spa.traineddata
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\tessdata\spa.training_text
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\tessdata\spa.training_text.bigram_freqs
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\tessdata\spa.training_text.unigram_freqs
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\tessdata\spa.unicharambigs
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\tessdata\spa.word.bigrams
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\tessdata\spa.wordlist
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\tessdata\spa_old.traineddata
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\x64\liblept172.dll
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\x64\libtesseract304.dll
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\x86\liblept172.dll
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\x86\libtesseract304.dll
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\WatcherCmd.exe.config
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\WatcherCmd.exe
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\WatcherCmd.pdb
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Common.Logging.Core.dll
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Common.Logging.dll
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Ninject.dll
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\OCR.dll
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Quartz.dll
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Tesseract.dll
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Spire.Pdf.dll
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Newtonsoft.Json.dll
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Spire.License.dll
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Microsoft.mshtml.dll
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\OCR.pdb
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Common.Logging.pdb
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Common.Logging.xml
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Common.Logging.Core.pdb
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Common.Logging.Core.xml
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Ninject.xml
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Quartz.pdb
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Quartz.xml
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Tesseract.xml
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Spire.Pdf.xml
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Newtonsoft.Json.xml
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Spire.License.xml
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\obj\Debug\WatcherCmd.exe
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\obj\Debug\WatcherCmd.pdb

@@ -1,7 +1,7 @@
 ﻿using WatcherCmd.Configuration;
-using log4net;
-using Quartz;
 
+using Quartz;
+using Common.Logging;
 
 namespace WatcherCmd.Jobs
 {
