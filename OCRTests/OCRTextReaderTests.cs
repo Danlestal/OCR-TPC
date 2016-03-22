@@ -18,7 +18,7 @@ namespace OCRTests
         [DeploymentItem(@"..\..\..\..\OCR-TPC\OCR\tessdata", "tessdata")]
         public void Read_Success()
         {
-            OCR.OCRTextReader reader = new OCR.OCRTextReader();
+            OCR.OcrTextReader reader = new OCR.OcrTextReader();
             reader.Read("format2.tiff");
         }
     }

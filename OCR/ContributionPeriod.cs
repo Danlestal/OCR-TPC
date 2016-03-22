@@ -26,7 +26,6 @@ namespace OCR
             return JsonConvert.SerializeObject(this);
         }
 
-
         public override bool Equals(object obj)
         {
             ContributionPeriod target = obj as ContributionPeriod;
@@ -34,6 +33,11 @@ namespace OCR
                 return false;
 
             return ((target.PeriodStart == this.PeriodStart) && (target.PeriodEnd == this.PeriodEnd) && (target.MoneyContribution == MoneyContribution));
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
 
     }

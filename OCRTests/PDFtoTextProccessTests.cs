@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
 using OCR;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace OCRTests
 {
@@ -17,13 +18,22 @@ namespace OCRTests
         public void WholeProc_Success()
         {
             PDFToImageConverter.ConvertToImage("Cert.pdf", "format2.tiff", 512, 512);
-            OCR.OCRTextReader reader = new OCR.OCRTextReader();
+            OCR.OcrTextReader reader = new OCR.OcrTextReader();
             OcrData data = reader.Read("format2.tiff");
 
             ContributionPeriodsParser parser = new ContributionPeriodsParser();
             List<ContributionPeriod> results = parser.Parse(data.Text);
 
             string id = HealthCareContributionIdParser.Parse(data.Text);
+
+            ContributionPeriodDataDTO dataToSend = new ContributionPeriodDataDTO();
+            dataToSend.ContributorId = id;
+            foreach (ContributionPeriod period in results)
+            {
+                dataToSend.ContributionPeriodsDTO.Add(new ContributionPeriodDTO() { MoneyContribution = period.MoneyContribution, PeriodEnd = period.PeriodEnd, PeriodStart = period.PeriodStart });
+            }
+
+            string jsonDataToSend = JsonConvert.SerializeObject(dataToSend);
 
             Assert.IsTrue(results.Count == 5);
         }
