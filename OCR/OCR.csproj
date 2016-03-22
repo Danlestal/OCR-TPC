@@ -60,6 +60,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="ContributionPeriod.cs" />
     <Compile Include="ContributionPeriodsParser.cs" />
+    <Compile Include="HealthCareContributionIdParser.cs" />
     <Compile Include="OcrData.cs" />
     <Compile Include="OCRTextReader.cs" />
     <Compile Include="PDFToImageConverter.cs" />
