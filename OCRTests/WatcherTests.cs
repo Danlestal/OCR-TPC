@@ -33,16 +33,12 @@ namespace WatcherCmd.Files.Tests
         {
             List<string> receivedEvents = new List<string>();
 
-            Watcher mockWatcher = new Watcher(_logger);
-
-            // arrange
-            this.mockWatcher = new Mock<Watcher>(MockBehavior.Strict);
-            //this._manager = new Manager(this.mockWatcher.Object);
+            var mockWatcher = new Mock<IWatcher>();
 
             // act
             this.mockWatcher.Raise(mock => mock.FileDetected += null, new EventArgs()); // this does not fire
 
-            Watcher _watcher = new Watcher(_logger);
+            Watcher _watcher = new Watcher();
 
             //this.mockWatcher.Verify(mock => mock.FileDetected(It.IsAny<string>()));
             

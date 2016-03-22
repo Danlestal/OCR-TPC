@@ -2,17 +2,13 @@
 using Common.Logging;
 using System;
 using System.ServiceProcess;
-using WatcherCmd.Configuration;
 using WatcherCmd.Jobs;
-using WatcherCmd.Jobs.Interfaces;
 
 namespace OCR
 {
     public partial class OCRService : ServiceBase
     {
         private static readonly ILog _logger = LogManager.GetLogger(typeof(OCRService));
-        private static IOCRJobFactory _jobFactory;
-        private ICronDispatcher _dispatcher;
 
         public OCRService()
         {
@@ -23,7 +19,7 @@ namespace OCR
         {
             try
             {
-                run(args);
+                Run(args);
             }
             catch (Exception e)
             {
@@ -31,7 +27,7 @@ namespace OCR
             }
         }
 
-        private static void run(string[] args)
+        private static void Run(string[] args)
         {
             var service = new OCRService();
             if (Environment.UserInteractive)
@@ -55,7 +51,7 @@ namespace OCR
             try
             {
                 _logger.Info("STARTED");
-                initDispatcher();
+                InitDispatcher();
             }
             catch (Exception e)
             {
@@ -66,17 +62,15 @@ namespace OCR
         protected override void OnStop()
         {
             _logger.Info("STOPPED");
-            if (_dispatcher != null)
-                _dispatcher.Dispose();
-
+            
             base.OnStop();
         }
 
-        private void initDispatcher()
+        private void InitDispatcher()
         {
-            _jobFactory = new OCRJobFactory(new ConfigurationProvider());
-            _dispatcher = new Dispatcher(_jobFactory);
-            _dispatcher.Init();
+
+            WatcherCmdJob _watcherCmdJob = new WatcherCmdJob();
+            _watcherCmdJob.Execute();
         }
     }
 }
