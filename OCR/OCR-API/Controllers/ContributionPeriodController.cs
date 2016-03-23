@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using OCR_API.DataLayer;
 using OCR_API.DTOs;
 using OCR_API.InternalService;
 using System;
@@ -15,6 +16,13 @@ namespace OCR_API.Controllers
 
         private ContributionPeriodInsertService insertionService;
 
+        public ContributionPeriodController()
+        {
+            var context = new OCR_TPC_Context();
+            insertionService = new ContributionPeriodInsertService(context);
+        }
+
+
 
         // GET: api/ContributionPeriod
         public IEnumerable<string> Get()
@@ -29,10 +37,9 @@ namespace OCR_API.Controllers
         }
 
         // POST: api/ContributionPeriod
-        public void Post([FromBody]string value)
+        public void Post(ContributionPeriodDataDTO value)
         {
-            var dataToInsert = JsonConvert.DeserializeObject<ContributionPeriodDataDTO>(value);
-            insertionService.Insert(dataToInsert);
+           insertionService.Insert(value);
         }
     }
 }

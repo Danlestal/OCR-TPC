@@ -8,6 +8,8 @@ namespace OCR_API.DataLayer
     public class Contributor
     {
 
+        public int id { get; set; }
+
         public string HealthCareContributorId { get; set; }
         public List<ContributionPeriod> Periods { get; set; }
     }
