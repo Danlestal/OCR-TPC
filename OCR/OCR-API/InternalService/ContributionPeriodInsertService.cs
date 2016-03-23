@@ -23,6 +23,7 @@ namespace OCR_API.InternalService
             if (contributor == null)
             {
                 contributor = new Contributor();
+                contributor.HealthCareContributorId = dataToInsert.ContributorId;
                 dbContext.Contributors.Add(contributor);
             }
 
