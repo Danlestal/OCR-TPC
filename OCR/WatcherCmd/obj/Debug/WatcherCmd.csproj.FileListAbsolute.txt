@@ -184,3 +184,6 @@ D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Newtonsoft.Json.xml
 D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Spire.License.xml
 D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\obj\Debug\WatcherCmd.exe
 D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\obj\Debug\WatcherCmd.pdb
+C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\WatcherCmd.exe.config
+C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\obj\Debug\WatcherCmd.exe
+C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\obj\Debug\WatcherCmd.pdb
