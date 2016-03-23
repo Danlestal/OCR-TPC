@@ -41,7 +41,7 @@ namespace WatcherCmd.Files
             try
             {
                 var appSettings = ConfigurationManager.AppSettings;
-                string directoryPathToWatch = appSettings["directoryPathToWatch"];
+                string directoryPathToWatch = appSettings["DirectoryPathToWatch"];
                 PrepareWatcher(directoryPathToWatch);
             }
             catch (Exception e)

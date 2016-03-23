@@ -12,38 +12,16 @@ namespace WatcherCmd.Files.Tests
     public class WatcherWatcherTests
     {
 
-        private static ILog _logger;
-        private Mock<Watcher> mockWatcher;
-        private Manager _manager;
-
         [TestMethod()]
-        public void Init_Test()
+        public void CreateTempPath_Test()
         {
-            Assert.Fail();
-        }
+            string result = Path.GetTempPath();
 
-        [TestMethod()]
-        public void Manager_InitializeSystem_Test()
-        {
-            Assert.Fail();
-        }
 
-        [TestMethod()]
-        public void MyEventIsRaised_Test()
-        {
-            List<string> receivedEvents = new List<string>();
+            var appData = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
 
-            var mockWatcher = new Mock<IWatcher>();
+            Assert.AreEqual(result, @"..\..\..\AppData\Local\Temp\");
 
-            // act
-            this.mockWatcher.Raise(mock => mock.FileDetected += null, new EventArgs()); // this does not fire
-
-            Watcher _watcher = new Watcher();
-
-            //this.mockWatcher.Verify(mock => mock.FileDetected(It.IsAny<string>()));
-            
-
-            Assert.Fail();
         }
     }
 }

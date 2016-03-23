@@ -19,16 +19,19 @@ namespace WatcherCmd.Jobs
 
         public void Execute()
         {
+            _logger.Info("FileProcesserJob started");
             try
             {
-                _logger.Info("FileProcesserJob started");
+                
                 execute();
-                _logger.Info("FileProcesserJob ended");
+                
             }
             catch (Exception e)
             {
                 _logger.ErrorFormat("Exception while executing FileProcesserJob: {0}\nStackTrace: \n{1}\n", e.Message, e.StackTrace);
             }
+
+            _logger.Info("FileProcesserJob ended");
         }
 
         private void execute()
