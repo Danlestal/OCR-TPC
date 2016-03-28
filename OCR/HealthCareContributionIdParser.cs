@@ -1,8 +1,7 @@
-﻿using OCR;
-using System;
+﻿using System;
 using System.Text.RegularExpressions;
 
-namespace OCRTests
+namespace OCR
 {
     public class HealthCareContributionIdParser
     {

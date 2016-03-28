@@ -5,8 +5,10 @@ using OCR_API.Controllers;
 using OCR_API.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using WatcherCmd.Files.Interface;
+using YFO.Testing.Infrastructure.APITesting;
 
 namespace WatcherCmd.Files
 {
@@ -41,7 +43,14 @@ namespace WatcherCmd.Files
 
             OCR.OcrTextReader reader = new OCR.OcrTextReader();
             OcrData data = reader.Read(outputPath);
+            
+            string jsonData = ParseData(data);
 
+            SendDataObject(jsonData);
+        }
+
+        private string ParseData(OcrData data)
+        {
             ContributionPeriodsParser parser = new ContributionPeriodsParser();
             List<ContributionPeriod> results = parser.Parse(data.Text);
 
@@ -51,15 +60,31 @@ namespace WatcherCmd.Files
             dataToSend.ContributorId = id;
             foreach (ContributionPeriod period in results)
             {
-                dataToSend.ContributionPeriodsDTO.Add(new OCR_API.DTOs.ContributionPeriodDTO() { MoneyContribution = period.MoneyContribution, PeriodEnd = period.PeriodEnd, PeriodStart = period.PeriodStart });
+                dataToSend.ContributionPeriodsDTO.Add(
+                    new OCR_API.DTOs.ContributionPeriodDTO()
+                    {
+                        MoneyContribution = period.MoneyContribution,
+                        PeriodEnd = period.PeriodEnd,
+                        PeriodStart = period.PeriodStart
+                    }
+                );
             }
 
             string jsonDataToSend = JsonConvert.SerializeObject(dataToSend);
 
-            ContributionPeriodController contributionApi = new ContributionPeriodController();
-            contributionApi.Post(dataToSend);
+            return jsonDataToSend;
+        }
 
-            
+        private void SendDataObject (string jsonData)
+        { 
+            var appSettings = ConfigurationManager.AppSettings;
+            string HostPath = appSettings["HostPath"];
+
+            APIClient client = new APIClient(HostPath);
+
+            client.Post(HostPath, jsonData);
+
+
         }
 
         
