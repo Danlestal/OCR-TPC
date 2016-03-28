@@ -2,6 +2,8 @@
 using System;
 using WatcherCmd.Files.Interface;
 using Common.Logging;
+using OCR;
+using System.Configuration;
 
 namespace WatcherCmd.Jobs
 {
@@ -37,9 +39,10 @@ namespace WatcherCmd.Jobs
         private void execute()
         {
                         
-            Watcher watcher = new Watcher();
+            var watcher = new Watcher();
+            var client = new APIClient(ConfigurationManager.AppSettings["ApiHost"]);
 
-            IManager manager = new Manager(_logger, watcher);
+            IManager manager = new Manager(_logger, watcher, client);
             manager.InitializeSystem();
         
         }

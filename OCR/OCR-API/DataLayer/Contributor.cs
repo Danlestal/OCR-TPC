@@ -17,5 +17,14 @@ namespace OCR_API.DataLayer
         public string HealthCareContributorId { get; set; }
 
         public List<ContributionPeriod> Periods { get; set; }
+
+        public void AddContributionPeriod(ContributionPeriod newPeriod)
+        {
+           if (!Periods.Contains(newPeriod))
+            {
+                Periods.Add(newPeriod);
+            }
+
+        }
     }
 }

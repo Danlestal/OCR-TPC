@@ -29,12 +29,14 @@ namespace OCR_API.InternalService
 
             foreach (ContributionPeriodDTO newPeriod in dataToInsert.ContributionPeriodsDTO)
             {
-                contributor.Periods.Add(new ContributionPeriod()
+                var newContributionPeriod = new ContributionPeriod()
                 {
                     MoneyContribution = newPeriod.MoneyContribution,
                     PeriodEnd = newPeriod.PeriodEnd,
                     PeriodStart = newPeriod.PeriodStart
-                });
+                };
+
+                contributor.AddContributionPeriod(newContributionPeriod);
             }
 
             dbContext.SaveChanges();
