@@ -50,6 +50,8 @@ namespace WatcherCmd.Files
 
             OCR_API.DTOs.ContributionPeriodDataDTO dataToSend = new OCR_API.DTOs.ContributionPeriodDataDTO();
             dataToSend.ContributorId = id;
+            dataToSend.ContributionPeriodsDTO = new List<OCR_API.DTOs.ContributionPeriodDTO>();
+
             foreach (ContributionPeriod period in results)
             {
                 dataToSend.ContributionPeriodsDTO.Add(new OCR_API.DTOs.ContributionPeriodDTO() { MoneyContribution = period.MoneyContribution, PeriodEnd = period.PeriodEnd, PeriodStart = period.PeriodStart });
