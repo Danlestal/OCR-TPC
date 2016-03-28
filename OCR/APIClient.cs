@@ -5,7 +5,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace YFO.Testing.Infrastructure.APITesting
+namespace OCR
 {
     public class APIClient
     {

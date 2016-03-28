@@ -1,9 +1,6 @@
 ﻿using Common.Logging;
 using Newtonsoft.Json;
 using OCR;
-using OCR_API.Controllers;
-using OCR_API.DTOs;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using WatcherCmd.Files.Interface;
@@ -14,11 +11,15 @@ namespace WatcherCmd.Files
     {
         private readonly ILog _logger;
         private readonly IWatcher _watcher;
+        private APIClient _apiClient;
+
         
-        public Manager(ILog logger, IWatcher watcher)
+        public Manager(ILog logger, IWatcher watcher, APIClient client)
         {
             _logger = logger;
             _watcher = watcher;
+            _apiClient = client;
+
         }
 
         public void InitializeSystem()
@@ -54,12 +55,7 @@ namespace WatcherCmd.Files
                 dataToSend.ContributionPeriodsDTO.Add(new OCR_API.DTOs.ContributionPeriodDTO() { MoneyContribution = period.MoneyContribution, PeriodEnd = period.PeriodEnd, PeriodStart = period.PeriodStart });
             }
 
-            string jsonDataToSend = JsonConvert.SerializeObject(dataToSend);
-
-            ContributionPeriodController contributionApi = new ContributionPeriodController();
-            contributionApi.Post(dataToSend);
-
-            
+            _apiClient.Post("ContributionPeriod", dataToSend);
         }
 
         
