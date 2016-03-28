@@ -1,5 +1,4 @@
-﻿using OCR;
-using System;
+﻿using System;
 using System.Text.RegularExpressions;
 
 namespace OCR
