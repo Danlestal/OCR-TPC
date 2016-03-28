@@ -30,8 +30,9 @@ namespace OCR_API.InternalService
                 return result;
 
 
+            
 
-            foreach (var contrPeriod in contributor.Periods)
+            foreach (var contrPeriod in dbContext.Periods.Where(s => s.ContributorRefId == contributor.id))
             {
                 var contrPeriodDTO = new ContributionPeriodDTO();
                 contrPeriodDTO.MoneyContribution = contrPeriod.MoneyContribution;
