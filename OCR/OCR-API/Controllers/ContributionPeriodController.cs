@@ -3,6 +3,7 @@ using OCR_API.DTOs;
 using OCR_API.InternalService;
 using System.Collections.Generic;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace OCR_API.Controllers
 {
@@ -10,31 +11,33 @@ namespace OCR_API.Controllers
     {
 
         private ContributionPeriodInsertService insertionService;
+        private ContributorReadService readService;
 
         public ContributionPeriodController()
         {
             var context = new OCR_TPC_Context();
             insertionService = new ContributionPeriodInsertService(context);
-        }
-
-
-
-        // GET: api/ContributionPeriod
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET: api/ContributionPeriod/5
-        public string Get(int id)
-        {
-            return "value";
+            readService = new ContributorReadService(context);
         }
 
         // POST: api/ContributionPeriod
         public void Post(ContributionPeriodDataDTO value)
         {
            insertionService.Insert(value);
+        }
+
+
+        /// <summary>
+        /// Gets the contribution periods
+        /// </summary>
+        /// <param name="healthCareid">The health careid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("{healthCareid}", Name = "ContributorDetails")]
+        [ResponseType(typeof(IEnumerable<ContributionPeriodDTO>))]
+        public IHttpActionResult Get(string healthCareid)
+        {
+            return Ok(readService.ReadContributorDetails(healthCareid));
         }
     }
 }

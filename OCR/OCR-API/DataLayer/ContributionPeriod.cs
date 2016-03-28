@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OCR_API.DataLayer
 {
@@ -13,13 +14,11 @@ namespace OCR_API.DataLayer
 
         public double MoneyContribution { get; set; }
 
+        public int ContributorRefId { get; set; }
 
-        public override bool Equals(object obj)
-        {
-            ContributionPeriod target = obj as ContributionPeriod;
-            return ((target.PeriodEnd == PeriodEnd) && (target.PeriodStart == PeriodStart) && (target.MoneyContribution == MoneyContribution));
-        }
+        [ForeignKey("ContributorRefId")]
+        public virtual Contributor Contributor { get; set; }
 
-
+       
     }
 }

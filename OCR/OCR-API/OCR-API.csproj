@@ -124,6 +124,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BrowserJsonFormatter.cs" />
     <Compile Include="Controllers\ContributionPeriodController.cs" />
+    <Compile Include="Controllers\ContributorController.cs" />
     <Compile Include="DataLayer\ContributionPeriod.cs" />
     <Compile Include="DataLayer\Contributor.cs" />
     <Compile Include="DataLayer\OCRDBContext.cs" />
@@ -132,6 +133,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="InternalService\ContributionPeriodInsertService.cs" />
+    <Compile Include="InternalService\ContributorReadService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

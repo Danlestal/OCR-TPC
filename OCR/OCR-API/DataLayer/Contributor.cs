@@ -16,7 +16,7 @@ namespace OCR_API.DataLayer
 
         public string HealthCareContributorId { get; set; }
 
-        public List<ContributionPeriod> Periods { get; set; }
+        public ICollection<ContributionPeriod> Periods { get; set; }
 
         public void AddContributionPeriod(ContributionPeriod newPeriod)
         {

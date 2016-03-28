@@ -36,12 +36,13 @@ namespace OCR_API.InternalService
                     PeriodStart = newPeriod.PeriodStart
                 };
 
+                dbContext.Periods.Add(newContributionPeriod);
+
                 contributor.AddContributionPeriod(newContributionPeriod);
             }
 
             dbContext.SaveChanges();
             return true;
-            
         }
     }
 }
