@@ -7,17 +7,23 @@ namespace OCR_API.DataLayer
 {
     public class Contributor
     {
-        public int id { get; set; }
+
+        public Contributor()
+        {
+            ContributionPeriods = new List<ContributionPeriod>();
+        }
+
+        public int ContributorId { get; set; }
 
         public string HealthCareContributorId { get; set; }
 
-        public ICollection<ContributionPeriod> Periods { get; set; }
+        public virtual ICollection<ContributionPeriod> ContributionPeriods { get; set; }
 
         public void AddContributionPeriod(ContributionPeriod newPeriod)
         {
-           if (!Periods.Contains(newPeriod))
+           if (!ContributionPeriods.Contains(newPeriod))
             {
-                Periods.Add(newPeriod);
+                ContributionPeriods.Add(newPeriod);
             }
 
         }

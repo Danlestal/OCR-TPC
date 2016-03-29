@@ -6,7 +6,7 @@ namespace OCR_API.DataLayer
     public class ContributionPeriod
     {
 
-        public int id { get; set; }
+        public int ContributionPeriodId { get; set; }
 
         public DateTime PeriodStart { get; set; }
 

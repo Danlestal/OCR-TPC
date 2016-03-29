@@ -12,5 +12,13 @@ namespace OCR_API.DataLayer
         public DbSet<Contributor> Contributors { get; set; }
 
         public DbSet<ContributionPeriod> Periods { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ContributionPeriod>()
+                    .HasRequired<Contributor>(s => s.Contributor)
+                    .WithMany(s => s.ContributionPeriods)
+                    .HasForeignKey(s => s.ContributorRefId);
+        }
     }
 }
