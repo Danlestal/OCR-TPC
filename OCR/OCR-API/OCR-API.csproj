@@ -77,7 +77,6 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -125,6 +124,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BrowserJsonFormatter.cs" />
     <Compile Include="Controllers\ContributionPeriodController.cs" />
+    <Compile Include="Controllers\ContributorController.cs" />
     <Compile Include="DataLayer\ContributionPeriod.cs" />
     <Compile Include="DataLayer\Contributor.cs" />
     <Compile Include="DataLayer\OCRDBContext.cs" />
@@ -133,7 +133,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="InternalService\ContributionPeriodInsertService.cs" />
-    <Compile Include="InternalService\Encryption.cs" />
+    <Compile Include="InternalService\ContributorReadService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
