@@ -52,6 +52,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Security" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -70,6 +71,7 @@
   <ItemGroup>
     <Compile Include="ContributionPeriodsParserTests.cs" />
     <Compile Include="HealthCareContributionIdParserTests.cs" />
+    <Compile Include="Password_Test.cs" />
     <Compile Include="WatcherTests.cs" />
     <Compile Include="PDFToImageConverterTests.cs" />
     <Compile Include="PDFtoTextProccessTests.cs" />
