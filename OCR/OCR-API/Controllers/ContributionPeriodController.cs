@@ -33,7 +33,7 @@ namespace OCR_API.Controllers
         /// <param name="healthCareid">The health careid.</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("{healthCareid}", Name = "ContributorDetails")]
+        [Route("ContributionPeriods/{healthCareid}", Name = "ContributorDetails")]
         [ResponseType(typeof(IEnumerable<ContributionPeriodDTO>))]
         public IHttpActionResult Get(string healthCareid)
         {

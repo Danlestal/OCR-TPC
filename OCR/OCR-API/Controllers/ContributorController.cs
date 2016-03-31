@@ -27,7 +27,7 @@ namespace OCR_API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Route("")]
+        [Route("Contributors")]
         [ResponseType(typeof(IEnumerable<string>))]
         public IHttpActionResult Get()
         {

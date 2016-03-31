@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>OCR WEB</title>
+	<meta charset="utf-8" />
+</head>
+<body>
+    <link type="text/css" rel="stylesheet" href="./css/jsgrid.min.css" />
+    <link type="text/css" rel="stylesheet" href="./css/jsgrid-theme.min.css" />
+    <link type="text/css" rel="stylesheet" href="css/jquery-ui.min.css"/>
+
+    <script type="text/javascript" src="./scripts/jquery-2.2.2.min.js"></script>
+    <script type="text/javascript" src="./scripts/jquery-ui-1.11.4.min.js"></script>
+    <script type="text/javascript" src="./scripts/jsgrid.min.js"></script>
+
+    <div class="ui-widget">
+        <label for="healthCareId">ID seguridad social: </label>
+        <input id="healthCareId">
+        <button id="searchForIdButton" class="ui-button-icon-only">Search</button>
+    </div>
+
+    <div id="jsGrid"></div>
+
+    <script>
+        $(document).ready(function () {
+
+            var apiUrl = '@System.Configuration.ConfigurationManager.AppSettings["APIBaseUrl"]';
+
+            var MyDateField = function (config) {
+                jsGrid.Field.call(this, config);
+            };
+
+            MyDateField.prototype = new jsGrid.Field({
+
+                css: "date-field",            // redefine general property 'css'
+                align: "center",              // redefine general property 'align'
+
+                myCustomProperty: "foo",      // custom property
+
+                sorter: function (date1, date2) {
+                    return new Date(date1) - new Date(date2);
+                },
+
+                itemTemplate: function (value) {
+                    return new Date(value).toLocaleDateString();
+                },
+
+                insertTemplate: function (value) {
+                    return this._insertPicker = $("<input>").datepicker({ defaultDate: new Date() });
+                },
+
+                editTemplate: function (value) {
+                    return this._editPicker = $("<input>").datepicker().datepicker("setDate", new Date(value));
+                },
+
+                insertValue: function () {
+                    return this._insertPicker.datepicker("getDate").toISOString();
+                },
+
+                editValue: function () {
+                    return this._editPicker.datepicker("getDate").toISOString();
+                }
+            });
+
+            jsGrid.fields.date = MyDateField;
+            var periods = [
+                          {
+                              "PeriodStart": "2011-01-01T00:00:00",
+                              "PeriodEnd": "2011-12-01T00:00:00",
+                              "MoneyContribution": 99920.66
+                          },
+                          {
+                              "PeriodStart": "2012-01-01T00:00:00",
+                              "PeriodEnd": "2012-12-01T00:00:00",
+                              "MoneyContribution": 100175.64
+                          },
+                          {
+                              "PeriodStart": "2013-01-01T00:00:00",
+                              "PeriodEnd": "2013-12-01T00:00:00",
+                              "MoneyContribution": 100542.51
+                          },
+                          {
+                              "PeriodStart": "2014-01-01T00:00:00",
+                              "PeriodEnd": "2014-12-01T00:00:00",
+                              "MoneyContribution": 101631.59
+                          },
+                          {
+                              "PeriodStart": "2015-01-01T00:00:00",
+                              "PeriodEnd": "2015-09-01T00:00:00",
+                              "MoneyContribution": 49334.24
+                          }
+            ];
+            $("#jsGrid").jsGrid({
+                width: "100%",
+                height: "auto",
+                inserting: false,
+                editing: false,
+                sorting: true,
+                data: periods,
+
+                fields: [
+                    { name: "PeriodStart", type: "date" },
+                    { name: "PeriodEnd", type: "date" },
+                    { name: "MoneyContribution", type: "text" }
+                ]
+            });
+            var myHealthCareIds = [
+                             "ActionScript",
+                             "AppleScript",
+                             "Asp",
+                             "BASIC",
+                             "C",
+                             "C++",
+                             "Clojure",
+                             "COBOL",
+                             "ColdFusion",
+                             "Erlang",
+                             "Fortran",
+                             "Groovy",
+                             "Haskell",
+                             "Java",
+                             "JavaScript",
+                             "Lisp",
+                             "Perl",
+                             "PHP",
+                             "Python",
+                             "Ruby",
+                             "Scala",
+                             "Scheme"
+            ];
+            $("#healthCareId").autocomplete({
+                source: myHealthCareIds
+            });
+
+            $("#searchForIdButton").button().click(function (event) {
+                event.preventDefault();
+                $.get("test.php", function (data) {
+                    alert("Data Loaded: " + data);
+                });
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>
