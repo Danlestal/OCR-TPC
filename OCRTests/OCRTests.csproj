@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="ContributionPeriodsParserTests.cs" />
     <Compile Include="HealthCareContributionIdParserTests.cs" />
+    <Compile Include="ImageUploadTest.cs" />
     <Compile Include="Password_Test.cs" />
     <Compile Include="WatcherTests.cs" />
     <Compile Include="PDFToImageConverterTests.cs" />
@@ -84,6 +85,10 @@
     <None Include="Resources\Cert.pdf" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OCR\OCR-API\OCR-API.csproj">
+      <Project>{acab07a9-3e21-49b1-a2a7-0814eff28c8f}</Project>
+      <Name>OCR-API</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OCR\OCR.csproj">
       <Project>{ce6b6406-ed99-497f-a507-663c0eb884fa}</Project>
       <Name>OCR</Name>
@@ -99,6 +104,7 @@
     <Content Include="Resources\Cert-sec3.png" />
     <Content Include="Resources\cert-sec4.png" />
     <Content Include="Resources\Cert.png" />
+    <Content Include="Resources\Cert.tiff" />
     <Content Include="Resources\otro.png" />
     <Content Include="Resources\parsedtext.txt" />
   </ItemGroup>

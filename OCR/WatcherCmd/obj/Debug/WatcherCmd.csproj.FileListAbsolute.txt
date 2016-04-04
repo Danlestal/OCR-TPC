@@ -182,7 +182,6 @@ D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Spire.License.xml
 D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\obj\Debug\WatcherCmd.exe
 D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\obj\Debug\WatcherCmd.pdb
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\obj\Debug\WatcherCmd.csprojResolveAssemblyReference.cache
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\obj\Debug\WatcherCmd.csproj.WatcherCmd.exe.config
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\WatcherCmd.exe.config
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\csc.exe
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\csc.exe.config
@@ -310,3 +309,18 @@ D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Net.Http.Formatting.xml
 D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\EntityFramework.xml
 D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.Http.WebHost.xml
 D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\obj\Debug\WatcherCmd.csproj.WatcherCmd.exe.config
+C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.Optimization.dll
+C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.Mvc.dll
+C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\WebGrease.dll
+C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.Razor.dll
+C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.WebPages.Razor.dll
+C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.WebPages.dll
+C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\Antlr3.Runtime.dll
+C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.WebPages.Deployment.dll
+C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.Optimization.xml
+C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.Mvc.xml
+C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.Razor.xml
+C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.WebPages.Razor.xml
+C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.WebPages.xml
+C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\Antlr3.Runtime.pdb
+C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.WebPages.Deployment.xml
