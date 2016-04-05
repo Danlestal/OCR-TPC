@@ -63,6 +63,7 @@
             });
 
             jsGrid.fields.date = MyDateField;
+            /*
             var periods = [
                           {
                               "PeriodStart": "2011-01-01T00:00:00",
@@ -89,14 +90,14 @@
                               "PeriodEnd": "2015-09-01T00:00:00",
                               "MoneyContribution": 49334.24
                           }
-            ];
+            ];*/
             $("#jsGrid").jsGrid({
                 width: "100%",
                 height: "auto",
                 inserting: false,
                 editing: false,
                 sorting: true,
-                data: periods,
+                
 
                 fields: [
                     { name: "PeriodStart", type: "date" },
@@ -134,8 +135,13 @@
 
             $("#searchForIdButton").button().click(function (event) {
                 event.preventDefault();
-                $.get("test.php", function (data) {
-                    alert("Data Loaded: " + data);
+                var healthCareId = $("#healthCareId").val().replace(/\s/g, "%20");
+
+                var queryUrl = apiUrl + "/ContributionPeriods/" + healthCareId;
+            
+                $.get(queryUrl, function (data) {
+                    $("#jsGrid").data = data;
+                    
                 });
             });
 
