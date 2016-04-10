@@ -23,9 +23,9 @@ namespace OCR_API.Controllers
         }
 
         //POST: api/Image
-        public void Post(string file)
+        public void Post(string file, string url)
         {
-            uploadService.uploadImage(file, "url");
+            uploadService.uploadImage(file, url);
         }
 
         // GET: api/Image
