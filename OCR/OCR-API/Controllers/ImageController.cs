@@ -1,4 +1,7 @@
-﻿using System;
+﻿using OCR_API.DataLayer;
+using OCR_API.DTOs;
+using OCR_API.InternalService;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,21 +13,20 @@ namespace OCR_API.Controllers
     public class ImageController : ApiController
     {
 
-        //private ImageInsertService insertionService;
+        private ImageUploadService uploadService;
         //private ImageReadService readService;
 
         public ImageController()
         {
             //var context = new OCR_TPC_Context();
-            //insertionService = new ContributionPeriodInsertService(context);
-            //readService = new ContributorReadService(context);
+            uploadService = new ImageUploadService();
         }
 
-        // POST: api/Image
-        //public void Post(//ContributionPeriodDataDTO value)
-        //{
-        //    //insertionService.Insert(value);
-        //}
+        //POST: api/Image
+        public void Post(string file)
+        {
+            uploadService.uploadImage(file, "url");
+        }
 
         // GET: api/Image
         //public ActionResult Index()
