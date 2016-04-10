@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace OCR
 {
@@ -52,6 +53,13 @@ namespace OCR
             return new APIResponse(response.Result);
         }
 
+        public APIResponse PostStream(string url, Stream data)
+        {
+            var client = GetHttpClient();
+            var response = client.PostAsync(HostAddress + url, CreateStreamContent(data));
+            return new APIResponse(response.Result);
+        }
+
         public async Task<APIResponse> PostAsync(string url, object data)
         {
             var client = GetHttpClient();
@@ -68,6 +76,13 @@ namespace OCR
         {
             var content = new StringContent(JsonConvert.SerializeObject(data));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            return content;
+        }
+
+        private StreamContent CreateStreamContent(Stream data)
+        {
+            var content= new StreamContent(data);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
             return content;
         }
 

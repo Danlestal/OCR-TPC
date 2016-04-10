@@ -3,6 +3,8 @@ using OCR_API.DTOs;
 using OCR_API.InternalService;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -22,11 +24,31 @@ namespace OCR_API.Controllers
             uploadService = new ImageUploadService();
         }
 
+
+        [HttpPost]
+        [Route("Image")]
+        public IHttpActionResult Post(Stream fileStream)
+        {
+            if (!Directory.Exists(ConfigurationManager.AppSettings["StorageSourceFolder"]))
+            {
+                Directory.CreateDirectory(ConfigurationManager.AppSettings["StorageSourceFolder"]);
+            }
+
+            string newFileName = Path.GetRandomFileName();
+            string filePath = ConfigurationManager.AppSettings["StorageSourceFolder"]  + "\\" + newFileName;
+            using (var output = File.Create(filePath))
+            {
+                fileStream.CopyTo(output);
+            }
+            return Ok(newFileName);
+        }
+
         //POST: api/Image
+        /*
         public void Post(string file, string url)
         {
-            uploadService.uploadImage(file, url);
-        }
+            uploadService.UploadImage(file, url);
+        }*/
 
         // GET: api/Image
         //public ActionResult Index()

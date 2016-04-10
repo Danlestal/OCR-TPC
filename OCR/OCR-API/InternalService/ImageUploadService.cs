@@ -12,7 +12,7 @@ namespace OCR_API.InternalService
     public class ImageUploadService
     {
 
-        public void uploadImage(string file, string url)
+        public void UploadImage(string file, string url)
         {
 
            

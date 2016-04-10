@@ -24,6 +24,23 @@ namespace OCRTests
             ContributionPeriodsParser parser = new ContributionPeriodsParser();
             List<ContributionPeriod> results = parser.Parse(data.Text);
 
+            if (results.Count == 0)
+                return;
+
+            APIClient client = new APIClient("http://localhost:58869/");
+
+            var filestream = new System.IO.FileStream("format2.tiff",
+                                          System.IO.FileMode.Open,
+                                          System.IO.FileAccess.Read,
+                                          System.IO.FileShare.ReadWrite);
+            var fileStreamReader = new System.IO.StreamReader(filestream, System.Text.Encoding.UTF8, true, 128);
+
+
+
+            client.PostStream("Image", fileStreamReader.BaseStream);
+
+
+
             string id = HealthCareContributionIdParser.Parse(data.Text);
 
             ContributionPeriodDataDTO dataToSend = new ContributionPeriodDataDTO();

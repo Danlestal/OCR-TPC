@@ -30,7 +30,7 @@ namespace OCRTests
             }
 
             var uploader = new ImageUploadService();
-            uploader.uploadImage(moveFile, url);
+            uploader.UploadImage(moveFile, url);
 
             Assert.IsTrue(File.Exists(url));
         }
