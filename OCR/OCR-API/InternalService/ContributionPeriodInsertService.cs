@@ -33,7 +33,8 @@ namespace OCR_API.InternalService
                 {
                     MoneyContribution = newPeriod.MoneyContribution,
                     PeriodEnd = newPeriod.PeriodEnd,
-                    PeriodStart = newPeriod.PeriodStart
+                    PeriodStart = newPeriod.PeriodStart,
+                    HighResFileId = newPeriod.HighResFileId
                 };
 
                 dbContext.Periods.Add(newContributionPeriod);

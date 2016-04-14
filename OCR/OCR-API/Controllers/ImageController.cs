@@ -43,6 +43,34 @@ namespace OCR_API.Controllers
             return Ok(newFileName);
         }
 
+        [HttpPost]
+        [Route("UploadFile")]
+        public HttpResponseMessage Post()
+        {
+            var task = this.Request.Content.ReadAsStreamAsync();
+            task.Wait();
+            Stream requestStream = task.Result;
+
+            if (!Directory.Exists(ConfigurationManager.AppSettings["StorageSourceFolder"]))
+            {
+                Directory.CreateDirectory(ConfigurationManager.AppSettings["StorageSourceFolder"]);
+            }
+
+            string newFileName = Path.GetRandomFileName();
+            newFileName = Path.GetFileNameWithoutExtension(newFileName) + ".tiff";
+
+            Stream fileStream = File.Create(ConfigurationManager.AppSettings["StorageSourceFolder"] + "\\"+ newFileName);
+            requestStream.CopyTo(fileStream);
+            fileStream.Close();
+            requestStream.Close();
+            
+
+            HttpResponseMessage response = new HttpResponseMessage();
+            response.StatusCode = HttpStatusCode.Created;
+            response.Content = new StringContent(newFileName);
+            return response;
+        }
+
         //POST: api/Image
         /*
         public void Post(string file, string url)

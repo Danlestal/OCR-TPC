@@ -75,7 +75,6 @@
     <Compile Include="Password_Test.cs" />
     <Compile Include="WatcherTests.cs" />
     <Compile Include="PDFToImageConverterTests.cs" />
-    <Compile Include="PDFtoTextProccessTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="OCRTextReaderTests.cs" />
   </ItemGroup>

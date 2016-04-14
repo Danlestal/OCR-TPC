@@ -16,6 +16,8 @@ namespace OCR_API.DataLayer
 
         public int ContributorRefId { get; set; }
 
+        public string HighResFileId { get; set; }
+
         [ForeignKey("ContributorRefId")]
         public virtual Contributor Contributor { get; set; }
 

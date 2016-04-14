@@ -82,7 +82,7 @@ namespace OCR
         private StreamContent CreateStreamContent(Stream data)
         {
             var content= new StreamContent(data);
-            content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
             return content;
         }
 

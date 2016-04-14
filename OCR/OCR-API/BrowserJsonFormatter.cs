@@ -9,7 +9,8 @@ namespace OCR_API
     {
         public BrowserJsonFormatter()
         {
-            this.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+            SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+            SupportedMediaTypes.Add(new MediaTypeHeaderValue("application/octet-stream"));
             this.SerializerSettings.Formatting = Formatting.Indented;
         }
 

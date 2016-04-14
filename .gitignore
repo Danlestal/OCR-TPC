@@ -45,3 +45,22 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+/OCR/.vs
+/OCR/bin/Debug
+/OCR/obj/Debug
+/OCR/OCR-API/bin
+/OCR/OCR-API/obj/Debug
+/OCR/OCR-API/OCR-API.csproj.user
+/OCR/packages
+/OCR/TestResults
+/OCR/WatcherCmd/bin/Debug
+/OCR/WatcherCmd/obj/Debug
+/OCR-Web/bin
+/OCR-Web/obj/Debug
+/OCRDataLayer/bin/Debug
+/OCRDataLayer/obj/Debug
+/OCRTests/bin/Debug
+/OCRTests/obj/Debug
+/RestAPI/bin
+/RestAPI/obj/Debug
+/RestAPI
