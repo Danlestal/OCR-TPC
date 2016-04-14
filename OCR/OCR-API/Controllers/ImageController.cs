@@ -16,31 +16,10 @@ namespace OCR_API.Controllers
     {
 
         private ImageUploadService uploadService;
-        //private ImageReadService readService;
 
         public ImageController()
         {
-            //var context = new OCR_TPC_Context();
             uploadService = new ImageUploadService();
-        }
-
-
-        [HttpPost]
-        [Route("Image")]
-        public IHttpActionResult Post(Stream fileStream)
-        {
-            if (!Directory.Exists(ConfigurationManager.AppSettings["StorageSourceFolder"]))
-            {
-                Directory.CreateDirectory(ConfigurationManager.AppSettings["StorageSourceFolder"]);
-            }
-
-            string newFileName = Path.GetRandomFileName();
-            string filePath = ConfigurationManager.AppSettings["StorageSourceFolder"]  + "\\" + newFileName;
-            using (var output = File.Create(filePath))
-            {
-                fileStream.CopyTo(output);
-            }
-            return Ok(newFileName);
         }
 
         [HttpPost]
@@ -70,20 +49,6 @@ namespace OCR_API.Controllers
             response.Content = new StringContent(newFileName);
             return response;
         }
-
-        //POST: api/Image
-        /*
-        public void Post(string file, string url)
-        {
-            uploadService.UploadImage(file, url);
-        }*/
-
-        // GET: api/Image
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
-
 
     }
 }
