@@ -35,7 +35,6 @@ namespace WatcherCmd.Files
 
         private void OnFileDetected(object sender, FileSystemEventArgs e)
         {
-
             string inputPath = e.FullPath;
             string inputFile = Path.GetFileName(inputPath);
             string outputFile = Path.GetFileNameWithoutExtension(inputPath) + ".tiff";
@@ -69,7 +68,7 @@ namespace WatcherCmd.Files
            string jsonDataToSend = JsonConvert.SerializeObject(dataToSend);
 
             APIClient client = new APIClient("http://localhost:58869/");
-            client.Post("ContributionPeriod", dataToSend);
+            client.Post("ContributionPeriods", dataToSend);
 
         }
 
@@ -111,8 +110,5 @@ namespace WatcherCmd.Files
                 return ms.ToArray();
             }
         }
-
-
-
     }
 }
