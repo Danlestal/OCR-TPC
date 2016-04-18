@@ -13,6 +13,8 @@ namespace OCR_API.DataLayer
 
         public DbSet<ContributionPeriod> Periods { get; set; }
 
+        public DbSet<User> Users { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ContributionPeriod>()

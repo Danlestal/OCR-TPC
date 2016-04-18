@@ -191,11 +191,16 @@
     <Compile Include="DataLayer\ContributionPeriod.cs" />
     <Compile Include="DataLayer\Contributor.cs" />
     <Compile Include="DataLayer\OCRDBContext.cs" />
+    <Compile Include="DataLayer\User.cs" />
     <Compile Include="DTOs\ContributionPeriodDataDTO.cs" />
     <Compile Include="DTOs\ImageDTO.cs" />
+    <Compile Include="Filters\ApiAuthenticationFilter.cs" />
+    <Compile Include="Filters\BasicAuthenticationIdentity.cs" />
+    <Compile Include="Filters\GenericAuthenticationFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="InternalService\BusinessServices.cs" />
     <Compile Include="InternalService\ContributionPeriodInsertService.cs" />
     <Compile Include="InternalService\ContributorReadService.cs" />
     <Compile Include="InternalService\ImageUploadService.cs" />
@@ -203,7 +208,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
     <Folder Include="Views\Image\" />
   </ItemGroup>
   <PropertyGroup>

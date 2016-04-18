@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OCR_API.DataLayer;
+using OCR_API.Filters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -18,6 +20,8 @@ namespace OCR_API
             );
             
             config.Formatters.Add(new BrowserJsonFormatter());
+
+            config.Filters.Add(new ApiAuthenticationFilter(new OCR_TPC_Context()));
         }
     }
 }

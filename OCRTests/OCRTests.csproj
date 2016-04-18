@@ -72,7 +72,6 @@
     <Compile Include="ContributionPeriodsParserTests.cs" />
     <Compile Include="HealthCareContributionIdParserTests.cs" />
     <Compile Include="ImageUploadTest.cs" />
-    <Compile Include="Password_Test.cs" />
     <Compile Include="WatcherTests.cs" />
     <Compile Include="PDFToImageConverterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
