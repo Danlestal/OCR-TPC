@@ -75,6 +75,7 @@
                 ]
             });
         });
+
         $("#searchForIdButton").button().click(function (event) {
 
             table.destroy();
@@ -82,7 +83,7 @@
             event.preventDefault();
             var healthCareId = $("#healthCareId").val().replace(/\s/g, "%20");
             if (healthCareId === '')
-                healthCareId = '1';
+                return;
 
             var queryUrl = apiUrl + "/ContributionPeriods/" + healthCareId;
             table = $('#jsGrid').DataTable({
@@ -107,7 +108,7 @@
                     { "targets": 2, "title": "Money Contribution", "render": function (data) { return (!data) ? "" : data; } },
                     {
                         "targets": 3, "title": "HighRes FileId", "render": function (data) {
-                            return (!data) ? "" : '<img src="' + 'file://C:\\Program Files (x86)\\IIS Express\\STORAGE\\' + data + '"/>';
+                            return (!data) ? "" : '<img src="' + '.\\STORAGE\\' + data + '"/>';
                         }
                     }
                 ]
