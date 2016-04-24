@@ -24,13 +24,12 @@ namespace OCR_API.InternalService
         public List<ContributionPeriodDTO> ReadContributorDetails(string healthCareId)
         {
             List<ContributionPeriodDTO> result = new List<ContributionPeriodDTO>();
-
-            Contributor contributor = dbContext.Contributors.FirstOrDefault(s => s.HealthCareContributorId == healthCareId);
+            Contributor contributor = new Contributor();
+            
+            contributor = dbContext.Contributors.FirstOrDefault(s => s.HealthCareContributorId == healthCareId);
+                    
             if (contributor == null)
                 return result;
-
-
-            
 
             foreach (var contrPeriod in contributor.ContributionPeriods)
             {
@@ -38,6 +37,7 @@ namespace OCR_API.InternalService
                 contrPeriodDTO.MoneyContribution = contrPeriod.MoneyContribution;
                 contrPeriodDTO.PeriodStart = contrPeriod.PeriodStart;
                 contrPeriodDTO.PeriodEnd = contrPeriod.PeriodEnd;
+                contrPeriodDTO.HighResFileId = contrPeriod.HighResFileId;
                 result.Add(contrPeriodDTO);
             }
 
