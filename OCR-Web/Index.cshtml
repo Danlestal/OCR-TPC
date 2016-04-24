@@ -49,27 +49,45 @@
         $(document).ready(function () {
 
             var url = apiUrl + "/ContributionPeriods/1";
+
+            //$.ajax({
+            //    type: "POST",
+            //    contentType: "application/json; charset=utf-8",
+            //    beforeSend: function (xhr) {
+            //        xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0");
+            //        xhr.setRequestHeader('Content-Type', 'text/plain; charset=UTF-8');
+            //    },
+            //    url: url,
+            //    data: "{}",
+            //    dataType: "json"
+            //});
+
+            var url = apiUrl + "/ContributionPeriods/1";
             table = $('#jsGrid').DataTable({
                 "dom": '<"top"if>rt<"bottom"lp><"clear">',
                 "retrieve": true,
                 "paging": false,
                 "ajax": {
                     "url": url,
-                    "dataSrc": ""
+                    "dataSrc": "",
+                    'type': 'GET',
+                    'beforeSend': function (request) {
+                        xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0");
+                        xhr.setRequestHeader('Content-Type', 'text/plain; charset=UTF-8');
+                    }
                 },
                 "columns": [
                     { "data": "PeriodStart" },
                     { "data": "PeriodEnd" },
                     { "data": "MoneyContribution" },
                     { "data": "HighResFileId" },
-                    //{ "data": "Active", "class": "text-center" }
                 ],
                 "columnDefs": [
                     { "targets": 0, "title": "Period Start", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
                     { "targets": 1, "title": "Period End", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
                     { "targets": 2, "title": "Money Contribution", "render": function (data) { return (!data) ? "" : data; } },
                     { "targets": 3, "title": "HighRes FileId", "render": function (data) {
-                        return (!data) ? "" : '<img src="' + 'file://C:\\Program Files (x86)\\IIS Express\\STORAGE\\' + data + '"/>';
+                        return (!data) ? "" : '<img src="' + '.\\STORAGE\\' + data + '"/>';
                         }
                     }
                 ]
@@ -85,25 +103,29 @@
             if (healthCareId === '')
                 return;
 
-            var queryUrl = apiUrl + "/ContributionPeriods/" + healthCareId;
+            var url = apiUrl + "/ContributionPeriods/" + healthCareId;
+            
             table = $('#jsGrid').DataTable({
                 "dom": '<"top"if>rt<"bottom"lp><"clear">',
                 "retrieve": true,
                 "paging": false,
                 "ajax": {
-                    "url": queryUrl,
-                    "dataSrc": ""
+                    "url": url,
+                    "dataSrc": "",
+                    'type': 'GET',
+                    'beforeSend': function (request) {
+                        xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0");
+                        xhr.setRequestHeader('Content-Type', 'text/plain; charset=UTF-8');
+                    }
                 },
                 "columns": [
                     { "data": "PeriodStart", "class": "text-center" },
                     { "data": "PeriodEnd", "class": "text-center" },
                     { "data": "MoneyContribution", "class": "text-center" },
                     { "data": "HighResFileId", "class": "text-center" },
-                    //{ "data": "Active", "class": "text-center" }
                 ],
                 "columnDefs": [
-                    {
-                        "targets": 0, "title": "Period Start", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
+                    { "targets": 0, "title": "Period Start", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
                     { "targets": 1, "title": "Period End", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
                     { "targets": 2, "title": "Money Contribution", "render": function (data) { return (!data) ? "" : data; } },
                     {
