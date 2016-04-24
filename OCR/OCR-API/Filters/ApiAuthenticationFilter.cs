@@ -3,59 +3,100 @@ using OCR_API.InternalService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Security.Principal;
+using System.Text;
 using System.Threading;
 using System.Web;
 using System.Web.Http.Controllers;
+using System.Web.Http.Filters;
 
 namespace OCR_API.Filters
 {
-    public class ApiAuthenticationFilter : GenericAuthenticationFilter
+    public class ApiAuthenticationFilter : AuthorizationFilterAttribute
     {
 
         private OCR_TPC_Context dbContext;
+        private bool isActive;
 
-
-        /// <summary>
-        /// Default Authentication Constructor
-        /// </summary>
-        public ApiAuthenticationFilter(OCR_TPC_Context context)
-        {
-            dbContext = context;
-        }
 
         /// <summary>
         /// AuthenticationFilter constructor with isActive parameter
         /// </summary>
         /// <param name="isActive"></param>
         public ApiAuthenticationFilter(bool isActive)
-            : base(isActive)
         {
+            dbContext = new OCR_TPC_Context();
+            this.isActive = isActive;
         }
 
-        /// <summary>
-        /// Protected overriden method for authorizing user
-        /// </summary>
-        /// <param name="username"></param>
-        /// <param name="password"></param>
-        /// <param name="actionContext"></param>
-        /// <returns></returns>
-        protected override bool OnAuthorizeUser(string username, string password, HttpActionContext actionContext)
+        public override void OnAuthorization(HttpActionContext actionContext)
         {
-            var businessService = new BusinessServices(dbContext);
+            if (!isActive) return;
+            var identity = FetchAuthHeader(actionContext);
 
-                var user = businessService.Authenticate(username, password);
-                if ( user != null )
+            if (identity == null)
+            {
+                CreateUnauthorizedResponse(actionContext);
+                return;
+            }
+
+            var genericPrincipal = new GenericPrincipal(identity, null);
+            Thread.CurrentPrincipal = genericPrincipal;
+
+            if (!CheckIdentity(identity.Name, identity.Password, actionContext))
+            {
+                CreateUnauthorizedResponse(actionContext);
+                return;
+            }
+
+            base.OnAuthorization(actionContext);
+        }
+
+        protected bool CheckIdentity(string username, string password, HttpActionContext actionContext)
+        {
+            var provider = new BusinessServices(dbContext);
+            if (provider != null)
+            {
+                var user = provider.Authenticate(username, password);
+                if (user != null)
                 {
                     var basicAuthenticationIdentity = Thread.CurrentPrincipal.Identity as BasicAuthenticationIdentity;
                     if (basicAuthenticationIdentity != null)
                     {
-                        basicAuthenticationIdentity.UserName = user.Name;
-                        basicAuthenticationIdentity.Password = user.Password;
+                        basicAuthenticationIdentity.UserId = user.UserId;
                         return true;
                     }
-                return false;
+
+                    
                 }
+            }
             return false;
+        }
+
+
+        private static void CreateUnauthorizedResponse(HttpActionContext filterContext)
+        {
+            var dnsHost = filterContext.Request.RequestUri.DnsSafeHost;
+            filterContext.Response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
+            filterContext.Response.Headers.Add("WWW-Authenticate", string.Format("Basic realm=\"{0}\"", dnsHost));
+        }
+
+        protected virtual BasicAuthenticationIdentity FetchAuthHeader(HttpActionContext filterContext)
+        {
+            string authHeaderValue = null;
+            var authRequest = filterContext.Request.Headers.Authorization;
+
+            if (authRequest != null && !String.IsNullOrEmpty(authRequest.Scheme))
+                authHeaderValue = authRequest.Parameter;
+
+            if (string.IsNullOrEmpty(authHeaderValue))
+                return null;
+
+            authHeaderValue = Encoding.Default.GetString(Convert.FromBase64String(authHeaderValue));
+            var credentials = authHeaderValue.Split(':');
+            return credentials.Length < 2 ? null : new BasicAuthenticationIdentity(credentials[0], credentials[1]);
         }
     }
 }

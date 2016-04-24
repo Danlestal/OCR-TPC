@@ -5,9 +5,15 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.IO;
+using System.Net;
 
 namespace OCR
 {
+    public class APIContants
+    {
+        public const string USER_PASSWORD_64BITS_ENCODED = "YWRtaW46UDNDNG5TMGZ0";
+    }
+
     public class APIClient
     {
         public string HostAddress { get; }
@@ -76,6 +82,7 @@ namespace OCR
         {
             var content = new StringContent(JsonConvert.SerializeObject(data));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            content.Headers.Add("Authorization", APIContants.USER_PASSWORD_64BITS_ENCODED);
             return content;
         }
 
@@ -83,6 +90,7 @@ namespace OCR
         {
             var content= new StreamContent(data);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            content.Headers.Add("Authorization", APIContants.USER_PASSWORD_64BITS_ENCODED);
             return content;
         }
 

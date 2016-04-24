@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Net.Http.Headers;
 using System.ServiceModel;
 using WatcherCmd.Files.Interface;
 
@@ -80,11 +81,15 @@ namespace WatcherCmd.Files
             request.Method = "POST";
             request.ContentType = "application/octet-stream";
 
+            var authorizationHeader = new AuthenticationHeaderValue( "Basic", APIContants.USER_PASSWORD_64BITS_ENCODED);
+
+            request.Headers.Add(HttpRequestHeader.Authorization, authorizationHeader.ToString());
+
             Stream serverStream = request.GetRequestStream();
             serverStream.Write(fileStream, 0, fileStream.Length);
             serverStream.Close();
 
-            WebResponse response =  request.GetResponse();
+           WebResponse response =  request.GetResponse();
             string result = string.Empty;
             using (var reader = new StreamReader(response.GetResponseStream()))
             {

@@ -1,11 +1,7 @@
-﻿using OCR_API.DataLayer;
-using OCR_API.DTOs;
+﻿using OCR_API.Filters;
 using OCR_API.InternalService;
-using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -24,6 +20,7 @@ namespace OCR_API.Controllers
 
         [HttpPost]
         [Route("UploadFile")]
+        [ApiAuthenticationFilter(true)]
         public HttpResponseMessage Post()
         {
             var task = this.Request.Content.ReadAsStreamAsync();

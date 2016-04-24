@@ -1,11 +1,7 @@
 ﻿using OCR_API.DataLayer;
-using OCR_API.DTOs;
+using OCR_API.Filters;
 using OCR_API.InternalService;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -14,10 +10,11 @@ namespace OCR_API.Controllers
     public class ContributorController : ApiController
     {
         private ContributorReadService readService;
+        private OCR_TPC_Context context;
 
         public ContributorController()
         {
-            var context = new OCR_TPC_Context();
+            context = new OCR_TPC_Context();
             readService = new ContributorReadService(context);
         }
 
@@ -28,6 +25,7 @@ namespace OCR_API.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("Contributors")]
+        [ApiAuthenticationFilter(true)]
         [ResponseType(typeof(IEnumerable<string>))]
         public IHttpActionResult Get()
         {
