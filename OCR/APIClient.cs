@@ -55,6 +55,7 @@ namespace OCR
         public APIResponse Post(string url, object data)
         {
             var client = GetHttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", APIContants.USER_PASSWORD_64BITS_ENCODED);
             var response = client.PostAsync(HostAddress + url, CreateContent(data));
             return new APIResponse(response.Result);
         }
@@ -69,6 +70,7 @@ namespace OCR
         public async Task<APIResponse> PostAsync(string url, object data)
         {
             var client = GetHttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", APIContants.USER_PASSWORD_64BITS_ENCODED);
             var response = await client.PostAsync(url, CreateContent(data));
             return new APIResponse(response);
         }
@@ -82,7 +84,6 @@ namespace OCR
         {
             var content = new StringContent(JsonConvert.SerializeObject(data));
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-            content.Headers.Add("Authorization", APIContants.USER_PASSWORD_64BITS_ENCODED);
             return content;
         }
 
@@ -90,7 +91,6 @@ namespace OCR
         {
             var content= new StreamContent(data);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-            content.Headers.Add("Authorization", APIContants.USER_PASSWORD_64BITS_ENCODED);
             return content;
         }
 
