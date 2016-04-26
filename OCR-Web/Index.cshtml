@@ -66,9 +66,11 @@
             table = $('#jsGrid').DataTable({
                 "ajax": {
                     "url": url,
-                    "dataType": 'json',
+                    "dataType": 'jsonp',
                     "type": "GET",
-                    "headers": { "Authorization": "Basic YWRtaW46UDNDNG5TMGZ0" }
+                    "beforeSend": function (xhr) {
+                        xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0")
+                    },
                 },
                 "columns": [
                     { "data": "PeriodStart" },
@@ -103,8 +105,10 @@
             $.ajax({
                 url: url,
                 type: 'GET',
-                crossDomain: true,
-                dataType: 'json',
+                dataType: 'jsonp',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0" )
+                },
                 success: function (response) {
 
                     //var trHTML = {};
@@ -133,9 +137,11 @@
                         ]
                     });
                 },
-                error: function () { alert('Failed!'); },
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0");
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR);
+                    console.log(textStatus);
+                    console.log(errorThrown);
+                    alert('Error');
                 }
             });
 
