@@ -26,7 +26,7 @@ namespace OCR_API.DataLayer
     }
 
 
-    public class OCR_TPC_Initializer : DropCreateDatabaseAlways<OCR_TPC_Context>
+    public class OCR_TPC_Initializer : CreateDatabaseIfNotExists<OCR_TPC_Context>
     {
         protected override void Seed(OCR_TPC_Context context)
         {

@@ -71,6 +71,7 @@ namespace WatcherCmd.Files
             APIClient client = new APIClient("http://localhost:58869/");
             client.Post("ContributionPeriods", dataToSend);
 
+            File.Delete(inputFile);
         }
 
         private static string UploadFile(string outputPath)

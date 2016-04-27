@@ -3,10 +3,12 @@ using OCR_API.Filters;
 using OCR_API.InternalService;
 using System.Collections.Generic;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 
 namespace OCR_API.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ContributorController : ApiController
     {
         private ContributorReadService readService;

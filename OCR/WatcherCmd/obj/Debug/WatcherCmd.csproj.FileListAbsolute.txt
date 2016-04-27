@@ -374,3 +374,6 @@ C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.WebPages.R
 C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.WebPages.xml
 C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\Antlr3.Runtime.pdb
 C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.WebPages.Deployment.xml
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.Http.Cors.dll
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.Cors.dll
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.Http.Cors.xml

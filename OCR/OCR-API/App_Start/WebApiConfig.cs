@@ -1,9 +1,5 @@
-﻿using OCR_API.DataLayer;
-using OCR_API.Filters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace OCR_API
 {
@@ -11,6 +7,11 @@ namespace OCR_API
     {
         public static void Register(HttpConfiguration config)
         {
+
+            config.EnableCors(new EnableCorsAttribute("*", "", ""));
+
+            //app.UseCors(CorsOptions.AllowAll);
+
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(

@@ -66,7 +66,7 @@
             table = $('#jsGrid').DataTable({
                 "ajax": {
                     "url": url,
-                    "dataType": 'jsonp',
+                    "dataType": 'json',
                     "type": "GET",
                     "beforeSend": function (xhr) {
                         xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0")
@@ -105,17 +105,11 @@
             $.ajax({
                 url: url,
                 type: 'GET',
-                dataType: 'jsonp',
+                dataType: 'json',
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0" )
                 },
                 success: function (response) {
-
-                    //var trHTML = {};
-                    //$.each(response, function (i, item) {
-                    //    trHTML = item;
-                    //});
-                    // And then: https://www.datatables.net/examples/data_sources/js_array.html
 
                     table = $('#jsGrid').DataTable({
                         "data": response,
@@ -145,32 +139,6 @@
                 }
             });
 
-            
-            //table = $('#jsGrid').DataTable({
-            //    "ajax": {
-            //        "url": url,
-            //        "dataType": 'json',
-            //        "type": "GET",
-            //        "crossDomain": true,
-            //        "headers": { "Authorization": "Basic YWRtaW46UDNDNG5TMGZ0" }
-            //    },
-            //    "columns": [
-            //        { "data": "PeriodStart", "class": "text-center" },
-            //        { "data": "PeriodEnd", "class": "text-center" },
-            //        { "data": "MoneyContribution", "class": "text-center" },
-            //        { "data": "HighResFileId", "class": "text-center" },
-            //    ],
-            //    "columnDefs": [
-            //        { "targets": 0, "title": "Period Start", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
-            //        { "targets": 1, "title": "Period End", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
-            //        { "targets": 2, "title": "Money Contribution", "render": function (data) { return (!data) ? "" : data; } },
-            //        {
-            //            "targets": 3, "title": "HighRes FileId", "render": function (data) {
-            //                return (!data) ? "" : '<img src="' + '.\\STORAGE\\' + data + '"/>';
-            //            }
-            //        }
-            //    ]
-            //});
             
             $('#jsGrid tbody').on('click', 'td', function () {
                 debugger;
