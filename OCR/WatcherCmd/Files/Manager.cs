@@ -3,10 +3,10 @@ using Newtonsoft.Json;
 using OCR;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Net.Http.Headers;
-using System.ServiceModel;
 using WatcherCmd.Files.Interface;
 
 namespace WatcherCmd.Files
@@ -39,9 +39,15 @@ namespace WatcherCmd.Files
             string inputPath = e.FullPath;
             string inputFile = Path.GetFileName(inputPath);
             string outputFile = Path.GetFileNameWithoutExtension(inputPath) + ".tiff";
-            string fileOutputPath = Path.Combine(Path.GetTempPath(), outputFile);
+            string outputPngFile = Path.GetFileNameWithoutExtension(inputPath) + ".png";
 
-            PDFToImageConverter.ConvertToImage(inputPath, fileOutputPath, 512, 512);
+            string fileOutputPath = Path.Combine(Path.GetTempPath(), outputFile);
+            string fileOutputPngPath = Path.Combine(Path.GetTempPath(), outputPngFile);
+
+            PDFToImageConverter.ConvertToImage(inputPath, fileOutputPath, 512, 512, ImageFormat.Tiff);
+
+            PDFToImageConverter.ConvertToImage(inputPath, fileOutputPngPath, 50, 50, ImageFormat.Png);
+
             OCR.OcrTextReader reader = new OCR.OcrTextReader();
             OcrData data = reader.Read(fileOutputPath);
 
@@ -52,7 +58,7 @@ namespace WatcherCmd.Files
                 return;
 
 
-            string fileId = UploadFile(fileOutputPath);
+            string fileUrl = UploadFile(fileOutputPngPath);
             string contributorId = HealthCareContributionIdParser.Parse(data.Text);
 
             ContributionPeriodDataDTO dataToSend = new ContributionPeriodDataDTO();
@@ -62,7 +68,7 @@ namespace WatcherCmd.Files
                 dataToSend.ContributionPeriodsDTO.Add(new ContributionPeriodDTO() { MoneyContribution = period.MoneyContribution,
                                                                                     PeriodEnd = period.PeriodEnd,
                                                                                     PeriodStart = period.PeriodStart,
-                                                                                    HighResFileId = fileId
+                                                                                    HighResFileId = fileUrl
                 });
             }
 
@@ -71,7 +77,7 @@ namespace WatcherCmd.Files
             APIClient client = new APIClient("http://localhost:58869/");
             client.Post("ContributionPeriods", dataToSend);
 
-            File.Delete(inputFile);
+            File.Delete(inputPath);
         }
 
         private static string UploadFile(string outputPath)

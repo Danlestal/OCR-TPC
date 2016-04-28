@@ -1,17 +1,15 @@
 ﻿
 using Spire.Pdf;
-using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Runtime.InteropServices;
 
 namespace OCR
 {
     public class PDFToImageConverter
     {
 
-        public static void ConvertToImage(string inputPath, string outputPath, int resX, int resY)
+        public static void ConvertToImage(string inputPath, string outputPath, int resX, int resY, ImageFormat format)
         {
 
             if (!File.Exists(inputPath))
@@ -25,7 +23,7 @@ namespace OCR
 
 
             //Image emf = doc.SaveAsImage(0, Spire.Pdf.Graphics.PdfImageType.Metafile);
-            emf.Save(outputPath, ImageFormat.Tiff);
+            emf.Save(outputPath, format);
         }
     }
 }

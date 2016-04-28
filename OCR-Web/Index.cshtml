@@ -83,7 +83,7 @@
                     { "targets": 1, "title": "Period End", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
                     { "targets": 2, "title": "Money Contribution", "render": function (data) { return (!data) ? "" : data; } },
                     { "targets": 3, "title": "HighRes FileId", "render": function (data) {
-                        return (!data) ? "" : '<img src="' + '.\\STORAGE\\' + data + '"/>';
+                        return (!data) ? "" : '<img src="' + data + '"/>';
                         }
                     }
                 ]
@@ -125,7 +125,7 @@
                             { "targets": 2, "title": "Money Contribution", "render": function (data) { return (!data) ? "" : data; } },
                             {
                                 "targets": 3, "title": "HighRes FileId", "render": function (data) {
-                                    return (!data) ? "" : '<img src="' + '.\\STORAGE\\' + data + '"/>';
+                                    return (!data) ? "" : '<img src="' +  data + '"/>';
                                 }
                             }
                         ]

@@ -1,4 +1,5 @@
-﻿using OCR_API.Filters;
+﻿using Microsoft.Web.Administration;
+using OCR_API.Filters;
 using OCR_API.InternalService;
 using System.Configuration;
 using System.IO;
@@ -6,6 +7,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Linq;
+using System.Web;
 
 namespace OCR_API.Controllers
 {
@@ -14,10 +17,14 @@ namespace OCR_API.Controllers
     {
 
         private ImageUploadService uploadService;
+        private string baseImageUrl;
+        private string imageStoragePath;
 
         public ImageController()
         {
             uploadService = new ImageUploadService();
+            baseImageUrl = @"http:\\" + HttpContext.Current.Request.Url.Host + ":" + HttpContext.Current.Request.Url.Port + "\\" + ConfigurationManager.AppSettings["StorageSourceFolder"];
+            imageStoragePath = HttpContext.Current.Server.MapPath(".") + "\\"+ ConfigurationManager.AppSettings["StorageSourceFolder"];
         }
 
         [HttpPost]
@@ -29,25 +36,28 @@ namespace OCR_API.Controllers
             task.Wait();
             Stream requestStream = task.Result;
 
-            if (!Directory.Exists(ConfigurationManager.AppSettings["StorageSourceFolder"]))
+            string newFileName = Path.GetRandomFileName();
+            newFileName = Path.GetFileNameWithoutExtension(newFileName) + ".png";
+
+            if (!Directory.Exists(imageStoragePath))
             {
-                Directory.CreateDirectory(ConfigurationManager.AppSettings["StorageSourceFolder"]);
+                Directory.CreateDirectory(imageStoragePath);
             }
 
-            string newFileName = Path.GetRandomFileName();
-            newFileName = Path.GetFileNameWithoutExtension(newFileName) + ".tiff";
 
-            Stream fileStream = File.Create(ConfigurationManager.AppSettings["StorageSourceFolder"] + "\\"+ newFileName);
+            Stream fileStream = File.Create(imageStoragePath + "\\"+ newFileName);
             requestStream.CopyTo(fileStream);
             fileStream.Close();
             requestStream.Close();
-            
+
 
             HttpResponseMessage response = new HttpResponseMessage();
             response.StatusCode = HttpStatusCode.Created;
-            response.Content = new StringContent(newFileName);
+            response.Content = new StringContent(baseImageUrl + "\\" + newFileName);
             return response;
         }
+
+       
 
     }
 }
