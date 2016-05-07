@@ -64,11 +64,13 @@
     <Compile Include="ContributionPeriod.cs" />
     <Compile Include="ContributionPeriodsParser.cs" />
     <Compile Include="HealthCareContributionIdParser.cs" />
+    <Compile Include="LaboralLifeParser.cs" />
     <Compile Include="OcrData.cs" />
     <Compile Include="OcrTextReader.cs" />
     <Compile Include="PDFToImageConverter.cs" />
     <Compile Include="PersonContributions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableStartNotFoundException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
