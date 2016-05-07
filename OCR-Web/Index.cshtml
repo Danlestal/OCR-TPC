@@ -1,6 +1,58 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <style>
+        #myImg {
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #myImg:hover {opacity: 0.7;}
+
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 5%; /* Location of the box */
+            padding-left:65%;
+            box-shadow: 0px 0px 50px 2px #000;
+        }
+
+        /* Modal Content (image) */
+        .modal-content {
+            width:99%;
+        }
+
+        /* Add Animation */
+        .modal-content, #caption {
+            -webkit-animation-name: zoom;
+            -webkit-animation-duration: 0.6s;
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+
+        /* The Close Button */
+        .myclose {
+            position: absolute;
+            float:right;
+            top: 15px;
+            right: 15px;
+            color: #000;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            opacity: .4;
+        }
+
+        .myclose:hover,
+        .myclose:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 
     <link type="text/css" rel="stylesheet" href="./css/3rdParty/jquery-ui.min.css" />
     <link type="text/css" rel="stylesheet" href="./css/3rdParty/jquery.datatables.min.css" />
@@ -20,9 +72,9 @@
     <div class="container" style="margin-top:50px">
 
         <div class="ui-widget">
-            <label for="healthCareId">ID seguridad social: </label>
+            <label for="healthCareId">Introduzca cta. Seguridad Social: </label>
             <input id="healthCareId">
-            <button id="searchForIdButton" class="ui-button-icon-only">Search</button>
+            <button id="searchForIdButton" class="ui-button-icon-only">Buscar</button>
         </div>
 
         <div class="row form-inline the-box" style="width:80%; padding-top:15px; margin-left: 8px; margin-right: 8px;">
@@ -30,10 +82,10 @@
                 <table id="jsGrid" class="dataTable table table-hover table-bordered table-responsive display pretty" cellspacing="0" style="text-align:center">
                     <thead>
                         <tr>
-                            <th>Period Start</th>
-                            <th>Period End</th>
-                            <th>Money Contributor</th>
-                            <th>High Res File Id</th>
+                            <th>Comienzo de cotización</th>
+                            <th>Fin de cotización</th>
+                            <th>Dinero Contribuido</th>
+                            <th>Muestra de Escaneo</th>
                         </tr>
                     </thead>
 
@@ -41,6 +93,12 @@
             </div>
         </div>
 
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+            <span class="myclose">×</span>
+            <img class="modal-content" id="img01">
+            <div id="caption"></div>
+        </div>
     </div>
 
     <script>
@@ -48,29 +106,10 @@
         var table;
         $(document).ready(function () {
 
-            var url = apiUrl + "/ContributionPeriods/1";
-
-            //var test = $.ajax({
-            //    type: "GET",
-            //    contentType: "application/json; charset=utf-8",
-            //    beforeSend: function (xhr) {
-            //        xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0");
-               
-            //    },
-            //    url: url,
-            //    data: "{}",
-            //    dataType: "json"
-            //});
-
-            var url = apiUrl + "/ContributionPeriods/1";
             table = $('#jsGrid').DataTable({
-                "ajax": {
-                    "url": url,
-                    "dataType": 'json',
-                    "type": "GET",
-                    "beforeSend": function (xhr) {
-                        xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0")
-                    },
+                "data": [],
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
                 },
                 "columns": [
                     { "data": "PeriodStart" },
@@ -79,11 +118,12 @@
                     { "data": "HighResFileId" },
                 ],
                 "columnDefs": [
-                    { "targets": 0, "title": "Period Start", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
-                    { "targets": 1, "title": "Period End", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
-                    { "targets": 2, "title": "Money Contribution", "render": function (data) { return (!data) ? "" : data; } },
-                    { "targets": 3, "title": "HighRes FileId", "render": function (data) {
-                        return (!data) ? "" : '<img src="' + data + '"/>';
+                    { "targets": 0, "class": "text-center", "title": "Comienzo de cotización", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
+                    { "targets": 1, "class": "text-center", "title": "Fin de cotización", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
+                    { "targets": 2, "class": "text-center", "title": "Dinero Contribuido", "render": function (data) { return (!data) ? "" : data; } },
+                    {
+                        "targets": 3, "class": "text-center", "title": "Muestra de Documento", "render": function (data) {
+                        return (!data) ? "" : '<p><a "href="#myModal">ver documento</a></p>';
                         }
                     }
                 ]
@@ -91,7 +131,6 @@
         });
 
         $("#searchForIdButton").button().click(function (event) {
-
 
             table.destroy();
 
@@ -112,6 +151,9 @@
                 success: function (response) {
 
                     table = $('#jsGrid').DataTable({
+                        "language": {
+                            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+                        },
                         "data": response,
                         "columns": [
                             { "data": "PeriodStart", "class": "text-center" },
@@ -120,14 +162,15 @@
                             { "data": "HighResFileId", "class": "text-center" },
                             ],
                         "columnDefs": [
-                            { "targets": 0, "title": "Period Start", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
-                            { "targets": 1, "title": "Period End", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
-                            { "targets": 2, "title": "Money Contribution", "render": function (data) { return (!data) ? "" : data; } },
+                            { "targets": 0, "class": "text-center", "title": "Comienzo de cotización", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
+                            { "targets": 1, "class": "text-center", "title": "Fin de cotización", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
+                            { "targets": 2, "class": "text-center", "title": "Dinero Contribuido", "render": function (data) { return (!data) ? "" : data; } },
                             {
-                                "targets": 3, "title": "HighRes FileId", "render": function (data) {
-                                    return (!data) ? "" : '<img src="' +  data + '"/>';
+                                "targets": 3, "class": "text-center", "title": "Muestra de Documento", "render": function (data) {
+                                    return (!data) ? "" : '<a>ver documento</a>';
                                 }
-                            }
+                            },
+
                         ]
                     });
                 },
@@ -135,22 +178,39 @@
                     console.log(jqXHR);
                     console.log(textStatus);
                     console.log(errorThrown);
-                    alert('Error');
                 }
             });
-
             
             $('#jsGrid tbody').on('click', 'td', function () {
+
                 debugger;
+
                 var colIdx = table
                         .cell(this)
                         .index().column;
 
                 if (colIdx == 3) {
-                    alert('grrr me tocaste!!');
+                    
+                    var rowIdx = table
+                    .cell(this)
+                    .index().row;
+
+                    var modal = document.getElementById('myModal');
+                    var modalImg = document.getElementById("img01");
+                    // Get the <span> element that closes the modal
+                    var span = document.getElementsByClassName("myclose")[0];
+
+
+                    var data = table.row(rowIdx).data();
+                    modal.style.display = "block";
+                    modalImg.src = data.HighResFileId;
+                    // When the user clicks on <span> (x), close the modal
+                    span.onclick = function () {
+                        modal.style.display = "none";
+                    }
+
                 }
             });
-
 
         });
     </script>
