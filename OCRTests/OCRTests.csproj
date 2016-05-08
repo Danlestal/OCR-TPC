@@ -73,6 +73,7 @@
     <Compile Include="ContributionPeriodsParserTests.cs" />
     <Compile Include="HealthCareContributionIdParserTests.cs" />
     <Compile Include="ImageUploadTest.cs" />
+    <Compile Include="LaboralLifeParserTests.cs" />
     <Compile Include="WatcherTests.cs" />
     <Compile Include="PDFToImageConverterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -82,6 +83,14 @@
     <None Include="App.config" />
     <None Include="packages.config" />
     <None Include="Resources\Cert.pdf" />
+    <None Include="Resources\vlaboral\20160428114735.pdf" />
+    <None Include="Resources\vlaboral\20160428114822.pdf" />
+    <None Include="Resources\vlaboral\20160428114905.pdf" />
+    <None Include="Resources\vlaboral\20160428114950.pdf" />
+    <None Include="Resources\vlaboral\20160428115037.pdf" />
+    <None Include="Resources\vlaboral\20160428115136.pdf" />
+    <None Include="Resources\vlaboral\20160428115237.pdf" />
+    <None Include="Resources\vlaboral\20160428115341.pdf" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OCR\OCR-API\OCR-API.csproj">
