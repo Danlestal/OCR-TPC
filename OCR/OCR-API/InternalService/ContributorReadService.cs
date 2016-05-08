@@ -34,6 +34,7 @@ namespace OCR_API.InternalService
             foreach (var contrPeriod in contributor.ContributionPeriods)
             {
                 var contrPeriodDTO = new ContributionPeriodDTO();
+                contrPeriodDTO.healthCareId = healthCareId;
                 contrPeriodDTO.MoneyContribution = contrPeriod.MoneyContribution;
                 contrPeriodDTO.PeriodStart = contrPeriod.PeriodStart;
                 contrPeriodDTO.PeriodEnd = contrPeriod.PeriodEnd;

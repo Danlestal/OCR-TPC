@@ -15,6 +15,7 @@ namespace OCR_API.DTOs
 
     public class ContributionPeriodDTO
     {
+        public string healthCareId { get; set; }
         public DateTime PeriodStart { get; set; }
         public DateTime PeriodEnd { get; set; }
         public double MoneyContribution { get; set; }

@@ -13,5 +13,7 @@ namespace OCR_API
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
         }
+
+
     }
 }

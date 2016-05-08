@@ -45,5 +45,25 @@ namespace OCR_API.Controllers
         {
             return Ok(readService.ReadContributorDetails(healthCareid));
         }
+
+        /// <summary>
+        /// Gets the contribution periods
+        /// </summary>
+        /// <param name="healthCareidList">The health careid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [ApiAuthenticationFilter(true)]
+        [Route("ContributionPeriodsList/{healthCareidList}", Name = "ContributorsDetails")]
+        [ResponseType(typeof(IEnumerable<ContributionPeriodDTO>))]
+        public IHttpActionResult GetList(string healthCareidList)
+        {
+            string[] idsArray = healthCareidList.Split(',');
+            List<ContributionPeriodDTO> result = new List<ContributionPeriodDTO>();
+            foreach(string id in idsArray)
+            {
+                result.AddRange(readService.ReadContributorDetails(id.Trim()));
+            }
+            return Ok(result);
+        }
     }
 }
