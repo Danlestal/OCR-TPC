@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.IO;
 namespace OCRTests
 {
     [TestClass]
@@ -17,23 +17,81 @@ namespace OCRTests
         [DeploymentItem(@"..\..\..\..\OCR-TPC\OCRTests\Resources\vlaboral\20160428114735.pdf")]
         [DeploymentItem(@"..\..\..\..\OCR-TPC\OCR\x86", "x86")]
         [DeploymentItem(@"..\..\..\..\OCR-TPC\OCR\tessdata", "tessdata")]
-        public void Parse_Success_EmptyText()
+        public void Parse_Success()
         {
             //PDFToImageConverter.ConvertToImage("20160428114735.pdf", "format2.png", 512,512,System.Drawing.Imaging.ImageFormat.Png);
 
             //PDFToImageConverter.ConvertToImage(, 512, 512, System.Drawing.Imaging.ImageFormat.Png);
 
-            PDFToImageConverter.ConvertToImage(1, "20160428114735.pdf", "20160428114735-1.png", 512, 512, System.Drawing.Imaging.ImageFormat.Png);
+            PDFToImageConverter converter = new PDFToImageConverter();
+            converter.AddFilter(new BrightnessFilter(0.35f));
 
+
+            converter.ConvertToImage(1, "20160428114735.pdf", "20160428114735-1.png", 512, 512, System.Drawing.Imaging.ImageFormat.Png);
 
             OCR.OcrTextReader reader = new OCR.OcrTextReader();
-            var result = reader.Read("20160428114735-1.png");
+            var tablesPageData = reader.Read("20160428114735-1.png");
+
 
             LaboralLifeParser parser = new LaboralLifeParser();
-            parser.ParseTable(result.Text);
+            parser.ParseTable(tablesPageData.Text);
+        }
+
+
+        [TestMethod]
+        [TestCategory("UnitTest")]
+        [DeploymentItem(@"..\..\..\..\OCR-TPC\OCRTests\Resources\vlaboral\20160428114735.pdf")]
+        [DeploymentItem(@"..\..\..\..\OCR-TPC\OCR\x86", "x86")]
+        [DeploymentItem(@"..\..\..\..\OCR-TPC\OCR\tessdata", "tessdata")]
+        public void Parse_PersonalData_Success()
+        {
+
+            PDFToImageConverter converter = new PDFToImageConverter();
+            converter.ConvertToImage(0, "20160428114735.pdf", "20160428114735-0.png", 512, 512, System.Drawing.Imaging.ImageFormat.Png);
+
+            OCR.OcrTextReader reader = new OCR.OcrTextReader();
+            var personalData = reader.Read("20160428114735-0.png");
+
+            LaboralLifeParser parser = new LaboralLifeParser();
+            parser.ParsePersonalData(personalData.Text);
+        }
+
+
+        [TestMethod]
+        [TestCategory("UnitTest")]
+        [DeploymentItem(@"..\..\..\..\OCR-TPC\OCRTests\Resources\vlaboral","vlaboral")]
+        [DeploymentItem(@"..\..\..\..\OCR-TPC\OCR\x86", "x86")]
+        [DeploymentItem(@"..\..\..\..\OCR-TPC\OCR\tessdata", "tessdata")]
+        public void Parse_AllPersonalData_Success()
+        {
+            PDFToImageConverter converter = new PDFToImageConverter();
+            OCR.OcrTextReader reader = new OCR.OcrTextReader();
+            LaboralLifeParser parser = new LaboralLifeParser();
+
+            List<PersonalData> personalDataList = new List<PersonalData>();
+            foreach (string file in Directory.GetFiles("vlaboral"))
+            {
+                string outputFileName = Path.GetFileNameWithoutExtension(file) + ".png";
+
+                converter.ConvertToImage(0, file, outputFileName, 512, 512, System.Drawing.Imaging.ImageFormat.Png);
+                var personalOCRData = reader.Read(outputFileName);
+
+                PersonalData data = null;
+                try
+                {
+                    data = parser.ParsePersonalData(personalOCRData.Text);
+                }
+                catch (Exception)
+                {
+                    Console.Write("Problems parsing file " + file);
+                }
+                
+                if (data != null)
+                    personalDataList.Add(data);
+            }
 
         }
 
 
-}
+    }
 }

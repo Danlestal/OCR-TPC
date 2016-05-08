@@ -10,12 +10,54 @@ namespace OCR
     public class LaboralLifeParser
     {
 
-        public void ParseLaboralLife(string laboralLifeFilePathDocument)
+        public PersonalData ParsePersonalData(string laboralLifeText)
         {
+            PersonalData data = new PersonalData();
+
+            laboralLifeText = laboralLifeText.Replace('\n', ' ');
+
+            Regex bornDate = new Regex(@"el (\d+ de .*?\d\d\d\d)");
+            Match bornDateMatch = bornDate.Match(laboralLifeText);
+            if(!bornDateMatch.Success)
+            {
+                data.BornDate = string.Empty;
+            }
+
+            Regex name = new Regex(@"D[I\/]D.*? (.*?)[,.]");
+            Match nameMatch = name.Match(laboralLifeText);
+            if (!nameMatch.Success)
+            {
+                throw new WrongPersonalTextException();
+            }
+
+            Regex healthCareId = new Regex(@"mero de la Seguridad Social (.*?)[,\.]");
+            Match healthCareIdMatch = healthCareId.Match(laboralLifeText);
+            if (!healthCareIdMatch.Success)
+            {
+                healthCareId = new Regex(@"mero dela Seguridad Social (.*?)[,\.]");
+                healthCareIdMatch = healthCareId.Match(laboralLifeText);
+                if (!healthCareIdMatch.Success)
+                {
+                    data.HealthCareId = string.Empty;
+                }
+            }
+
+            Regex dni = new Regex(@"(\d\d\d\d\d\d\d\d\d[A-Z])");
+            Match matchDni = dni.Match(laboralLifeText);
+            if (!matchDni.Success)
+            {
+                throw new WrongPersonalTextException();
+            }
+           
+            data.Name = nameMatch.Groups[1].Value.ToString();
+            data.BornDate = bornDateMatch.Groups[1].Value.ToString();
+            data.HealthCareId = healthCareIdMatch.Groups[1].Value.ToString();
+            data.DNI = matchDni.Groups[1].Value.ToString();
+
+            return data;
         }
 
-
-        public void ParseTable(string tableText)
+        public List<LaboralLifeRow> ParseTable(string tableText)
         {
 
             string[] tableLines = tableText.Split('\n');
@@ -37,6 +79,8 @@ namespace OCR
                     rows.Add(parsedRow);
                 }
             }
+
+            return rows;
         }
 
         private int GetTableStartLine(string[] tableLines)
@@ -52,7 +96,6 @@ namespace OCR
             throw new TableStartNotFoundException(); 
         }
 
-
         private int GetTableEndLine(string[] tableLines)
         {
             for (int i = 0; i < tableLines.Length; i++)
@@ -66,7 +109,7 @@ namespace OCR
             throw new TableStartNotFoundException();
         }
 
-        public LaboralLifeRow ParseTableRow(string text)
+        private LaboralLifeRow ParseTableRow(string text)
         {
             Regex rowRegex = new Regex(@"(\S*) (\S*) (\D+)(\d\d.\d\d.\d\d\d\d) (\d\d.\d\d.\d\d\d\d) (.*)");
             Match matchResult = rowRegex.Match(text);
@@ -112,19 +155,5 @@ namespace OCR
                 row.CT = tokens[tokens.Count() - 3];
             }
         }
-    }
-
-    public class LaboralLifeRow
-    {
-        public string Regimen { get; set; }
-        public string Code { get; set; }
-        public string Company { get; set; }
-        public string StartDate { get; set; }
-        public string EffectiveStartDate { get; set; }
-        public string EndDate { get; set; }
-        public string CT { get; set; }
-        public string CTP { get; set; }
-        public string GC { get; set; }
-        public string Days { get; set; }
     }
 }
