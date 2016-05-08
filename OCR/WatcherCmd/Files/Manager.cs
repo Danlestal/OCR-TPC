@@ -62,7 +62,10 @@ namespace WatcherCmd.Files
                 List<ContributionPeriod> results = parser.Parse(data.Text);
 
                 if (results.Count == 0)
+                {
+                    File.Delete(inputPath);
                     return;
+                }
 
 
                 string fileUrl = UploadFile(fileOutputPngPath);
