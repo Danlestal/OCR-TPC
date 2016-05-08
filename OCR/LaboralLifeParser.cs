@@ -39,7 +39,7 @@ namespace OCR
 
 
             outputFileName = Path.GetFileNameWithoutExtension(file) + "-1.png";
-            converter.AddFilter(new BrightnessFilter(0.35f));
+            //converter.AddFilter(new BrightnessFilter(0.35f));
             converter.ConvertToImage(1, file, outputFileName, 512, 512, System.Drawing.Imaging.ImageFormat.Png);
             var tableOCRData = reader.Read(outputFileName);
             result.Rows = parser.ParseTable(tableOCRData.Text);
@@ -111,7 +111,12 @@ namespace OCR
                 LaboralLifeRow parsedRow = ParseTableRow(tableLines[i]);
                 if (parsedRow == null)
                 {
-                    rows.Last().Company += tableLines[i];
+                    if (tableLines[i].Split(' ').Count() == 1)
+                    {
+                        if (rows.Count()>0)
+                            rows.Last().Company += tableLines[i];
+                    }
+                        
                 }
                 else
                 {
@@ -126,7 +131,7 @@ namespace OCR
         {
             for (int i = 0; i < tableLines.Length; i++)
             {
-                if (tableLines[i].StartsWith("REGIMEN"))
+                if ( (tableLines[i].StartsWith("REGIMEN")) || (tableLines[i].StartsWith("REG'MEN")))
                 {
                     return i + 1;
                 }
@@ -139,7 +144,7 @@ namespace OCR
         {
             for (int i = 0; i < tableLines.Length; i++)
             {
-                if (tableLines[i].StartsWith("REFERENCIAS ELECTRONICAS"))
+                if (tableLines[i].StartsWith("REFERENCIAS ELECTR"))
                 {
                     return i + 1;
                 }
