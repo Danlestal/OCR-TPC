@@ -25,6 +25,18 @@ namespace OCR
             filters.Add(filter);
         }
 
+        public static int GetPdfPages(string inputPath)
+        {
+            if (!File.Exists(inputPath))
+            {
+                throw new FileNotFoundException(inputPath);
+            }
+
+            var doc = new PdfDocument();
+            doc.LoadFromFile(inputPath, FileFormat.PDF);
+            return doc.Pages.Count;
+        }
+
         public static void ConvertToImage(string inputPath, string outputPath, int resX, int resY, ImageFormat format)
         {
 
@@ -38,7 +50,7 @@ namespace OCR
             Image emf = doc.SaveAsImage(0, resX, resY);
             emf.Save(outputPath, format);
         }
-
+        
 
         public void ConvertToImage(int index, string inputPath, string outputPath, int resX, int resY, ImageFormat format)
         {

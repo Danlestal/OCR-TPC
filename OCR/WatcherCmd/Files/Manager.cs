@@ -38,44 +38,55 @@ namespace WatcherCmd.Files
         {
             string inputPath = e.FullPath;
             string inputFile = Path.GetFileName(inputPath);
-            string outputFile = Path.GetFileNameWithoutExtension(inputPath) + ".tiff";
-            string outputPngFile = Path.GetFileNameWithoutExtension(inputPath) + ".png";
-
-            string fileOutputPath = Path.Combine(Path.GetTempPath(), outputFile);
-            string fileOutputPngPath = Path.Combine(Path.GetTempPath(), outputPngFile);
-
-            PDFToImageConverter.ConvertToImage(inputPath, fileOutputPath, 512, 512, ImageFormat.Tiff);
-
-            PDFToImageConverter.ConvertToImage(inputPath, fileOutputPngPath, 50, 50, ImageFormat.Png);
-
-            OCR.OcrTextReader reader = new OCR.OcrTextReader();
-            OcrData data = reader.Read(fileOutputPath);
-
-            ContributionPeriodsParser parser = new ContributionPeriodsParser();
-            List<ContributionPeriod> results = parser.Parse(data.Text);
-
-            if (results.Count == 0)
-                return;
+            int inputFilePages = PDFToImageConverter.GetPdfPages(inputPath);
 
 
-            string fileUrl = UploadFile(fileOutputPngPath);
-            string contributorId = HealthCareContributionIdParser.Parse(data.Text);
+            PDFToImageConverter coverter = new PDFToImageConverter();
 
-            ContributionPeriodDataDTO dataToSend = new ContributionPeriodDataDTO();
-            dataToSend.ContributorId = contributorId;
-            foreach (ContributionPeriod period in results)
+            for (int i = 0; i < inputFilePages; i++)
             {
-                dataToSend.ContributionPeriodsDTO.Add(new ContributionPeriodDTO() { MoneyContribution = period.MoneyContribution,
-                                                                                    PeriodEnd = period.PeriodEnd,
-                                                                                    PeriodStart = period.PeriodStart,
-                                                                                    HighResFileId = fileUrl
-                });
+                string outputFile = Path.GetFileNameWithoutExtension(inputPath) + "-"+i+".tiff";
+                string outputPngFile = Path.GetFileNameWithoutExtension(inputPath) + "-"+i+".png";
+
+                string fileOutputPath = Path.Combine(Path.GetTempPath(), outputFile);
+                string fileOutputPngPath = Path.Combine(Path.GetTempPath(), outputPngFile);
+
+                coverter.ConvertToImage(i, inputPath, fileOutputPath, 512, 512, ImageFormat.Tiff);
+
+                coverter.ConvertToImage(i, inputPath, fileOutputPngPath, 50, 50, ImageFormat.Png);
+
+                OCR.OcrTextReader reader = new OCR.OcrTextReader();
+                OcrData data = reader.Read(fileOutputPath);
+
+                ContributionPeriodsParser parser = new ContributionPeriodsParser();
+                List<ContributionPeriod> results = parser.Parse(data.Text);
+
+                if (results.Count == 0)
+                    return;
+
+
+                string fileUrl = UploadFile(fileOutputPngPath);
+                string contributorId = HealthCareContributionIdParser.Parse(data.Text);
+
+                ContributionPeriodDataDTO dataToSend = new ContributionPeriodDataDTO();
+                dataToSend.ContributorId = contributorId;
+                foreach (ContributionPeriod period in results)
+                {
+                    dataToSend.ContributionPeriodsDTO.Add(new ContributionPeriodDTO()
+                    {
+                        MoneyContribution = period.MoneyContribution,
+                        PeriodEnd = period.PeriodEnd,
+                        PeriodStart = period.PeriodStart,
+                        HighResFileId = fileUrl
+                    });
+                }
+
+                string jsonDataToSend = JsonConvert.SerializeObject(dataToSend);
+
+                APIClient client = new APIClient("http://localhost:58869/");
+                client.Post("ContributionPeriods", dataToSend);
+
             }
-
-           string jsonDataToSend = JsonConvert.SerializeObject(dataToSend);
-
-            APIClient client = new APIClient("http://localhost:58869/");
-            client.Post("ContributionPeriods", dataToSend);
 
             File.Delete(inputPath);
         }
