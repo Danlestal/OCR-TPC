@@ -17,7 +17,7 @@ namespace OCRTests
         [DeploymentItem(@"..\..\..\..\OCR-TPC\OCRTests\Resources\vlaboral\20160428114735.pdf")]
         [DeploymentItem(@"..\..\..\..\OCR-TPC\OCR\x86", "x86")]
         [DeploymentItem(@"..\..\..\..\OCR-TPC\OCR\tessdata", "tessdata")]
-        public void Parse_Success()
+        public void ParseTable_Success()
         {
             //PDFToImageConverter.ConvertToImage("20160428114735.pdf", "format2.png", 512,512,System.Drawing.Imaging.ImageFormat.Png);
 
@@ -37,6 +37,18 @@ namespace OCRTests
             parser.ParseTable(tablesPageData.Text);
         }
 
+        [TestMethod]
+        [TestCategory("UnitTest")]
+        [DeploymentItem(@"..\..\..\..\OCR-TPC\OCRTests\Resources\vlaboral\20160428114735.pdf")]
+        [DeploymentItem(@"..\..\..\..\OCR-TPC\OCR\x86", "x86")]
+        [DeploymentItem(@"..\..\..\..\OCR-TPC\OCR\tessdata", "tessdata")]
+        public void Parse_Success()
+        {
+
+            LaboralLifeParser parser = new LaboralLifeParser();
+            LaboralLifeData result = parser.Parse("20160428114735.pdf");
+
+        }
 
         [TestMethod]
         [TestCategory("UnitTest")]

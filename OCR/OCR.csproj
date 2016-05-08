@@ -66,6 +66,7 @@
     <Compile Include="ContributionPeriodsParser.cs" />
     <Compile Include="HealthCareContributionIdParser.cs" />
     <Compile Include="IImageFilter.cs" />
+    <Compile Include="LaboralLifeData.cs" />
     <Compile Include="LaboralLifeParser.cs" />
     <Compile Include="LaboralLifeRow.cs" />
     <Compile Include="OcrData.cs" />

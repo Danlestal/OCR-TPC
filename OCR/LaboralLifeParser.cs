@@ -4,11 +4,50 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace OCR
 {
     public class LaboralLifeParser
     {
+
+        public LaboralLifeData Parse(string file)
+        {
+            LaboralLifeData result = new LaboralLifeData();
+
+            PDFToImageConverter converter = new PDFToImageConverter();
+            OCR.OcrTextReader reader = new OCR.OcrTextReader();
+            LaboralLifeParser parser = new LaboralLifeParser();
+
+            List<PersonalData> personalDataList = new List<PersonalData>();
+            string outputFileName = Path.GetFileNameWithoutExtension(file) + "-0.png";
+            converter.ConvertToImage(0, file, outputFileName, 512, 512, System.Drawing.Imaging.ImageFormat.Png);
+            var personalOCRData = reader.Read(outputFileName);
+
+            PersonalData data = null;
+            try
+            {
+                data = parser.ParsePersonalData(personalOCRData.Text);
+            }
+            catch (Exception)
+            {
+                Console.Write("Problems parsing file " + file);
+            }
+
+            if (data != null)
+                result.PersonalData = data;
+
+
+            outputFileName = Path.GetFileNameWithoutExtension(file) + "-1.png";
+            converter.AddFilter(new BrightnessFilter(0.35f));
+            converter.ConvertToImage(1, file, outputFileName, 512, 512, System.Drawing.Imaging.ImageFormat.Png);
+            var tableOCRData = reader.Read(outputFileName);
+            result.Rows = parser.ParseTable(tableOCRData.Text);
+
+
+
+            return result;
+        }
 
         public PersonalData ParsePersonalData(string laboralLifeText)
         {
