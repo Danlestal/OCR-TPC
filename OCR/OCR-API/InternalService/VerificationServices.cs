@@ -48,7 +48,7 @@ namespace OCR_API.InternalService
                     bool verify = true;
                     string rowResult = string.Empty;
 
-                    for (int row = 0; row <= _worksheet.LastRowNum; row++)
+                    for (int row = 1; row <= _worksheet.LastRowNum; row++)
                     {
                         
                         IRow eachRow = _worksheet.GetRow(row);
@@ -94,6 +94,11 @@ namespace OCR_API.InternalService
                 
             }
             
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+            
             return result;
         }
 
@@ -101,7 +106,7 @@ namespace OCR_API.InternalService
 
         private string StartPeriodNotFound(int row)
         {
-            return @"<p style=""padding-left:5em"">" + "line: " + row.ToString() + " no se ha encontrado en la BBDD</p>";
+            return @"<p style=""padding-left:5em"">" + "line: " + row.ToString() + " ningún registro para esa fecha de inicio</p>";
         }
 
         private string verifyRow(ContributionPeriod contrPeriod, IRow eachRow, int i)
@@ -124,12 +129,12 @@ namespace OCR_API.InternalService
                     result = string.Empty;
                 } else
                 {
-                    result = @"<p style=""padding-left:5em"">" + "line: " + i.ToString() + " difiere en el dinero contribuido guardado en la BBDD</p>";
+                    result = @"<p style=""padding-left:5em"">" + "line: " + i.ToString() + " ningún registro con ese dinero contribuido</p>";
                 }
 
             } else
             {
-                result = @"<p style=""padding-left:5em"">" + "line: " + i.ToString() + " difiere en el periodo final de contribución guardado en la BBDD</p>";
+                result = @"<p style=""padding-left:5em"">" + "line: " + i.ToString() + " ningún registro para esa fecha final</p>";
             }
             return result;
         }

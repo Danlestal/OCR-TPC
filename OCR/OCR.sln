@@ -6,6 +6,10 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OCR", "OCR.csproj", "{CE6B6406-ED99-497F-A507-663C0EB884FA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1C2BF11D-ECBC-4B95-9FE0-3A072B99663A}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\lineaIncorrecta_userUnknown_userCorrect.xls = ..\..\lineaIncorrecta_userUnknown_userCorrect.xls
+		..\..\pruebaCorrecta.xls = ..\..\pruebaCorrecta.xls
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OCRTests", "..\OCRTests\OCRTests.csproj", "{434EAA42-61C7-4377-ADE3-F2289A5BB699}"
 EndProject
