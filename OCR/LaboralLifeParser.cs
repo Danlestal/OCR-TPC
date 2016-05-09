@@ -22,7 +22,16 @@ namespace OCR
             List<PersonalData> personalDataList = new List<PersonalData>();
             string outputFileName = Path.GetFileNameWithoutExtension(file) + "-0.png";
             converter.ConvertToImage(0, file, outputFileName, 512, 512, System.Drawing.Imaging.ImageFormat.Png);
-            var personalOCRData = reader.Read(outputFileName);
+
+            OcrData personalOCRData = null;
+            try
+            {
+                personalOCRData = reader.Read(outputFileName);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
 
             PersonalData data = null;
             try
@@ -41,10 +50,12 @@ namespace OCR
             outputFileName = Path.GetFileNameWithoutExtension(file) + "-1.png";
             //converter.AddFilter(new BrightnessFilter(0.35f));
             converter.ConvertToImage(1, file, outputFileName, 512, 512, System.Drawing.Imaging.ImageFormat.Png);
-            var tableOCRData = reader.Read(outputFileName);
-            result.Rows = parser.ParseTable(tableOCRData.Text);
-
-
+            try
+            {
+                var tableOCRData = reader.Read(outputFileName);
+                result.Rows = parser.ParseTable(tableOCRData.Text);
+            }
+            catch (Exception) { }
 
             return result;
         }
@@ -61,12 +72,20 @@ namespace OCR
             {
                 data.BornDate = string.Empty;
             }
+            else
+            {
+                data.BornDate = bornDateMatch.Groups[1].Value.ToString();
+            }
 
             Regex name = new Regex(@"D[I\/]D.*? (.*?)[,.]");
             Match nameMatch = name.Match(laboralLifeText);
             if (!nameMatch.Success)
             {
-                throw new WrongPersonalTextException();
+                data.Name = string.Empty;
+            }
+            else
+            {
+                data.Name = nameMatch.Groups[1].Value.ToString();
             }
 
             Regex healthCareId = new Regex(@"mero de la Seguridad Social (.*?)[,\.]");
@@ -79,20 +98,27 @@ namespace OCR
                 {
                     data.HealthCareId = string.Empty;
                 }
+                else
+                {
+                    data.HealthCareId = healthCareIdMatch.Groups[1].Value.ToString();
+                }
+            }
+            else
+            {
+                data.HealthCareId = healthCareIdMatch.Groups[1].Value.ToString();
             }
 
             Regex dni = new Regex(@"(\d\d\d\d\d\d\d\d\d[A-Z])");
             Match matchDni = dni.Match(laboralLifeText);
             if (!matchDni.Success)
             {
-                throw new WrongPersonalTextException();
+                data.DNI = string.Empty;
+            }
+            else
+            {
+                data.DNI = matchDni.Groups[1].Value.ToString();
             }
            
-            data.Name = nameMatch.Groups[1].Value.ToString();
-            data.BornDate = bornDateMatch.Groups[1].Value.ToString();
-            data.HealthCareId = healthCareIdMatch.Groups[1].Value.ToString();
-            data.DNI = matchDni.Groups[1].Value.ToString();
-
             return data;
         }
 
