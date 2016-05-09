@@ -56,6 +56,7 @@ namespace WatcherCmd.Files
 
             APIClient client = new APIClient(_apiUrl);
             client.Post("LaboralLife", data);
+            File.Delete(inputPath);
         }
 
         private void ProcContributionFile(string inputPath)

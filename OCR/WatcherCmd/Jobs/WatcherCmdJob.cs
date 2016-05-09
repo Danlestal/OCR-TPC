@@ -40,7 +40,7 @@ namespace WatcherCmd.Jobs
         {
                         
             var watcher = new Watcher();
-            var client = new APIClient(ConfigurationManager.AppSettings["ApiHost"]);
+            var client = new APIClient(ConfigurationManager.AppSettings["ApiURL"]);
 
             IManager manager = new Manager(_logger, watcher, client);
             manager.InitializeSystem();

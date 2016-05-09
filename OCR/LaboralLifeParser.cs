@@ -188,8 +188,8 @@ namespace OCR
 
             LaboralLifeRow row = new LaboralLifeRow();
             row.Regimen = matchResult.Groups[1].Value.ToString();
-            row.Code = matchResult.Groups[2].Value.ToString();
-            row.Company = matchResult.Groups[3].Value.ToString();
+            row.Code = ProCode(matchResult.Groups[2].Value.ToString());
+            row.Company = ProCompany(matchResult.Groups[3].Value.ToString());
             row.StartDate = matchResult.Groups[4].Value.ToString();
             row.EffectiveStartDate = matchResult.Groups[5].Value.ToString();
            
@@ -198,6 +198,33 @@ namespace OCR
 
          
             return row;
+        }
+
+        private string ProCompany(string parsedCode)
+        {
+            string partial = parsedCode.Replace(".", "");
+            partial = partial.Replace("-", "");
+            partial = partial.Replace("_", "");
+            partial = partial.Replace("—", "");
+            return partial;
+        }
+
+        private string ProCode(string parsedCode)
+        {
+            string partial = parsedCode.Replace('o', '0');
+            partial = partial.Replace('O', '0');
+
+            double numericValue = 0;
+
+            if (double.TryParse(partial, out numericValue))
+            {
+                return numericValue.ToString();
+            }
+            else
+            {
+                return string.Empty;
+            }
+
         }
 
         private void TryToMatchOptionalFields(LaboralLifeRow row, string optionalPart)
@@ -213,16 +240,40 @@ namespace OCR
             }
 
             var tokens = optionalPart.Split(' ');
-            row.Days = tokens.Last();
+
+            int numericResult = 0;
+
+            if (Int32.TryParse(tokens.Last(), out numericResult))
+            {
+                row.Days = numericResult.ToString();
+            }
+            else
+            {
+                row.Days = string.Empty;
+            }
 
             if (tokens.Count() > 1)
             {
-                row.GC = tokens[tokens.Count() - 2];
+                if (Int32.TryParse(tokens[tokens.Count() - 2], out numericResult))
+                {
+                    row.GC = numericResult.ToString();
+                }
+                else
+                {
+                    row.GC = string.Empty;
+                }
             }
 
             if (tokens.Count() > 2)
             {
-                row.CT = tokens[tokens.Count() - 3];
+                if (Int32.TryParse(tokens[tokens.Count() - 3], out numericResult))
+                {
+                    row.CT = numericResult.ToString();
+                }
+                else
+                {
+                    row.CT = string.Empty;
+                }
             }
         }
     }
