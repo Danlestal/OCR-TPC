@@ -309,21 +309,26 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="BrowserJsonFormatter.cs" />
     <Compile Include="Controllers\ContributionPeriodController.cs" />
+    <Compile Include="Controllers\LaboralLifeController.cs" />
     <Compile Include="Controllers\LogInController.cs" />
     <Compile Include="Controllers\VerificationFileController.cs" />
     <Compile Include="Controllers\ContributorController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="DataLayer\ContributionPeriod.cs" />
     <Compile Include="DataLayer\Contributor.cs" />
+    <Compile Include="DataLayer\DatoPersonal.cs" />
     <Compile Include="DataLayer\OCRDBContext.cs" />
+    <Compile Include="DataLayer\PeriodoVidaLaboral.cs" />
     <Compile Include="DataLayer\User.cs" />
     <Compile Include="DTOs\ContributionPeriodDataDTO.cs" />
     <Compile Include="DTOs\ImageDTO.cs" />
+    <Compile Include="DTOs\LaboralLifeDTO.cs" />
     <Compile Include="Filters\ApiAuthenticationFilter.cs" />
     <Compile Include="Filters\BasicAuthenticationIdentity.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="InternalService\InsertLaboralLifeService.cs" />
     <Compile Include="InternalService\VerificationServices.cs" />
     <Compile Include="InternalService\BusinessServices.cs" />
     <Compile Include="InternalService\ContributionPeriodInsertService.cs" />

@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using Newtonsoft.Json;
+
 namespace OCRTests
 {
     [TestClass]
@@ -56,6 +58,23 @@ namespace OCRTests
                 LaboralLifeParser parser = new LaboralLifeParser();
                 allLifes.Add(parser.Parse(file));
             }
+        }
+
+        [TestMethod]
+        [TestCategory("UnitTest")]
+        [DeploymentItem(@"..\..\..\..\OCR-TPC\OCRTests\Resources\vlaboral\20160428114735.pdf")]
+        [DeploymentItem(@"..\..\..\..\OCR-TPC\OCR\x86", "x86")]
+        [DeploymentItem(@"..\..\..\..\OCR-TPC\OCR\tessdata", "tessdata")]
+        public void Parse_JustOneFile_Success()
+        {
+
+            LaboralLifeParser parser = new LaboralLifeParser();
+            LaboralLifeData data = parser.Parse("20160428114735.pdf");
+
+            string jsonDataToSend = JsonConvert.SerializeObject(data);
+
+            APIClient client = new APIClient("http://localhost:58869/");
+            client.Post("LaboralLife", jsonDataToSend);
         }
 
         [TestMethod]

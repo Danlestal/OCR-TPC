@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using OCR;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
@@ -42,6 +43,7 @@ namespace WatcherCmd.Files
 
 
             PDFToImageConverter coverter = new PDFToImageConverter();
+            double firstContributor = 0;
 
             for (int i = 0; i < inputFilePages; i++)
             {
@@ -63,8 +65,7 @@ namespace WatcherCmd.Files
 
                 if (results.Count == 0)
                 {
-                    File.Delete(inputPath);
-                    return;
+                    break;
                 }
 
                 string fileUrl = UploadFile(fileOutputPngPath);
@@ -73,6 +74,7 @@ namespace WatcherCmd.Files
 
                 ContributionPeriodDataDTO dataToSend = new ContributionPeriodDataDTO();
                 dataToSend.ContributorId = ContributorPersonalData.ParseCotizationAccount(data.Text);
+                firstContributor = dataToSend.ContributorId;
                 dataToSend.CNAE = ContributorPersonalData.ParseCNAE(data.Text);
                 dataToSend.SocialReason = ContributorPersonalData.ParseSocialReason(data.Text);
 
@@ -94,7 +96,12 @@ namespace WatcherCmd.Files
 
             }
 
-            File.Delete(inputPath);
+            string destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\" + firstContributor + "_" + System.DateTime.Today.ToString("ddMMyyyy") + ".pdf";
+
+            if (File.Exists(destinationPath))
+                File.Delete(destinationPath);
+
+            File.Move(inputPath, destinationPath);
         }
 
         private static string UploadFile(string outputPath)

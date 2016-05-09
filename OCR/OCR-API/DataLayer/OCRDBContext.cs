@@ -16,6 +16,9 @@ namespace OCR_API.DataLayer
 
         public DbSet<Usuario> Users { get; set; }
 
+        public DbSet<DatoPersonal> DatoPersonal { get; set; }
+
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PeriodoContribucion>()
