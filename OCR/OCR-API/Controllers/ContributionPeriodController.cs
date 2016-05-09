@@ -46,6 +46,16 @@ namespace OCR_API.Controllers
             return Ok(readService.ReadContributorDetails(healthCareid));
         }
 
+
+        [HttpGet]
+        [ApiAuthenticationFilter(true)]
+        [Route("ContributionPeriods")]
+        [ResponseType(typeof(IEnumerable<ContributionPeriodDTO>))]
+        public IHttpActionResult GetFixed()
+        {
+            return Ok(readService.ReadWithLimit());
+        }
+
         /// <summary>
         /// Gets the contribution periods
         /// </summary>

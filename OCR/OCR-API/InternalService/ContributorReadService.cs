@@ -2,6 +2,7 @@
 using OCR_API.DTOs;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 
@@ -19,6 +20,28 @@ namespace OCR_API.InternalService
         public List<string> ReadContributorsIds()
         {
             return dbContext.Contributors.Select(s => s.IdentificadorSeguridadSocial).ToList();
+        }
+
+        public List<ContributionPeriodDTO> ReadWithLimit()
+        {
+            int queryLimit = int.Parse(ConfigurationManager.AppSettings["QueryLimit"]);
+
+            List<PeriodoContribucion> periods = new List<PeriodoContribucion>();
+            List<ContributionPeriodDTO> result = new List<ContributionPeriodDTO>();
+
+            periods = dbContext.Periods.Take(queryLimit).ToList();
+
+            //foreach (var contrPeriod in periods)
+            //{
+            //    var contrPeriodDTO = new ContributionPeriodDTO();
+            //    contrPeriodDTO.healthCareId = contrPeriod.ContribuidorRefId;
+            //    contrPeriodDTO.MoneyContribution = contrPeriod.Dinero;
+            //    contrPeriodDTO.PeriodStart = contrPeriod.ComienzoPeriodo;
+            //    contrPeriodDTO.PeriodEnd = contrPeriod.FinPeriodo;
+            //    contrPeriodDTO.HighResFileId = contrPeriod.HighResImagenId;
+            //    result.Add(contrPeriodDTO);
+            //}
+            return result;
         }
 
         public List<ContributionPeriodDTO> ReadContributorDetails(string healthCareId)
