@@ -16,17 +16,17 @@ namespace OCR_API.InternalService
             dbContext = context;
         }
 
-        public List<string> ReadContributorsIds()
+        public List<double> ReadContributorsIds()
         {
-            return dbContext.Contributors.Select(s => s.IdentificadorSeguridadSocial).ToList();
+            return dbContext.Contributors.Select(s => s.CuentaCotizacion).ToList();
         }
 
-        public List<ContributionPeriodDTO> ReadContributorDetails(string healthCareId)
+        public List<ContributionPeriodDTO> ReadContributorDetails(double healthCareId)
         {
             List<ContributionPeriodDTO> result = new List<ContributionPeriodDTO>();
             Contribuidor contributor = new Contribuidor();
             
-            contributor = dbContext.Contributors.FirstOrDefault(s => s.IdentificadorSeguridadSocial == healthCareId);
+            contributor = dbContext.Contributors.FirstOrDefault(s => s.CuentaCotizacion == healthCareId);
                     
             if (contributor == null)
                 return result;
@@ -34,7 +34,7 @@ namespace OCR_API.InternalService
             foreach (var contrPeriod in contributor.PeriodosContribucion)
             {
                 var contrPeriodDTO = new ContributionPeriodDTO();
-                contrPeriodDTO.healthCareId = healthCareId;
+                contrPeriodDTO.HealthCareId = healthCareId;
                 contrPeriodDTO.MoneyContribution = contrPeriod.Dinero;
                 contrPeriodDTO.PeriodStart = contrPeriod.ComienzoPeriodo;
                 contrPeriodDTO.PeriodEnd = contrPeriod.FinPeriodo;

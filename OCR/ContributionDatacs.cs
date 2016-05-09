@@ -15,7 +15,9 @@ namespace OCR
             ContributionPeriodsDTO = new List<ContributionPeriodDTO>();
         }
 
-        public string ContributorId { get; set; }
+        public double ContributorId { get; set; }
+        public string SocialReason { get; set; }
+        public string CNAE { get; set; }
 
         public List<ContributionPeriodDTO> ContributionPeriodsDTO { get; set; }
 

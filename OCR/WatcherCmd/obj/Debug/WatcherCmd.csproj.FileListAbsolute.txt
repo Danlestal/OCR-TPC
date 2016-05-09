@@ -377,3 +377,6 @@ C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.WebPages.D
 C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.Http.Cors.dll
 C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.Cors.dll
 C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.Http.Cors.xml
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\NPOI.dll
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\NPOI.xml

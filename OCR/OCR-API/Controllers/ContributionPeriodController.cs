@@ -41,7 +41,7 @@ namespace OCR_API.Controllers
         [ApiAuthenticationFilter(true)]
         [Route("ContributionPeriods/{healthCareid}", Name = "ContributorDetails")]
         [ResponseType(typeof(IEnumerable<ContributionPeriodDTO>))]
-        public IHttpActionResult Get(string healthCareid)
+        public IHttpActionResult Get(int healthCareid)
         {
             return Ok(readService.ReadContributorDetails(healthCareid));
         }
@@ -55,13 +55,12 @@ namespace OCR_API.Controllers
         [ApiAuthenticationFilter(true)]
         [Route("ContributionPeriodsList/{healthCareidList}", Name = "ContributorsDetails")]
         [ResponseType(typeof(IEnumerable<ContributionPeriodDTO>))]
-        public IHttpActionResult GetList(string healthCareidList)
+        public IHttpActionResult GetList(int[] healthCareidList)
         {
-            string[] idsArray = healthCareidList.Split(',');
             List<ContributionPeriodDTO> result = new List<ContributionPeriodDTO>();
-            foreach(string id in idsArray)
+            foreach(int id in healthCareidList)
             {
-                result.AddRange(readService.ReadContributorDetails(id.Trim()));
+                result.AddRange(readService.ReadContributorDetails(id));
             }
             return Ok(result);
         }

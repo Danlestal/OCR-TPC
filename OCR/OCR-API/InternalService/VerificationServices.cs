@@ -23,83 +23,85 @@ namespace OCR_API.InternalService
 
         public string FileVerification(string filePath)
         {
-            Contribuidor contributor = new Contribuidor();
-            string result = "";
+            //Contribuidor contributor = new Contribuidor();
+            //string result = "";
 
-            FileStream _fileStream = new FileStream(filePath, FileMode.Open,
-                                      FileAccess.Read);
-            
-            IWorkbook _workbook = WorkbookFactory.Create(_fileStream);
-            _fileStream.Close();
+            //FileStream _fileStream = new FileStream(filePath, FileMode.Open,
+            //                          FileAccess.Read);
 
-            int sheetsNumber = _workbook.NumberOfSheets;
+            //IWorkbook _workbook = WorkbookFactory.Create(_fileStream);
+            //_fileStream.Close();
 
-            for (int i = 0; i < sheetsNumber; i++)
-            {
-                ISheet _worksheet = _workbook.GetSheetAt(i);
-                string sheetName = _worksheet.SheetName;
-                
-                contributor = dbContext.Contributors.FirstOrDefault(s => s.IdentificadorSeguridadSocial == sheetName);
-                if (contributor == null)
-                {
-                    result += "<p>La Cta. Seguridad Social " + sheetName + " no se encontró en la Base de datos.Verifique el nombre de la pestaña<p>";
-                } else
-                {
-                    bool verify = true;
-                    string rowResult = string.Empty;
+            //int sheetsNumber = _workbook.NumberOfSheets;
 
-                    for (int row = 1; row <= _worksheet.LastRowNum; row++)
-                    {
-                        
-                        IRow eachRow = _worksheet.GetRow(row);
-                        if (eachRow == null) //null is when the row only contains empty cells 
-                        {
-                            continue;
-                        }
-                        if (eachRow.GetCell(0) == null)
-                        {
-                            break;
-                        }
-                        bool periodExist = false;
-                        foreach (var contrPeriod in contributor.PeriodosContribucion)
-                        {
-                            if (contrPeriod.ComienzoPeriodo == eachRow.GetCell(0).DateCellValue)
-                            {
-                                periodExist = true;
-                                rowResult += verifyRow(contrPeriod, eachRow, row + 1);
-                                break;
-                            } 
-                        }
-                        if (!periodExist)
-                        {
-                            rowResult += StartPeriodNotFound(row + 1);
-                            verify = false;
-                        }
-                    }
+            //for (int i = 0; i < sheetsNumber; i++)
+            //{
+            //    ISheet _worksheet = _workbook.GetSheetAt(i);
+            //    string sheetName = _worksheet.SheetName;
 
-                    if (rowResult != string.Empty)
-                    {
-                        verify = false;
-                    }
+            //    contributor = dbContext.Contributors.FirstOrDefault(s => s.CuentaCotizacion == sheetName);
+            //    if (contributor == null)
+            //    {
+            //        result += "<p>La Cta. Seguridad Social " + sheetName + " no se encontró en la Base de datos.Verifique el nombre de la pestaña<p>";
+            //    } else
+            //    {
+            //        bool verify = true;
+            //        string rowResult = string.Empty;
 
-                    if (verify)
-                    {
-                        result += "<p>La Cta. Seguridad Social " + sheetName + " ha sido verificada satisfactoriamente<p>";
-                    } else
-                    {
-                        result += "<p>Error en la verificación para " + sheetName + ":</p>" + rowResult;
-                    }
-                        
-                }
-                
-            }
-            
-            if (File.Exists(filePath))
-            {
-                File.Delete(filePath);
-            }
-            
-            return result;
+            //        for (int row = 1; row <= _worksheet.LastRowNum; row++)
+            //        {
+
+            //            IRow eachRow = _worksheet.GetRow(row);
+            //            if (eachRow == null) //null is when the row only contains empty cells 
+            //            {
+            //                continue;
+            //            }
+            //            if (eachRow.GetCell(0) == null)
+            //            {
+            //                break;
+            //            }
+            //            bool periodExist = false;
+            //            foreach (var contrPeriod in contributor.PeriodosContribucion)
+            //            {
+            //                if (contrPeriod.ComienzoPeriodo == eachRow.GetCell(0).DateCellValue)
+            //                {
+            //                    periodExist = true;
+            //                    rowResult += verifyRow(contrPeriod, eachRow, row + 1);
+            //                    break;
+            //                } 
+            //            }
+            //            if (!periodExist)
+            //            {
+            //                rowResult += StartPeriodNotFound(row + 1);
+            //                verify = false;
+            //            }
+            //        }
+
+            //        if (rowResult != string.Empty)
+            //        {
+            //            verify = false;
+            //        }
+
+            //        if (verify)
+            //        {
+            //            result += "<p>La Cta. Seguridad Social " + sheetName + " ha sido verificada satisfactoriamente<p>";
+            //        } else
+            //        {
+            //            result += "<p>Error en la verificación para " + sheetName + ":</p>" + rowResult;
+            //        }
+
+            //    }
+
+            //}
+
+            //if (File.Exists(filePath))
+            //{
+            //    File.Delete(filePath);
+            //}
+
+            //return result;
+
+            return string.Empty;
         }
 
 

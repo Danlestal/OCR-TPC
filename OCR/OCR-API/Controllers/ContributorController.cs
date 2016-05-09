@@ -28,7 +28,7 @@ namespace OCR_API.Controllers
         [HttpGet]
         [Route("Contributors")]
         [ApiAuthenticationFilter(true)]
-        [ResponseType(typeof(IEnumerable<string>))]
+        [ResponseType(typeof(IEnumerable<int>))]
         public IHttpActionResult Get()
         {
             return Ok(readService.ReadContributorsIds());
