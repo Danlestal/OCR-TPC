@@ -19,22 +19,22 @@ namespace OCR_API.InternalService
 
         public bool Insert(ContributionPeriodDataDTO dataToInsert)
         {
-            Contributor contributor = dbContext.Contributors.FirstOrDefault(s => s.HealthCareContributorId == dataToInsert.ContributorId);
+            Contribuidor contributor = dbContext.Contributors.FirstOrDefault(s => s.IdentificadorSeguridadSocial == dataToInsert.ContributorId);
             if (contributor == null)
             {
-                contributor = new Contributor();
-                contributor.HealthCareContributorId = dataToInsert.ContributorId;
+                contributor = new Contribuidor();
+                contributor.IdentificadorSeguridadSocial = dataToInsert.ContributorId;
                 dbContext.Contributors.Add(contributor);
             }
 
             foreach (ContributionPeriodDTO newPeriod in dataToInsert.ContributionPeriodsDTO)
             {
-                var newContributionPeriod = new ContributionPeriod()
+                var newContributionPeriod = new PeriodoContribucion()
                 {
-                    MoneyContribution = newPeriod.MoneyContribution,
-                    PeriodEnd = newPeriod.PeriodEnd,
-                    PeriodStart = newPeriod.PeriodStart,
-                    HighResFileId = newPeriod.HighResFileId
+                    Dinero = newPeriod.MoneyContribution,
+                    FinPeriodo = newPeriod.PeriodEnd,
+                    ComienzoPeriodo = newPeriod.PeriodStart,
+                    HighResImagenId = newPeriod.HighResFileId
                 };
 
                 dbContext.Periods.Add(newContributionPeriod);

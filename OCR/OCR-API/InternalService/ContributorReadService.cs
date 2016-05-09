@@ -18,27 +18,27 @@ namespace OCR_API.InternalService
 
         public List<string> ReadContributorsIds()
         {
-            return dbContext.Contributors.Select(s => s.HealthCareContributorId).ToList();
+            return dbContext.Contributors.Select(s => s.IdentificadorSeguridadSocial).ToList();
         }
 
         public List<ContributionPeriodDTO> ReadContributorDetails(string healthCareId)
         {
             List<ContributionPeriodDTO> result = new List<ContributionPeriodDTO>();
-            Contributor contributor = new Contributor();
+            Contribuidor contributor = new Contribuidor();
             
-            contributor = dbContext.Contributors.FirstOrDefault(s => s.HealthCareContributorId == healthCareId);
+            contributor = dbContext.Contributors.FirstOrDefault(s => s.IdentificadorSeguridadSocial == healthCareId);
                     
             if (contributor == null)
                 return result;
 
-            foreach (var contrPeriod in contributor.ContributionPeriods)
+            foreach (var contrPeriod in contributor.PeriodosContribucion)
             {
                 var contrPeriodDTO = new ContributionPeriodDTO();
                 contrPeriodDTO.healthCareId = healthCareId;
-                contrPeriodDTO.MoneyContribution = contrPeriod.MoneyContribution;
-                contrPeriodDTO.PeriodStart = contrPeriod.PeriodStart;
-                contrPeriodDTO.PeriodEnd = contrPeriod.PeriodEnd;
-                contrPeriodDTO.HighResFileId = contrPeriod.HighResFileId;
+                contrPeriodDTO.MoneyContribution = contrPeriod.Dinero;
+                contrPeriodDTO.PeriodStart = contrPeriod.ComienzoPeriodo;
+                contrPeriodDTO.PeriodEnd = contrPeriod.FinPeriodo;
+                contrPeriodDTO.HighResFileId = contrPeriod.HighResImagenId;
                 result.Add(contrPeriodDTO);
             }
 

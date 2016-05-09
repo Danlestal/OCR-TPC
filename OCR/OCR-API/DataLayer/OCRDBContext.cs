@@ -10,18 +10,18 @@ namespace OCR_API.DataLayer
             Database.SetInitializer<OCR_TPC_Context>(new OCR_TPC_Initializer());
         }
 
-        public DbSet<Contributor> Contributors { get; set; }
+        public DbSet<Contribuidor> Contributors { get; set; }
 
-        public DbSet<ContributionPeriod> Periods { get; set; }
+        public DbSet<PeriodoContribucion> Periods { get; set; }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<Usuario> Users { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ContributionPeriod>()
-                    .HasRequired<Contributor>(s => s.Contributor)
-                    .WithMany(s => s.ContributionPeriods)
-                    .HasForeignKey(s => s.ContributorRefId);
+            modelBuilder.Entity<PeriodoContribucion>()
+                    .HasRequired<Contribuidor>(s => s.Contributor)
+                    .WithMany(s => s.PeriodosContribucion)
+                    .HasForeignKey(s => s.ContribuidorRefId);
         }
     }
 
@@ -30,7 +30,7 @@ namespace OCR_API.DataLayer
     {
         protected override void Seed(OCR_TPC_Context context)
         {
-            context.Users.Add(new User() { Name = "admin", Password = "P3C4nS0ft" });
+            context.Users.Add(new Usuario() { Nombre = "admin", Password = "P3C4nS0ft" });
             base.Seed(context);
         }
     }

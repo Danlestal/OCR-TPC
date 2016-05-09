@@ -5,25 +5,25 @@ using System.Web;
 
 namespace OCR_API.DataLayer
 {
-    public class Contributor
+    public class Contribuidor
     {
 
-        public Contributor()
+        public Contribuidor()
         {
-            ContributionPeriods = new List<ContributionPeriod>();
+            PeriodosContribucion = new List<PeriodoContribucion>();
         }
 
-        public int ContributorId { get; set; }
+        public int ContribuidorId { get; set; }
 
-        public string HealthCareContributorId { get; set; }
+        public string IdentificadorSeguridadSocial { get; set; }
 
-        public virtual ICollection<ContributionPeriod> ContributionPeriods { get; set; }
+        public virtual ICollection<PeriodoContribucion> PeriodosContribucion { get; set; }
 
-        public void AddContributionPeriod(ContributionPeriod newPeriod)
+        public void AddContributionPeriod(PeriodoContribucion newPeriod)
         {
-           if (!ContributionPeriods.Contains(newPeriod))
+           if (!PeriodosContribucion.Contains(newPeriod))
             {
-                ContributionPeriods.Add(newPeriod);
+                PeriodosContribucion.Add(newPeriod);
             }
 
         }

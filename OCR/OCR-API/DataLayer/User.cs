@@ -1,10 +1,10 @@
 ﻿namespace OCR_API.DataLayer
 {
-    public class User
+    public class Usuario
     {
-        public int UserId { get; set; }
+        public int UsuarioId { get; set; }
 
-        public string Name { get; set; }
+        public string Nombre { get; set; }
 
         public string Password { get; set; }
     }

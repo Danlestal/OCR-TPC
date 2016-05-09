@@ -20,14 +20,14 @@ namespace OCR_API.InternalService
         public string LogIn(string userName, string password)
         {
             
-            var user = dbContext.Users.FirstOrDefault(u => u.Name == userName);
+            var user = dbContext.Users.FirstOrDefault(u => u.Nombre == userName);
             if (user == null)
             {
                 return "No se encontró el usuario";
             }
             else
             {
-                user = dbContext.Users.FirstOrDefault(u => u.Name == userName && u.Password == password);
+                user = dbContext.Users.FirstOrDefault(u => u.Nombre == userName && u.Password == password);
                 if (user == null)
                 {
                     return "Contraseña incorrecta";
@@ -36,9 +36,9 @@ namespace OCR_API.InternalService
             return string.Empty;
         }
 
-        public User Authenticate(string userName, string password)
+        public Usuario Authenticate(string userName, string password)
         {
-            var user = dbContext.Users.FirstOrDefault(u => u.Name == userName && u.Password == password);
+            var user = dbContext.Users.FirstOrDefault(u => u.Nombre == userName && u.Password == password);
             if (user != null)
             {
                 return user;

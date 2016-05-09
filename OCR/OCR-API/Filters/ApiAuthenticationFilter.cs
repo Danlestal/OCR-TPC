@@ -65,7 +65,7 @@ namespace OCR_API.Filters
                     var basicAuthenticationIdentity = Thread.CurrentPrincipal.Identity as BasicAuthenticationIdentity;
                     if (basicAuthenticationIdentity != null)
                     {
-                        basicAuthenticationIdentity.UserId = user.UserId;
+                        basicAuthenticationIdentity.UserId = user.UsuarioId;
                         return true;
                     }
 

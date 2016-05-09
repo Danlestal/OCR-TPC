@@ -3,23 +3,23 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OCR_API.DataLayer
 {
-    public class ContributionPeriod
+    public class PeriodoContribucion
     {
 
-        public int ContributionPeriodId { get; set; }
+        public int PeriodoContribucionId { get; set; }
 
-        public DateTime PeriodStart { get; set; }
+        public DateTime ComienzoPeriodo { get; set; }
 
-        public DateTime PeriodEnd { get; set; }
+        public DateTime FinPeriodo { get; set; }
 
-        public double MoneyContribution { get; set; }
+        public double Dinero { get; set; }
 
-        public int ContributorRefId { get; set; }
+        public int ContribuidorRefId { get; set; }
 
-        public string HighResFileId { get; set; }
+        public string HighResImagenId { get; set; }
 
         [ForeignKey("ContributorRefId")]
-        public virtual Contributor Contributor { get; set; }
+        public virtual Contribuidor Contributor { get; set; }
 
        
     }

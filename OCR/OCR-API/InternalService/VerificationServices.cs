@@ -23,7 +23,7 @@ namespace OCR_API.InternalService
 
         public string FileVerification(string filePath)
         {
-            Contributor contributor = new Contributor();
+            Contribuidor contributor = new Contribuidor();
             string result = "";
 
             FileStream _fileStream = new FileStream(filePath, FileMode.Open,
@@ -39,7 +39,7 @@ namespace OCR_API.InternalService
                 ISheet _worksheet = _workbook.GetSheetAt(i);
                 string sheetName = _worksheet.SheetName;
                 
-                contributor = dbContext.Contributors.FirstOrDefault(s => s.HealthCareContributorId == sheetName);
+                contributor = dbContext.Contributors.FirstOrDefault(s => s.IdentificadorSeguridadSocial == sheetName);
                 if (contributor == null)
                 {
                     result += "<p>La Cta. Seguridad Social " + sheetName + " no se encontró en la Base de datos.Verifique el nombre de la pestaña<p>";
@@ -61,9 +61,9 @@ namespace OCR_API.InternalService
                             break;
                         }
                         bool periodExist = false;
-                        foreach (var contrPeriod in contributor.ContributionPeriods)
+                        foreach (var contrPeriod in contributor.PeriodosContribucion)
                         {
-                            if (contrPeriod.PeriodStart == eachRow.GetCell(0).DateCellValue)
+                            if (contrPeriod.ComienzoPeriodo == eachRow.GetCell(0).DateCellValue)
                             {
                                 periodExist = true;
                                 rowResult += verifyRow(contrPeriod, eachRow, row + 1);
@@ -109,10 +109,10 @@ namespace OCR_API.InternalService
             return @"<p style=""padding-left:5em"">" + "line: " + row.ToString() + " ningún registro para esa fecha de inicio</p>";
         }
 
-        private string verifyRow(ContributionPeriod contrPeriod, IRow eachRow, int i)
+        private string verifyRow(PeriodoContribucion contrPeriod, IRow eachRow, int i)
         {
             string result = "";
-            if (contrPeriod.PeriodEnd == eachRow.GetCell(1).DateCellValue)
+            if (contrPeriod.FinPeriodo == eachRow.GetCell(1).DateCellValue)
             {
 
                 double money;
@@ -124,7 +124,7 @@ namespace OCR_API.InternalService
                     money = double.Parse(eachRow.GetCell(2).StringCellValue.Replace('.', ','));
                 }
 
-                if (contrPeriod.MoneyContribution == money)
+                if (contrPeriod.Dinero == money)
                 {
                     result = string.Empty;
                 } else
