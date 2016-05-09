@@ -57,7 +57,7 @@ namespace OCR_API.InternalService
             }
 
             if (File.Exists(filePath))
-                File.Delete(filePath); 
+                File.Delete(filePath);
 
             return result;
 
@@ -67,14 +67,30 @@ namespace OCR_API.InternalService
         {
             Contribuidor contributor = new Contribuidor();
 
-            double idContributor = eachRow.GetCell(1).NumericCellValue;
+            double idContributor = 0;
+            if (eachRow.GetCell(1).CellType == CellType.Numeric)
+            {
+                idContributor = eachRow.GetCell(1).NumericCellValue;
+            } else
+            {
+                idContributor = double.Parse(eachRow.GetCell(1).StringCellValue);
+            }
+            
+            contributor = dbContext.Contributors.FirstOrDefault(s => s.CuentaCotizacion == idContributor);
 
-            contributor = dbContext.Contributors.FirstOrDefault(s => s.IdentificadorSeguridadSocial == idContributor);
             if (contributor == null)
                 return ContributorNotFound(row);
 
-            //if (contributor != eachRow.GetCell(2).StringCellValue)
-            //    return NIFNotFound(row);
+
+            if (eachRow.GetCell(2).CellType == CellType.Numeric)
+            {
+                if (contributor.NIF != eachRow.GetCell(2).NumericCellValue.ToString()) 
+                    return NIFNotFound(row);
+            } else
+            {
+                if (contributor.NIF != eachRow.GetCell(2).StringCellValue)
+                    return NIFNotFound(row);
+            }
 
             if (contributor.RazonSocial != eachRow.GetCell(3).StringCellValue)
                 return RazonSocialNotFound(row);
@@ -103,3 +119,4 @@ namespace OCR_API.InternalService
         }
 
     }
+}

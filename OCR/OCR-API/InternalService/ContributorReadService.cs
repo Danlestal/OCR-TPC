@@ -17,9 +17,9 @@ namespace OCR_API.InternalService
             dbContext = context;
         }
 
-        public List<string> ReadContributorsIds()
+        public List<double> ReadContributorsIds()
         {
-            return dbContext.Contributors.Select(s => s.IdentificadorSeguridadSocial).ToList();
+            return dbContext.Contributors.Select(s => s.CuentaCotizacion).ToList();
         }
 
         public List<ContributionPeriodDTO> ReadWithLimit()
@@ -31,33 +31,33 @@ namespace OCR_API.InternalService
 
             periods = dbContext.Periods.Take(queryLimit).ToList();
 
-            //foreach (var contrPeriod in periods)
-            //{
-            //    var contrPeriodDTO = new ContributionPeriodDTO();
-            //    contrPeriodDTO.healthCareId = contrPeriod.ContribuidorRefId;
-            //    contrPeriodDTO.MoneyContribution = contrPeriod.Dinero;
-            //    contrPeriodDTO.PeriodStart = contrPeriod.ComienzoPeriodo;
-            //    contrPeriodDTO.PeriodEnd = contrPeriod.FinPeriodo;
-            //    contrPeriodDTO.HighResFileId = contrPeriod.HighResImagenId;
-            //    result.Add(contrPeriodDTO);
-            //}
+            foreach (var contrPeriod in periods)
+            {
+                var contrPeriodDTO = new ContributionPeriodDTO();
+                contrPeriodDTO.HealthCareId = contrPeriod.Contributor.CuentaCotizacion;
+                contrPeriodDTO.MoneyContribution = contrPeriod.Dinero;
+                contrPeriodDTO.PeriodStart = contrPeriod.ComienzoPeriodo;
+                contrPeriodDTO.PeriodEnd = contrPeriod.FinPeriodo;
+                contrPeriodDTO.HighResFileId = contrPeriod.HighResImagenId;
+                result.Add(contrPeriodDTO);
+            }
             return result;
         }
 
-        public List<ContributionPeriodDTO> ReadContributorDetails(string healthCareId)
+        public List<ContributionPeriodDTO> ReadContributorDetails(double healthCareId)
         {
             List<ContributionPeriodDTO> result = new List<ContributionPeriodDTO>();
             Contribuidor contributor = new Contribuidor();
-            
-            contributor = dbContext.Contributors.FirstOrDefault(s => s.IdentificadorSeguridadSocial == healthCareId);
-                    
+
+            contributor = dbContext.Contributors.FirstOrDefault(s => s.CuentaCotizacion == healthCareId);
+
             if (contributor == null)
                 return result;
 
             foreach (var contrPeriod in contributor.PeriodosContribucion)
             {
                 var contrPeriodDTO = new ContributionPeriodDTO();
-                contrPeriodDTO.healthCareId = healthCareId;
+                contrPeriodDTO.HealthCareId = healthCareId;
                 contrPeriodDTO.MoneyContribution = contrPeriod.Dinero;
                 contrPeriodDTO.PeriodStart = contrPeriod.ComienzoPeriodo;
                 contrPeriodDTO.PeriodEnd = contrPeriod.FinPeriodo;

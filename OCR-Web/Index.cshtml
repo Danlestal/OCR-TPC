@@ -119,202 +119,237 @@
         </div>
 
         <div id="verifyModal"></div>
+    </div>
 
-        <script>
-            var apiUrl = '@System.Configuration.ConfigurationManager.AppSettings["APIBaseUrl"]';
-            var table;
-            var url = apiUrl + "/ContributionPeriods";
+    <script>
+        var apiUrl = '@System.Configuration.ConfigurationManager.AppSettings["APIBaseUrl"]';
+        var table;
+        var url = apiUrl + "/ContributionPeriods";
             
-            $(document).ready(function () {
+        $(document).ready(function () {
+            
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0")
+                },
+                success: function (response) {
 
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    dataType: 'json',
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0")
-                    },
-                    success: function (response) {
-
-                        table = $('#jsGrid').DataTable({
-                            "data": response,
-                            "language": {
-                                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
-                            },
-                            "columns": [
-                                { "data": "HealthCareId" },
-                                { "data": "PeriodStart" },
-                                { "data": "PeriodEnd" },
-                                { "data": "MoneyContribution" },
-                                { "data": "HighResFileId" },
-                            ],
-                            "columnDefs": [
-                                { "targets": 0, "class": "text-center", "title": "Cuenta de cotización", "render": function (data) { return (!data) ? "" : data; } },
-                                { "targets": 1, "class": "text-center", "title": "Comienzo de cotización", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
-                                { "targets": 2, "class": "text-center", "title": "Fin de cotización", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
-                                { "targets": 3, "class": "text-center", "title": "Dinero Contribuido", "render": function (data) { return (!data) ? "" : data; } },
-                                {
-                                    "targets": 4, "class": "text-center", "title": "Muestra de Documento", "render": function (data) {
-                                        return (!data) ? "" : '<p><a "href="#myModal">ver documento</a></p>';
-                                    }
+                    table = $('#jsGrid').DataTable({
+                        "data": response,
+                        "language": {
+                            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+                        },
+                        "columns": [
+                            { "data": "HealthCareId" },
+                            { "data": "PeriodStart" },
+                            { "data": "PeriodEnd" },
+                            { "data": "MoneyContribution" },
+                            { "data": "HighResFileId" },
+                        ],
+                        "columnDefs": [
+                            { "targets": 0, "class": "text-center", "title": "Cuenta de cotización", "render": function (data) { return (!data) ? "" : data; } },
+                            { "targets": 1, "class": "text-center", "title": "Comienzo de cotización", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
+                            { "targets": 2, "class": "text-center", "title": "Fin de cotización", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
+                            { "targets": 3, "class": "text-center", "title": "Dinero Contribuido", "render": function (data) { return (!data) ? "" : data; } },
+                            {
+                                "targets": 4, "class": "text-center", "title": "Muestra de Documento", "render": function (data) {
+                                    return (!data) ? "" : '<a>ver documento</a>';
                                 }
-                            ]
-                        });
-                    }
-                });
-            });
+                            }
+                        ]
+                    });
+                    $('#jsGrid tbody').on('click', 'td', function () {
 
-            $("#selectIdButton").button().click(function (event) {
+                        debugger;
 
-                var healthCareId = $("#healthCareId").val();//.replace(/\s/g, "%20");
+                        var colIdx = table
+                                .cell(this)
+                                .index().column;
 
-                if ($("#selectedIds").val() != "") {
-                    $("#selectedIds").val($("#selectedIds").val() + ", " + healthCareId);
-                } else {
-                    $("#selectedIds").val(healthCareId);
-                }
+                        if (colIdx == 4) {
 
-                $("#healthCareId").val("");
-            });
-
-            $("#searchForIdButton").button().click(function (event) {
-                var url;
-                debugger;
-                table.destroy();
-
-                event.preventDefault();
-
-                var healthCareId = $("#selectedIds").val();
-                $("#selectedIds").val('');
-                if (healthCareId === '')
-                    return;
-
-                //healthCareId = healthCareId.replace(/\s/g, '');
-
-                if (healthCareId.indexOf(',') > -1) {
-                    url = apiUrl + "/ContributionPeriodsList/" + healthCareId;
-                } else {
-                    url = apiUrl + "/ContributionPeriods/" + healthCareId;
-                }
-
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    dataType: 'json',
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0")
-                    },
-                    success: function (response) {
-
-                        table = $('#jsGrid').DataTable({
-                            "language": {
-                                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
-                            },
-                            "data": response,
-                            "columns": [
-                                { "data": "healthCareId" },
-                                { "data": "PeriodStart", "class": "text-center" },
-                                { "data": "PeriodEnd", "class": "text-center" },
-                                { "data": "MoneyContribution", "class": "text-center" },
-                                { "data": "HighResFileId", "class": "text-center" },
-                            ],
-                            "columnDefs": [
-                                { "targets": 0, "class": "text-center", "title": "Cuenta de cotización", "render": function (data) { return (!data) ? "" : data; } },
-                                { "targets": 1, "class": "text-center", "title": "Comienzo de cotización", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
-                                { "targets": 2, "class": "text-center", "title": "Fin de cotización", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
-                                { "targets": 3, "class": "text-center", "title": "Dinero Contribuido", "render": function (data) { return (!data) ? "" : data; } },
-                                {
-                                    "targets": 4, "class": "text-center", "title": "Muestra de Documento", "render": function (data) {
-                                        return (!data) ? "" : '<a>ver documento</a>';
-                                    }
-                                },
-
-                            ]
-                        });
-                    },
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        console.log(jqXHR);
-                        console.log(textStatus);
-                        console.log(errorThrown);
-                    }
-                });
-
-                $('#jsGrid tbody').on('click', 'td', function () {
-
-                    debugger;
-
-                    var colIdx = table
+                            var rowIdx = table
                             .cell(this)
-                            .index().column;
+                            .index().row;
 
-                    if (colIdx == 4) {
+                            var modal = document.getElementById('myModal');
+                            var modalImg = document.getElementById("img01");
+                            // Get the <span> element that closes the modal
+                            var span = document.getElementsByClassName("myclose")[0];
 
-                        var rowIdx = table
-                        .cell(this)
-                        .index().row;
+                            var data = table.row(rowIdx).data();
+                            modal.style.display = "block";
+                            modalImg.src = data.HighResFileId;
+                            // When the user clicks on <span> (x), close the modal
+                            span.onclick = function () {
+                                modal.style.display = "none";
+                            }
 
-                        var modal = document.getElementById('myModal');
-                        var modalImg = document.getElementById("img01");
-                        // Get the <span> element that closes the modal
-                        var span = document.getElementsByClassName("myclose")[0];
-
-                        var data = table.row(rowIdx).data();
-                        modal.style.display = "block";
-                        modalImg.src = data.HighResFileId;
-                        // When the user clicks on <span> (x), close the modal
-                        span.onclick = function () {
-                            modal.style.display = "none";
                         }
-
-                    }
-                });
-
-            });
-
-            var _URL = window.URL || window.webkitURL;
-            $("#f_UploadXls").on('change', function () {
-
-                $('#verifyModal').html("");
-
-                var file;
-                if ((file = this.files[0])) {
-                    sendFile(file);
+                    });
                 }
             });
 
-            function sendFile(file) {
 
-                var url = apiUrl + "/VerificationFile";
+            
 
-                var formData = new FormData();
-                formData.append('file', $('#f_UploadXls')[0].files[0]);
-                $.ajax({
-                    type: 'post',
-                    url: url,
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    beforeSend: function (xhr) {
-                        xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0")
-                    },
-                    success: function (status) {
-                        $('#verifyModal').html(status);
+        });
 
-                        //var span = document.getElementsByClassName("close")[0];
-                        //span.onclick = function () {
-                        //    $('#verification').css("display", "none");
-                        //}
+        $("#selectIdButton").button().click(function (event) {
 
-                    },
-                    processData: false,
-                    contentType: false,
-                    error: function () {
-                        //alert("Se encontró algún problema");
+            var healthCareId = $("#healthCareId").val();//.replace(/\s/g, "%20");
+
+            if ($("#selectedIds").val() != "") {
+                $("#selectedIds").val($("#selectedIds").val() + ", " + healthCareId);
+            } else {
+                $("#selectedIds").val(healthCareId);
+            }
+
+            $("#healthCareId").val("");
+        });
+
+        $("#searchForIdButton").button().click(function (event) {
+            var url;
+            debugger;
+            table.destroy();
+
+            event.preventDefault();
+
+            var healthCareId = $("#selectedIds").val();
+            $("#selectedIds").val('');
+            if (healthCareId === '')
+                return;
+
+            //healthCareId = healthCareId.replace(/\s/g, '');
+
+            if (healthCareId.indexOf(',') > -1) {
+                url = apiUrl + "/ContributionPeriodsList/" + healthCareId;
+            } else {
+                url = apiUrl + "/ContributionPeriods/" + healthCareId;
+            }
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: 'json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0")
+                },
+                success: function (response) {
+
+                    table = $('#jsGrid').DataTable({
+                        "language": {
+                            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+                        },
+                        "data": response,
+                        "columns": [
+                            { "data": "HealthCareId" },
+                            { "data": "PeriodStart", "class": "text-center" },
+                            { "data": "PeriodEnd", "class": "text-center" },
+                            { "data": "MoneyContribution", "class": "text-center" },
+                            { "data": "HighResFileId", "class": "text-center" },
+                        ],
+                        "columnDefs": [
+                            { "targets": 0, "class": "text-center", "title": "Cuenta de cotización", "render": function (data) { return (!data) ? "" : data; } },
+                            { "targets": 1, "class": "text-center", "title": "Comienzo de cotización", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
+                            { "targets": 2, "class": "text-center", "title": "Fin de cotización", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
+                            { "targets": 3, "class": "text-center", "title": "Dinero Contribuido", "render": function (data) { return (!data) ? "" : data; } },
+                            {
+                                "targets": 4, "class": "text-center", "title": "Muestra de Documento", "render": function (data) {
+                                    return (!data) ? "" : '<a>ver documento</a>';
+                                }
+                            },
+
+                        ]
+                    });
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR);
+                    console.log(textStatus);
+                    console.log(errorThrown);
+                }
+            });
+
+            $('#jsGrid tbody').on('click', 'td', function () {
+
+                debugger;
+
+                var colIdx = table
+                        .cell(this)
+                        .index().column;
+
+                if (colIdx == 4) {
+
+                    var rowIdx = table
+                    .cell(this)
+                    .index().row;
+
+                    var modal = document.getElementById('myModal');
+                    var modalImg = document.getElementById("img01");
+                    // Get the <span> element that closes the modal
+                    var span = document.getElementsByClassName("myclose")[0];
+
+                    var data = table.row(rowIdx).data();
+                    modal.style.display = "block";
+                    modalImg.src = data.HighResFileId;
+                    // When the user clicks on <span> (x), close the modal
+                    span.onclick = function () {
+                        modal.style.display = "none";
                     }
-                });
-            };
 
-        </script>
+                }
+            });
+        
+
+        });
+
+        var _URL = window.URL || window.webkitURL;
+        $("#f_UploadXls").on('change', function () {
+
+            $('#verifyModal').html("Procesando...");
+
+            var file;
+            if ((file = this.files[0])) {
+                sendFile(file);
+            }
+        });
+
+        function sendFile(file) {
+
+            var url = apiUrl + "/VerificationFile";
+
+            var formData = new FormData();
+            formData.append('file', $('#f_UploadXls')[0].files[0]);
+            $.ajax({
+                type: 'post',
+                url: url,
+                data: formData,
+                contentType: false,
+                processData: false,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0")
+                },
+                success: function (status) {
+                    $('#verifyModal').html(status);
+
+                    //var span = document.getElementsByClassName("close")[0];
+                    //span.onclick = function () {
+                    //    $('#verification').css("display", "none");
+                    //}
+
+                },
+                processData: false,
+                contentType: false,
+                error: function () {
+                    //alert("Se encontró algún problema");
+                }
+            });
+        };
+
+    </script>
 
 </body>
 

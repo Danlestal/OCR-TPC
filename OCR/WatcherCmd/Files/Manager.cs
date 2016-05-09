@@ -17,13 +17,15 @@ namespace WatcherCmd.Files
         private readonly ILog _logger;
         private readonly IWatcher _watcher;
         private APIClient _apiClient;
+        private string _apiUrl;
 
-        
+
         public Manager(ILog logger, IWatcher watcher, APIClient client)
         {
             _logger = logger;
             _watcher = watcher;
             _apiClient = client;
+            _apiUrl = ConfigurationManager.AppSettings["ApiURL"];
 
         }
 
@@ -37,7 +39,27 @@ namespace WatcherCmd.Files
 
         private void OnFileDetected(object sender, FileSystemEventArgs e)
         {
-            string inputPath = e.FullPath;
+            if (e.FullPath.Contains("Contribuidores"))
+            {
+                ProcContributionFile(e.FullPath);
+            }
+            else if (e.FullPath.Contains("VidaLaboral"))
+                {
+                    ProcLaboralLife(e.FullPath);
+                }
+        }
+
+        private void ProcLaboralLife(string inputPath)
+        {
+            LaboralLifeParser parser = new LaboralLifeParser();
+            LaboralLifeData data = parser.Parse(inputPath);
+
+            APIClient client = new APIClient(_apiUrl);
+            client.Post("LaboralLife", data);
+        }
+
+        private void ProcContributionFile(string inputPath)
+        {
             string inputFile = Path.GetFileName(inputPath);
             int inputFilePages = PDFToImageConverter.GetPdfPages(inputPath);
 
@@ -47,8 +69,8 @@ namespace WatcherCmd.Files
 
             for (int i = 0; i < inputFilePages; i++)
             {
-                string outputFile = Path.GetFileNameWithoutExtension(inputPath) + "-"+i+".tiff";
-                string outputPngFile = Path.GetFileNameWithoutExtension(inputPath) + "-"+i+".png";
+                string outputFile = Path.GetFileNameWithoutExtension(inputPath) + "-" + i + ".tiff";
+                string outputPngFile = Path.GetFileNameWithoutExtension(inputPath) + "-" + i + ".png";
 
                 string fileOutputPath = Path.Combine(Path.GetTempPath(), outputFile);
                 string fileOutputPngPath = Path.Combine(Path.GetTempPath(), outputPngFile);
@@ -70,13 +92,14 @@ namespace WatcherCmd.Files
 
                 string fileUrl = UploadFile(fileOutputPngPath);
 
-   
+
 
                 ContributionPeriodDataDTO dataToSend = new ContributionPeriodDataDTO();
                 dataToSend.ContributorId = ContributorPersonalData.ParseCotizationAccount(data.Text);
                 firstContributor = dataToSend.ContributorId;
                 dataToSend.CNAE = ContributorPersonalData.ParseCNAE(data.Text);
                 dataToSend.SocialReason = ContributorPersonalData.ParseSocialReason(data.Text);
+                dataToSend.NIF = ContributorPersonalData.ParseNIF(data.Text);
 
                 foreach (ContributionPeriod period in results)
                 {
@@ -89,9 +112,7 @@ namespace WatcherCmd.Files
                     });
                 }
 
-                string jsonDataToSend = JsonConvert.SerializeObject(dataToSend);
-
-                APIClient client = new APIClient("http://localhost:58869/");
+                APIClient client = new APIClient(_apiUrl);
                 client.Post("ContributionPeriods", dataToSend);
 
             }

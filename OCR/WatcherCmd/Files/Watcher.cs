@@ -13,14 +13,7 @@ namespace WatcherCmd.Files
 
         public event FileSystemEventHandler FileDetected;
         private static FileSystemWatcher _watcher;
-
-
         private static readonly ILog _logger = LogManager.GetLogger(typeof(Watcher));
-
-        public Watcher()
-        {
-            
-        }
 
         public bool EnableRaisingEvents
         {

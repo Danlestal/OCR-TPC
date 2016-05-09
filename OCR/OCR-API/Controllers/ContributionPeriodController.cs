@@ -9,7 +9,7 @@ using System.Web.Http.Description;
 
 namespace OCR_API.Controllers
 {
-    [EnableCors("*", "*","*")]
+    [EnableCors("*", "*", "*")]
     public class ContributionPeriodController : ApiController
     {
 
@@ -28,24 +28,8 @@ namespace OCR_API.Controllers
         [ApiAuthenticationFilter(true)]
         public void Post(ContributionPeriodDataDTO value)
         {
-           insertionService.Insert(value);
+            insertionService.Insert(value);
         }
-
-
-        /// <summary>
-        /// Gets the contribution periods
-        /// </summary>
-        /// <param name="healthCareid">The health careid.</param>
-        /// <returns></returns>
-        [HttpGet]
-        [ApiAuthenticationFilter(true)]
-        [Route("ContributionPeriods/{healthCareid}", Name = "ContributorDetails")]
-        [ResponseType(typeof(IEnumerable<ContributionPeriodDTO>))]
-        public IHttpActionResult Get(string healthCareid)
-        {
-            return Ok(readService.ReadContributorDetails(healthCareid));
-        }
-
 
         [HttpGet]
         [ApiAuthenticationFilter(true)]
@@ -59,19 +43,32 @@ namespace OCR_API.Controllers
         /// <summary>
         /// Gets the contribution periods
         /// </summary>
+        /// <param name="healthCareid">The health careid.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [ApiAuthenticationFilter(true)]
+        [Route("ContributionPeriods/{healthCareid}", Name = "ContributorDetails")]
+        [ResponseType(typeof(IEnumerable<ContributionPeriodDTO>))]
+        public IHttpActionResult Get(int healthCareid)
+        {
+            return Ok(readService.ReadContributorDetails(healthCareid));
+        }
+
+        /// <summary>
+        /// Gets the contribution periods
+        /// </summary>
         /// <param name="healthCareidList">The health careid.</param>
         /// <returns></returns>
         [HttpGet]
         [ApiAuthenticationFilter(true)]
         [Route("ContributionPeriodsList/{healthCareidList}", Name = "ContributorsDetails")]
         [ResponseType(typeof(IEnumerable<ContributionPeriodDTO>))]
-        public IHttpActionResult GetList(string healthCareidList)
+        public IHttpActionResult GetList(int[] healthCareidList)
         {
-            string[] idsArray = healthCareidList.Split(',');
             List<ContributionPeriodDTO> result = new List<ContributionPeriodDTO>();
-            foreach(string id in idsArray)
+            foreach (int id in healthCareidList)
             {
-                result.AddRange(readService.ReadContributorDetails(id.Trim()));
+                result.AddRange(readService.ReadContributorDetails(id));
             }
             return Ok(result);
         }

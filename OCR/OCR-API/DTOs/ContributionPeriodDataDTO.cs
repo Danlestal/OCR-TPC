@@ -8,14 +8,18 @@ namespace OCR_API.DTOs
     public class ContributionPeriodDataDTO
     {
 
-        public string ContributorId { get; set; }
+        public double ContributorId { get; set; }
+        public string SocialReason { get; set; }
+        public string CNAE { get; set; }
+        public string NIF { get; internal set; }
+
         public List<ContributionPeriodDTO> ContributionPeriodsDTO { get; set; }
-       
+        
     }
 
     public class ContributionPeriodDTO
     {
-        public string healthCareId { get; set; }
+        public double HealthCareId { get; set; }
         public DateTime PeriodStart { get; set; }
         public DateTime PeriodEnd { get; set; }
         public double MoneyContribution { get; set; }

@@ -19,11 +19,14 @@ namespace OCR_API.InternalService
 
         public bool Insert(ContributionPeriodDataDTO dataToInsert)
         {
-            Contribuidor contributor = dbContext.Contributors.FirstOrDefault(s => s.IdentificadorSeguridadSocial == dataToInsert.ContributorId);
+            Contribuidor contributor = dbContext.Contributors.FirstOrDefault(s => s.CuentaCotizacion == dataToInsert.ContributorId);
             if (contributor == null)
             {
                 contributor = new Contribuidor();
-                contributor.IdentificadorSeguridadSocial = dataToInsert.ContributorId;
+                contributor.CuentaCotizacion = dataToInsert.ContributorId;
+                contributor.RazonSocial = dataToInsert.SocialReason;
+                contributor.CNAE = dataToInsert.CNAE;
+                contributor.NIF = dataToInsert.NIF;
                 dbContext.Contributors.Add(contributor);
             }
 
