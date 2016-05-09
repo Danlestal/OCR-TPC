@@ -20,15 +20,14 @@ namespace OCR_API.InternalService
 
         }
 
-
         public string FileVerification(string filePath)
         {
-            Contribuidor contributor = new Contribuidor();
+
             string result = "";
 
             FileStream _fileStream = new FileStream(filePath, FileMode.Open,
                                       FileAccess.Read);
-            
+
             IWorkbook _workbook = WorkbookFactory.Create(_fileStream);
             _fileStream.Close();
 
@@ -37,106 +36,70 @@ namespace OCR_API.InternalService
             for (int i = 0; i < sheetsNumber; i++)
             {
                 ISheet _worksheet = _workbook.GetSheetAt(i);
-                string sheetName = _worksheet.SheetName;
-                
-                contributor = dbContext.Contributors.FirstOrDefault(s => s.IdentificadorSeguridadSocial == sheetName);
-                if (contributor == null)
+
+                for (int row = 2; row <= _worksheet.LastRowNum; row++)
                 {
-                    result += "<p>La Cta. Seguridad Social " + sheetName + " no se encontró en la Base de datos.Verifique el nombre de la pestaña<p>";
-                } else
-                {
-                    bool verify = true;
-                    string rowResult = string.Empty;
 
-                    for (int row = 1; row <= _worksheet.LastRowNum; row++)
+                    IRow eachRow = _worksheet.GetRow(row);
+                    if (eachRow == null) //null is when the row only contains empty cells 
                     {
-                        
-                        IRow eachRow = _worksheet.GetRow(row);
-                        if (eachRow == null) //null is when the row only contains empty cells 
-                        {
-                            continue;
-                        }
-                        if (eachRow.GetCell(0) == null)
-                        {
-                            break;
-                        }
-                        bool periodExist = false;
-                        foreach (var contrPeriod in contributor.PeriodosContribucion)
-                        {
-                            if (contrPeriod.ComienzoPeriodo == eachRow.GetCell(0).DateCellValue)
-                            {
-                                periodExist = true;
-                                rowResult += verifyRow(contrPeriod, eachRow, row + 1);
-                                break;
-                            } 
-                        }
-                        if (!periodExist)
-                        {
-                            rowResult += StartPeriodNotFound(row + 1);
-                            verify = false;
-                        }
+                        continue;
+                    }
+                    if (eachRow.GetCell(0) == null)
+                    {
+                        break;
                     }
 
-                    if (rowResult != string.Empty)
-                    {
-                        verify = false;
-                    }
-
-                    if (verify)
-                    {
-                        result += "<p>La Cta. Seguridad Social " + sheetName + " ha sido verificada satisfactoriamente<p>";
-                    } else
-                    {
-                        result += "<p>Error en la verificación para " + sheetName + ":</p>" + rowResult;
-                    }
-                        
+                    result += VerifyRow(eachRow, row);
                 }
-                
+
+                result += @"<p style=""text-info"">" + "Nueva Pestaña</p>";
             }
-            
+
             if (File.Exists(filePath))
-            {
-                File.Delete(filePath);
-            }
-            
+                File.Delete(filePath); 
+
             return result;
+
         }
 
-
-
-        private string StartPeriodNotFound(int row)
+        private string VerifyRow(IRow eachRow, int row)
         {
-            return @"<p style=""padding-left:5em"">" + "line: " + row.ToString() + " ningún registro para esa fecha de inicio</p>";
+            Contribuidor contributor = new Contribuidor();
+
+            double idContributor = eachRow.GetCell(1).NumericCellValue;
+
+            contributor = dbContext.Contributors.FirstOrDefault(s => s.IdentificadorSeguridadSocial == idContributor);
+            if (contributor == null)
+                return ContributorNotFound(row);
+
+            //if (contributor != eachRow.GetCell(2).StringCellValue)
+            //    return NIFNotFound(row);
+
+            if (contributor.RazonSocial != eachRow.GetCell(3).StringCellValue)
+                return RazonSocialNotFound(row);
+
+            return Correct(row);
         }
 
-        private string verifyRow(PeriodoContribucion contrPeriod, IRow eachRow, int i)
+        private string ContributorNotFound(int row)
         {
-            string result = "";
-            if (contrPeriod.FinPeriodo == eachRow.GetCell(1).DateCellValue)
-            {
-
-                double money;
-                if (eachRow.GetCell(2).CellType == CellType.Numeric)
-                {
-                    money = eachRow.GetCell(2).NumericCellValue;
-                } else
-                {
-                    money = double.Parse(eachRow.GetCell(2).StringCellValue.Replace('.', ','));
-                }
-
-                if (contrPeriod.Dinero == money)
-                {
-                    result = string.Empty;
-                } else
-                {
-                    result = @"<p style=""padding-left:5em"">" + "line: " + i.ToString() + " ningún registro con ese dinero contribuido</p>";
-                }
-
-            } else
-            {
-                result = @"<p style=""padding-left:5em"">" + "line: " + i.ToString() + " ningún registro para esa fecha final</p>";
-            }
-            return result;
+            return @"<p style=""text-danger"">" + "line: " + row.ToString() + " ningún registro para Cta. de vCotización</p>";
         }
+
+        private string NIFNotFound(int row)
+        {
+            return @"<p style=""text-danger"">" + "line: " + row.ToString() + " ningún registro para NIF</p>";
+        }
+
+        private string RazonSocialNotFound(int row)
+        {
+            return @"<p style=""text-danger"">" + "line: " + row.ToString() + " ningún registro para Razón Social</p>";
+        }
+
+        private string Correct(int row)
+        {
+            return @"<p style=""text-success"">" + "line: " + row.ToString() + " Verificación Correcta</p>";
+        }
+
     }
-}

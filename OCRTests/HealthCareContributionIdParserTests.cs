@@ -20,8 +20,8 @@ namespace OCRTests
         [DeploymentItem(@"..\..\..\..\OCR-TPC\OCRTests\Resources\Parsedtext.txt")]
         public void Parse_Success()
         {
-            string id = HealthCareContributionIdParser.Parse(File.ReadAllText("Parsedtext.txt"));
-            Assert.IsTrue(id == "30 0026409 59");
+            double id = ContributorPersonalData.ParseCotizationAccount(File.ReadAllText("Parsedtext.txt"));
+            Assert.IsTrue(id == 30002640959);
         }
 
 
@@ -31,7 +31,7 @@ namespace OCRTests
         [ExpectedException(typeof(ArgumentException))]
         public void Parse_Fail()
         {
-            string id = HealthCareContributionIdParser.Parse("lol");
+            double id = ContributorPersonalData.ParseCotizationAccount("lol");
         }
     }
 }

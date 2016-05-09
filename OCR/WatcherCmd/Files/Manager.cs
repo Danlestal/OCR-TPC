@@ -67,12 +67,15 @@ namespace WatcherCmd.Files
                     return;
                 }
 
-
                 string fileUrl = UploadFile(fileOutputPngPath);
-                string contributorId = HealthCareContributionIdParser.Parse(data.Text);
+
+   
 
                 ContributionPeriodDataDTO dataToSend = new ContributionPeriodDataDTO();
-                dataToSend.ContributorId = contributorId;
+                dataToSend.ContributorId = ContributorPersonalData.ParseCotizationAccount(data.Text);
+                dataToSend.CNAE = ContributorPersonalData.ParseCNAE(data.Text);
+                dataToSend.SocialReason = ContributorPersonalData.ParseSocialReason(data.Text);
+
                 foreach (ContributionPeriod period in results)
                 {
                     dataToSend.ContributionPeriodsDTO.Add(new ContributionPeriodDTO()

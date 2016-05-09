@@ -123,31 +123,44 @@
         <script>
             var apiUrl = '@System.Configuration.ConfigurationManager.AppSettings["APIBaseUrl"]';
             var table;
+            var url = apiUrl + "/ContributionPeriods";
+            
             $(document).ready(function () {
 
-                table = $('#jsGrid').DataTable({
-                    "data": [],
-                    "language": {
-                        "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: 'json',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0")
                     },
-                    "columns": [
-                        { "data": "healthCareId" },
-                        { "data": "PeriodStart" },
-                        { "data": "PeriodEnd" },
-                        { "data": "MoneyContribution" },
-                        { "data": "HighResFileId" },
-                    ],
-                    "columnDefs": [
-                        { "targets": 0, "class": "text-center", "title": "Cuenta de cotización", "render": function (data) { return (!data) ? "" : data; } },
-                        { "targets": 1, "class": "text-center", "title": "Comienzo de cotización", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
-                        { "targets": 2, "class": "text-center", "title": "Fin de cotización", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
-                        { "targets": 3, "class": "text-center", "title": "Dinero Contribuido", "render": function (data) { return (!data) ? "" : data; } },
-                        {
-                            "targets": 4, "class": "text-center", "title": "Muestra de Documento", "render": function (data) {
-                                return (!data) ? "" : '<p><a "href="#myModal">ver documento</a></p>';
-                            }
-                        }
-                    ]
+                    success: function (response) {
+
+                        table = $('#jsGrid').DataTable({
+                            "data": response,
+                            "language": {
+                                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+                            },
+                            "columns": [
+                                { "data": "HealthCareId" },
+                                { "data": "PeriodStart" },
+                                { "data": "PeriodEnd" },
+                                { "data": "MoneyContribution" },
+                                { "data": "HighResFileId" },
+                            ],
+                            "columnDefs": [
+                                { "targets": 0, "class": "text-center", "title": "Cuenta de cotización", "render": function (data) { return (!data) ? "" : data; } },
+                                { "targets": 1, "class": "text-center", "title": "Comienzo de cotización", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
+                                { "targets": 2, "class": "text-center", "title": "Fin de cotización", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
+                                { "targets": 3, "class": "text-center", "title": "Dinero Contribuido", "render": function (data) { return (!data) ? "" : data; } },
+                                {
+                                    "targets": 4, "class": "text-center", "title": "Muestra de Documento", "render": function (data) {
+                                        return (!data) ? "" : '<p><a "href="#myModal">ver documento</a></p>';
+                                    }
+                                }
+                            ]
+                        });
+                    }
                 });
             });
 
