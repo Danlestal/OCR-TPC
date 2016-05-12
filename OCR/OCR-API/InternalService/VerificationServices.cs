@@ -37,6 +37,11 @@ namespace OCR_API.InternalService
             {
                 ISheet _worksheet = _workbook.GetSheetAt(i);
 
+                if (i > 0)
+                {
+                    result += @"<p style=""text-info"">" + "Nueva Pestaña</p>";
+                }
+
                 for (int row = 2; row <= _worksheet.LastRowNum; row++)
                 {
 
@@ -53,7 +58,6 @@ namespace OCR_API.InternalService
                     result += VerifyRow(eachRow, row);
                 }
 
-                result += @"<p style=""text-info"">" + "Nueva Pestaña</p>";
             }
 
             if (File.Exists(filePath))
@@ -79,38 +83,38 @@ namespace OCR_API.InternalService
             contributor = dbContext.Contributors.FirstOrDefault(s => s.CuentaCotizacion == idContributor);
 
             if (contributor == null)
-                return ContributorNotFound(row);
+                return ContributorNotFound(row, idContributor);
 
 
             if (eachRow.GetCell(2).CellType == CellType.Numeric)
             {
                 if (contributor.NIF != eachRow.GetCell(2).NumericCellValue.ToString()) 
-                    return NIFNotFound(row);
+                    return NIFNotFound(row, eachRow.GetCell(2).NumericCellValue.ToString());
             } else
             {
                 if (contributor.NIF != eachRow.GetCell(2).StringCellValue)
-                    return NIFNotFound(row);
+                    return NIFNotFound(row, eachRow.GetCell(2).StringCellValue);
             }
 
             if (contributor.RazonSocial != eachRow.GetCell(3).StringCellValue)
-                return RazonSocialNotFound(row);
+                return RazonSocialNotFound(row, eachRow.GetCell(3).StringCellValue);
 
-            return Correct(row);
+            return string.Empty;
         }
 
-        private string ContributorNotFound(int row)
+        private string ContributorNotFound(int row, double contributor)
         {
-            return @"<p style=""text-danger"">" + "line: " + row.ToString() + " ningún registro para Cta. de vCotización</p>";
+            return @"<p style=""text-danger"">" + "line: " + row.ToString() + " ningún registro para Cta. de Cotización: " + contributor.ToString() + "</p>";
         }
 
-        private string NIFNotFound(int row)
+        private string NIFNotFound(int row, string nif)
         {
-            return @"<p style=""text-danger"">" + "line: " + row.ToString() + " ningún registro para NIF</p>";
+            return @"<p style=""text-danger"">" + "line: " + row.ToString() + " ningún registro para NIF: " + nif + "</p>";
         }
 
-        private string RazonSocialNotFound(int row)
+        private string RazonSocialNotFound(int row, string razonSocial)
         {
-            return @"<p style=""text-danger"">" + "line: " + row.ToString() + " ningún registro para Razón Social</p>";
+            return @"<p style=""text-danger"">" + "line: " + row.ToString() + " ningún registro para Razón Social" + razonSocial + "</p>";
         }
 
         private string Correct(int row)

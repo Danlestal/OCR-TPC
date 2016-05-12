@@ -125,9 +125,9 @@
         var apiUrl = '@System.Configuration.ConfigurationManager.AppSettings["APIBaseUrl"]';
         var table;
         var url = apiUrl + "/ContributionPeriods";
-            
+
         $(document).ready(function () {
-            
+
             $.ajax({
                 url: url,
                 type: 'GET',
@@ -194,7 +194,7 @@
             });
 
 
-            
+
 
         });
 
@@ -302,7 +302,7 @@
 
                 }
             });
-        
+
 
         });
 
@@ -333,12 +333,14 @@
                     xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0")
                 },
                 success: function (status) {
-                    $('#verifyModal').html(status);
-
-                    //var span = document.getElementsByClassName("close")[0];
-                    //span.onclick = function () {
-                    //    $('#verification').css("display", "none");
-                    //}
+                    var newDiv = $(document.createElement('div'));
+                    var textDialog = $(document.createElement('div'));
+                    $(textDialog).html(status);
+                    newDiv.append(textDialog);
+                    //var header = "<span class=\"ui-state-default\"><span class=\"ui-icon ui-icon-info\" style=\"float:left; margin:0 7px 0 0;\"></span></span><div style=\"margin-left: 23px;\">";
+                    $(newDiv).dialog();
+                    
+                    $('#verifyModal').html("");
 
                 },
                 processData: false,
