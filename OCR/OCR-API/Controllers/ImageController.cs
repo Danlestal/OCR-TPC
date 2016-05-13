@@ -51,9 +51,11 @@ namespace OCR_API.Controllers
             requestStream.Close();
 
 
+            string fullpath = Path.GetFullPath(imageStoragePath + "\\" + newFileName);
+
             HttpResponseMessage response = new HttpResponseMessage();
             response.StatusCode = HttpStatusCode.Created;
-            response.Content = new StringContent(baseImageUrl + "\\" + newFileName);
+            response.Content = new StringContent(baseImageUrl + "\\" + newFileName + "@" + fullpath);
             return response;
         }
 

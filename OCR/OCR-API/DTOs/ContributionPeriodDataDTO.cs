@@ -24,5 +24,6 @@ namespace OCR_API.DTOs
         public DateTime PeriodEnd { get; set; }
         public double MoneyContribution { get; set; }
         public string HighResFileId { get; set; }
+        public string FileAbsolutePath { get; set; }
     }
 }

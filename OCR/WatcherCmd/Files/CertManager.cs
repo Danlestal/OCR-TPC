@@ -74,7 +74,10 @@ namespace WatcherCmd.Files
                     break;
                 }
 
-                string fileUrl = UploadFile(fileOutputPngPath);
+                string uploadResult = UploadFile(fileOutputPngPath);
+
+                string fileUrl = uploadResult.Split('@')[0];
+                string fileAbsolutePath = uploadResult.Split('@')[1];
 
 
 
@@ -92,7 +95,8 @@ namespace WatcherCmd.Files
                         MoneyContribution = period.MoneyContribution,
                         PeriodEnd = period.PeriodEnd,
                         PeriodStart = period.PeriodStart,
-                        HighResFileId = fileUrl
+                        HighResFileId = fileUrl,
+                        FileAbsolutePath = fileAbsolutePath
                     });
                 }
 

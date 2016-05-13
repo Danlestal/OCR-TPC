@@ -18,6 +18,8 @@ namespace OCR_API.DataLayer
 
         public string HighResImagenId { get; set; }
 
+        public string PathAbsolutoArchivo { get; set; }
+
         [ForeignKey("ContributorRefId")]
         public virtual Contribuidor Contributor { get; set; }
 

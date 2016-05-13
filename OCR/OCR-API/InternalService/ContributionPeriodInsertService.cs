@@ -37,7 +37,8 @@ namespace OCR_API.InternalService
                     Dinero = newPeriod.MoneyContribution,
                     FinPeriodo = newPeriod.PeriodEnd,
                     ComienzoPeriodo = newPeriod.PeriodStart,
-                    HighResImagenId = newPeriod.HighResFileId
+                    HighResImagenId = newPeriod.HighResFileId,
+                    PathAbsolutoArchivo = newPeriod.FileAbsolutePath
                 };
 
                 dbContext.Periods.Add(newContributionPeriod);
