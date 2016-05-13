@@ -15,7 +15,7 @@ namespace OCR_API.Controllers
 
         public LaboralLifeController()
         {
-            var context = new OCR_TPC_Context();
+            var context = new VidaLaboral_Context();
             insertionService = new LaboralLifeInsertService(context);
         }
 

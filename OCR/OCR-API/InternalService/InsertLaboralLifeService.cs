@@ -9,9 +9,9 @@ namespace OCR_API.InternalService
 {
     public class LaboralLifeInsertService
     {
-        private OCR_TPC_Context dbContext;
+        private VidaLaboral_Context dbContext;
 
-        public LaboralLifeInsertService(OCR_TPC_Context context)
+        public LaboralLifeInsertService(VidaLaboral_Context context)
         {
             dbContext = context;
         }

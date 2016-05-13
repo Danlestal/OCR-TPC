@@ -320,6 +320,7 @@
     <Compile Include="DataLayer\OCRDBContext.cs" />
     <Compile Include="DataLayer\PeriodoVidaLaboral.cs" />
     <Compile Include="DataLayer\User.cs" />
+    <Compile Include="DataLayer\VidaLaboralDBContext.cs" />
     <Compile Include="DTOs\ContributionPeriodDataDTO.cs" />
     <Compile Include="DTOs\ImageDTO.cs" />
     <Compile Include="DTOs\LaboralLifeDTO.cs" />
