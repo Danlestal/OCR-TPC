@@ -21,21 +21,18 @@ namespace WatcherCmd.Files
             set { _watcher.EnableRaisingEvents = value; }
         }
 
-        public void Init()
+        public void Init(string folder)
         {
-            _logger.Info("Initialize Watcher");
-            PrepareWatcherInExceptionSafeMode();
+            PrepareWatcherInExceptionSafeMode(folder);
         }
 
-        private void PrepareWatcherInExceptionSafeMode()
+        private void PrepareWatcherInExceptionSafeMode(string folderToWatch)
         {
             _logger.Debug("Preparing FileSystemWatcher");
 
             try
             {
-                var appSettings = ConfigurationManager.AppSettings;
-                string directoryPathToWatch = appSettings["DirectoryPathToWatch"];
-                PrepareWatcher(directoryPathToWatch);
+                PrepareWatcher(folderToWatch);
             }
             catch (Exception e)
             {
@@ -54,6 +51,7 @@ namespace WatcherCmd.Files
                 _logger.Fatal(error);
                 return;
             }
+
             _logger.Info(string.Format("Directory '{0}' found", directoryPathToWatch));
             
             _watcher = new FileSystemWatcher();

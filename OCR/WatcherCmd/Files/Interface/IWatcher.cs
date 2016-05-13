@@ -11,7 +11,7 @@ namespace WatcherCmd.Files.Interface
     {
 
         event FileSystemEventHandler FileDetected;
-        void Init();
+        void Init(string folderToWath);
         bool EnableRaisingEvents { get; set; }
 
     }

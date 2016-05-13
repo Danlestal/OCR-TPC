@@ -39,12 +39,17 @@ namespace WatcherCmd.Jobs
         private void execute()
         {
                         
-            var watcher = new Watcher();
+            
             var client = new APIClient(ConfigurationManager.AppSettings["ApiURL"]);
 
-            IManager manager = new Manager(_logger, watcher, client);
-            manager.InitializeSystem();
-        
+            var certWatcher = new Watcher();
+            IManager certManager = new CertManager(_logger, certWatcher, client);
+            certManager.InitializeSystem();
+
+            var laboralWatcher = new Watcher();
+            IManager vidaLaboralManager = new VidaLaboralManager(_logger, laboralWatcher, client);
+            vidaLaboralManager.InitializeSystem();
+
         }
  
     }

@@ -12,7 +12,7 @@ using WatcherCmd.Files.Interface;
 
 namespace WatcherCmd.Files
 {
-    public class Manager : IManager
+    public class CertManager : IManager
     {
         private readonly ILog _logger;
         private readonly IWatcher _watcher;
@@ -20,7 +20,7 @@ namespace WatcherCmd.Files
         private string _apiUrl;
 
 
-        public Manager(ILog logger, IWatcher watcher, APIClient client)
+        public CertManager(ILog logger, IWatcher watcher, APIClient client)
         {
             _logger = logger;
             _watcher = watcher;
@@ -33,30 +33,13 @@ namespace WatcherCmd.Files
         {
 
             _watcher.FileDetected += OnFileDetected;
-            _watcher.Init();
+            _watcher.Init(ConfigurationManager.AppSettings["CertFolder"]);
 
         }
 
         private void OnFileDetected(object sender, FileSystemEventArgs e)
         {
-            if (e.FullPath.Contains("Contribuidores"))
-            {
-                ProcContributionFile(e.FullPath);
-            }
-            else if (e.FullPath.Contains("VidaLaboral"))
-                {
-                    ProcLaboralLife(e.FullPath);
-                }
-        }
-
-        private void ProcLaboralLife(string inputPath)
-        {
-            LaboralLifeParser parser = new LaboralLifeParser();
-            LaboralLifeData data = parser.Parse(inputPath);
-
-            APIClient client = new APIClient(_apiUrl);
-            client.Post("LaboralLife", data);
-            File.Delete(inputPath);
+            ProcContributionFile(e.FullPath);
         }
 
         private void ProcContributionFile(string inputPath)

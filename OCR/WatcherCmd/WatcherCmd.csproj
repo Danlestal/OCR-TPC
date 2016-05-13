@@ -63,10 +63,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Files\VidaLaboralManager.cs" />
     <Compile Include="Jobs\WatcherCmdJob.cs" />
     <Compile Include="Files\Interface\IManager.cs" />
     <Compile Include="Files\Interface\IWatcher.cs" />
-    <Compile Include="Files\Manager.cs" />
+    <Compile Include="Files\CertManager.cs" />
     <Compile Include="Files\Watcher.cs" />
     <Compile Include="OCRService.cs">
       <SubType>Component</SubType>
