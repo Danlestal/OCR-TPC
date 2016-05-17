@@ -60,10 +60,23 @@ namespace OCR
 
         private double ParseMoneyOnSpanishFormat(string contributionString)
         {
-            contributionString = contributionString.Replace(".", "");
-            contributionString.Replace(",", ".");
-            return double.Parse(contributionString);
+            Regex moneyRegex = new Regex(@"(\d+[,.]*\d*)");
+            Match matchResult = moneyRegex.Match(contributionString);
+
+            if (!matchResult.Success)
+            {
+                return 0;
+            }
+
+            contributionString = matchResult.Groups[1].Value.ToString();
+            contributionString = contributionString.Replace(".", ",");
+
+            double result = 0;
+
+            double.TryParse(contributionString, out result);
+            return result;
         }
+
         public int ParseSpanishMonth(string value)
         {
             for (int i = 0; i < Constants.SpanishMonths.Length; ++i)
