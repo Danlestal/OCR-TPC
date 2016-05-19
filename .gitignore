@@ -74,3 +74,5 @@ Temporary Items
 /OCR/WatcherCmd/obj/Release
 /OCR-Web/obj/Release
 /OCRTests/obj/Release
+/OCR/WatcherCmd/WatcherCmd.csproj.user
+/OCR/WatcherCmd/WatcherCmd_TemporaryKey.pfx

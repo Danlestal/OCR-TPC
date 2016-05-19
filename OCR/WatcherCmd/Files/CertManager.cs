@@ -113,11 +113,11 @@ namespace WatcherCmd.Files
             File.Move(inputPath, destinationPath);
         }
 
-        private static string UploadFile(string outputPath)
+        private string UploadFile(string outputPath)
         {
             StreamReader sr = new StreamReader(outputPath, System.Text.Encoding.UTF8, true, 128);
             byte[] fileStream = ReadFully(sr.BaseStream);
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(new Uri("http://localhost:58869/UploadFile"));
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(new Uri(_apiUrl + "/UploadFile"));
             request.Method = "POST";
             request.ContentType = "application/octet-stream";
 
