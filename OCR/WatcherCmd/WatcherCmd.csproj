@@ -53,14 +53,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.ServiceModel" />
-    <Reference Include="System.ServiceProcess" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.ServiceProcess" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Files\VidaLaboralManager.cs" />
@@ -81,10 +76,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OCR-API\OCR-API.csproj">
-      <Project>{acab07a9-3e21-49b1-a2a7-0814eff28c8f}</Project>
-      <Name>OCR-API</Name>
-    </ProjectReference>
     <ProjectReference Include="..\OCR.csproj">
       <Project>{ce6b6406-ed99-497f-a507-663c0eb884fa}</Project>
       <Name>OCR</Name>

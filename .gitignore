@@ -67,3 +67,10 @@ Temporary Items
 /OCR/OCR-API/IMGs
 /OCR/OCR-API/STORAGE
 /OCR/.~lock.Funcional.doc#
+/OCR/bin/Release
+/OCR/obj/Release
+/OCR/OCR-API/obj/Release
+/OCR/WatcherCmd/bin/Release
+/OCR/WatcherCmd/obj/Release
+/OCR-Web/obj/Release
+/OCRTests/obj/Release
