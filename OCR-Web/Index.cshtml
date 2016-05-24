@@ -235,7 +235,7 @@
             if (healthCareId.indexOf(',') > -1) {
                 url = apiUrl + "/ContributionPeriodsList/" + healthCareId;
             } else {
-                url = apiUrl + "/ContributionPeriods/" + healthCareId;
+                url = apiUrl + "/ContributionPeriods/" + healthCareId;f
             }
 
             $.ajax({
@@ -272,7 +272,7 @@
                             },
                              {
                                  "targets": 5, "class": "text-center", "title": "Eliminar", "render": function (data) {
-                                     return (!data) ? "" : '<a>ver documento</a>';
+                                     return (!data) ? "" : '<span class="glyphicon glyphicon-erase" style="cursor:pointer"></span>';
                                  }
                              }
 
@@ -314,6 +314,14 @@
                         modal.style.display = "none";
                     }
 
+                } else if (colIdx == 5)
+                {
+                    var rowIdx = table
+                    .cell(this)
+                    .index().row;
+
+                    var data = table.row(rowIdx).data();
+                    alert(data.healthCareId);
                 }
             });
 

@@ -178,33 +178,6 @@ D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\obj\Debug\WatcherCmd.exe
 D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\obj\Debug\WatcherCmd.pdb
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\obj\Debug\WatcherCmd.csprojResolveAssemblyReference.cache
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\WatcherCmd.exe.config
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\csc.exe
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\csc.exe.config
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\csc.rsp
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\csi.exe
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\csi.rsp
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\Microsoft.CodeAnalysis.CSharp.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\Microsoft.CodeAnalysis.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\Microsoft.CSharp.Core.targets
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\Microsoft.DiaSymReader.Native.x86.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\Microsoft.VisualBasic.Core.targets
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\System.AppContext.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\System.Collections.Immutable.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\System.Console.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\System.Diagnostics.StackTrace.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\System.IO.FileSystem.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\System.IO.FileSystem.Primitives.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\System.Reflection.Metadata.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\vbc.exe
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\vbc.exe.config
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\vbc.rsp
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\VBCSCompiler.exe
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\VBCSCompiler.exe.config
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\tessdata\spa.cube-unicharset
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\tessdata\spa.cube-word-dawg
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\tessdata\spa.cube.bigrams
@@ -234,30 +207,17 @@ C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\WatcherCmd.pdb
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\Common.Logging.Core.dll
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\Common.Logging.dll
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\Newtonsoft.Json.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\OCR-API.dll
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\OCR.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\WebActivatorEx.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\Swashbuckle.Core.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.Http.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Net.Http.Formatting.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\EntityFramework.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.Http.WebHost.dll
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\Tesseract.dll
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\Spire.Pdf.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\Microsoft.Web.Infrastructure.dll
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\Spire.License.dll
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\Microsoft.mshtml.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\OCR-API.pdb
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\OCR.pdb
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\Common.Logging.pdb
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\Common.Logging.xml
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\Common.Logging.Core.pdb
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\Common.Logging.Core.xml
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\Newtonsoft.Json.xml
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.Http.xml
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Net.Http.Formatting.xml
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\EntityFramework.xml
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.Http.WebHost.xml
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\Tesseract.xml
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\Spire.Pdf.xml
 C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\Spire.License.xml
@@ -304,21 +264,6 @@ D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Net.Http.Formatting.xml
 D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\EntityFramework.xml
 D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.Http.WebHost.xml
 D:\PecanSoft\OCR-TPC\OCR\WatcherCmd\obj\Debug\WatcherCmd.csproj.WatcherCmd.exe.config
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.Optimization.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.Mvc.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\WebGrease.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.Razor.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.WebPages.Razor.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.WebPages.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\Antlr3.Runtime.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.WebPages.Deployment.dll
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.Optimization.xml
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.Mvc.xml
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.Razor.xml
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.WebPages.Razor.xml
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.WebPages.xml
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\Antlr3.Runtime.pdb
-C:\Nueva carpeta\OCR-TPC\OCR\WatcherCmd\bin\Debug\System.Web.WebPages.Deployment.xml
 C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\csc.exe
 C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\csc.exe.config
 C:\programacion\PecanSoft\OCR-TPC\OCR\WatcherCmd\bin\Debug\roslyn\csc.rsp
