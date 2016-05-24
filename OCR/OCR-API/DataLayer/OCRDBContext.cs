@@ -21,7 +21,7 @@ namespace OCR_API.DataLayer
             modelBuilder.Entity<PeriodoContribucion>()
                     .HasRequired<Contribuidor>(s => s.Contributor)
                     .WithMany(s => s.PeriodosContribucion)
-                    .HasForeignKey(s => s.ContribuidorRefId);
+                    .HasForeignKey(s => s.ContribuidorRefId).WillCascadeOnDelete();
         }
     }
 

@@ -30,7 +30,9 @@ namespace OCR
                     break;
                 else
                 {
-                    result.Add(ParseContributionPeriod(lines[counter]));
+                    ContributionPeriod parsedPeriod = ParseContributionPeriod(lines[counter]);
+                    if (parsedPeriod != null)
+                        result.Add(parsedPeriod);
                 }
             }
 
@@ -52,7 +54,17 @@ namespace OCR
             {
                 DateTime periodStart = new DateTime(Int32.Parse(match.Groups[2].Value), ParseSpanishMonth(match.Groups[1].Value), 1);
                 DateTime periodEnd = new DateTime(Int32.Parse(match.Groups[4].Value), ParseSpanishMonth(match.Groups[3].Value), 1);
+
+                if (periodStart > periodEnd)
+                {
+                    Console.WriteLine("Dato incorrecto detectado.");
+                    return null;
+                }
+
+
                 double contribution = ParseMoneyOnSpanishFormat(match.Groups[5].Value);
+               
+
 
                 return new ContributionPeriod(periodStart, periodEnd, contribution);
             }
@@ -60,6 +72,7 @@ namespace OCR
 
         private double ParseMoneyOnSpanishFormat(string contributionString)
         {
+            contributionString = contributionString.Replace(".", "");
             Regex moneyRegex = new Regex(@"(\d+[,.]*\d*)");
             Match matchResult = moneyRegex.Match(contributionString);
 
@@ -67,9 +80,8 @@ namespace OCR
             {
                 return 0;
             }
-
+            
             contributionString = matchResult.Groups[1].Value.ToString();
-            contributionString = contributionString.Replace(".", ",");
 
             double result = 0;
 

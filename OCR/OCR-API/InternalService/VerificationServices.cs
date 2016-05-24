@@ -71,14 +71,7 @@ namespace OCR_API.InternalService
         {
             Contribuidor contributor = new Contribuidor();
 
-            double idContributor = 0;
-            if (eachRow.GetCell(1).CellType == CellType.Numeric)
-            {
-                idContributor = eachRow.GetCell(1).NumericCellValue;
-            } else
-            {
-                idContributor = double.Parse(eachRow.GetCell(1).StringCellValue);
-            }
+            string idContributor = eachRow.GetCell(1).StringCellValue;
             
             contributor = dbContext.Contributors.FirstOrDefault(s => s.CuentaCotizacion == idContributor);
 
@@ -102,9 +95,9 @@ namespace OCR_API.InternalService
             return string.Empty;
         }
 
-        private string ContributorNotFound(int row, double contributor)
+        private string ContributorNotFound(int row, string contributor)
         {
-            return @"<p style=""text-danger"">" + "line: " + row.ToString() + " ningún registro para Cta. de Cotización: " + contributor.ToString() + "</p>";
+            return @"<p style=""text-danger"">" + "line: " + row.ToString() + " ningún registro para Cta. de Cotización: " + contributor + "</p>";
         }
 
         private string NIFNotFound(int row, string nif)

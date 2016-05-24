@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OCR_API.DataLayer
@@ -16,9 +17,8 @@ namespace OCR_API.DataLayer
 
         public int ContribuidorRefId { get; set; }
 
+        [MaxLength(250)]
         public string HighResImagenId { get; set; }
-
-        public string PathAbsolutoArchivo { get; set; }
 
         [ForeignKey("ContributorRefId")]
         public virtual Contribuidor Contributor { get; set; }

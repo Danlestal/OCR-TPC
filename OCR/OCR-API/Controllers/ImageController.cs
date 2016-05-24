@@ -1,4 +1,5 @@
-﻿using Microsoft.Web.Administration;
+﻿using System;
+using Microsoft.Web.Administration;
 using OCR_API.Filters;
 using OCR_API.InternalService;
 using System.Configuration;
@@ -39,16 +40,23 @@ namespace OCR_API.Controllers
             string newFileName = Path.GetRandomFileName();
             newFileName = Path.GetFileNameWithoutExtension(newFileName) + ".png";
 
-            if (!Directory.Exists(imageStoragePath))
+            try
             {
-                Directory.CreateDirectory(imageStoragePath);
+                if (!Directory.Exists(imageStoragePath))
+                {
+                    Directory.CreateDirectory(imageStoragePath);
+                }
+
+                Stream fileStream = File.Create(imageStoragePath + "\\" + newFileName);
+                requestStream.CopyTo(fileStream);
+                fileStream.Close();
+                requestStream.Close();
             }
-
-
-            Stream fileStream = File.Create(imageStoragePath + "\\"+ newFileName);
-            requestStream.CopyTo(fileStream);
-            fileStream.Close();
-            requestStream.Close();
+            catch (Exception a)
+            {
+                File.WriteAllText("lol.txt", a.Message + "\n " + a.InnerException.Message);
+            }
+            
 
 
             string fullpath = Path.GetFullPath(imageStoragePath + "\\" + newFileName);

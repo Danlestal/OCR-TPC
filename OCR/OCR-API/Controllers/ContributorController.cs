@@ -11,13 +11,13 @@ namespace OCR_API.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ContributorController : ApiController
     {
-        private ContributorReadService readService;
+        private ContributorReadService contributorService;
         private OCR_TPC_Context context;
 
         public ContributorController()
         {
             context = new OCR_TPC_Context();
-            readService = new ContributorReadService(context);
+            contributorService = new ContributorReadService(context);
         }
 
 
@@ -31,7 +31,18 @@ namespace OCR_API.Controllers
         [ResponseType(typeof(IEnumerable<string>))]
         public IHttpActionResult Get()
         {
-            return Ok(readService.ReadContributorsIds());
+            return Ok(contributorService.ReadContributorsIds());
         }
+
+        [HttpDelete]
+        [Route("Contributors/{id}")]
+        [ApiAuthenticationFilter(true)]
+        public void Delete(int id)
+        {
+            contributorService.Delete(id);
+        }
+
+
+
     }
 }

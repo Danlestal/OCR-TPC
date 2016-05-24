@@ -17,7 +17,7 @@ namespace OCR_API.InternalService
             dbContext = context;
         }
 
-        public List<double> ReadContributorsIds()
+        public List<string> ReadContributorsIds()
         {
             return dbContext.Contributors.Select(s => s.CuentaCotizacion).ToList();
         }
@@ -44,7 +44,7 @@ namespace OCR_API.InternalService
             return result;
         }
 
-        public List<ContributionPeriodDTO> ReadContributorDetails(double healthCareId)
+        public List<ContributionPeriodDTO> ReadContributorDetails(string healthCareId)
         {
             List<ContributionPeriodDTO> result = new List<ContributionPeriodDTO>();
             Contribuidor contributor = new Contribuidor();
@@ -68,5 +68,12 @@ namespace OCR_API.InternalService
             return result;
         }
 
+        public void Delete(int id)
+        {
+            Contribuidor toRemove =  dbContext.Contributors.FirstOrDefault(s => s.ContribuidorId == id);
+            dbContext.Contributors.Remove(toRemove);
+            dbContext.SaveChanges();
+
+        }
     }
 }

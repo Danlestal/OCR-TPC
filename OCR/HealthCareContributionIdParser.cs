@@ -6,7 +6,7 @@ namespace OCR
     public class ContributorPersonalData
     {
 
-        public static double ParseCotizationAccount(string text)
+        public static string ParseCotizationAccount(string text)
         {
             var idRegex = new Regex(Constants.IDRegExp);
             Match match = idRegex.Match(text);
@@ -14,7 +14,7 @@ namespace OCR
             {
                 string result = match.Groups[1].Value.Trim();
                 result = result.Replace(" ", "");
-                return Double.Parse(result);
+                return result;
 
             }
 

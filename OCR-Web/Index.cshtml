@@ -106,6 +106,7 @@
                             <th>Fin de cotización</th>
                             <th>Dinero Contribuido</th>
                             <th>Muestra de Escaneo</th>
+                            <th>Eliminar</th>
                         </tr>
                     </thead>
 
@@ -148,6 +149,7 @@
                             { "data": "PeriodEnd" },
                             { "data": "MoneyContribution" },
                             { "data": "HighResFileId" },
+                            { "data": "Delete", "class": "text-center" }
                         ],
                         "columnDefs": [
                             { "targets": 0, "class": "text-center", "title": "Cuenta de cotización", "render": function (data) { return (!data) ? "" : data; } },
@@ -156,6 +158,11 @@
                             { "targets": 3, "class": "text-center", "title": "Dinero Contribuido", "render": function (data) { return (!data) ? "" : data; } },
                             {
                                 "targets": 4, "class": "text-center", "title": "Muestra de Documento", "render": function (data) {
+                                    return (!data) ? "" : '<a>ver documento</a>';
+                                }
+                            },
+                            {
+                                "targets": 5, "class": "text-center", "title": "Eliminar", "render": function (data) {
                                     return (!data) ? "" : '<a>ver documento</a>';
                                 }
                             }
@@ -251,6 +258,7 @@
                             { "data": "PeriodEnd", "class": "text-center" },
                             { "data": "MoneyContribution", "class": "text-center" },
                             { "data": "HighResFileId", "class": "text-center" },
+                            { "data": "Delete", "class": "text-center" }
                         ],
                         "columnDefs": [
                             { "targets": 0, "class": "text-center", "title": "Cuenta de cotización", "render": function (data) { return (!data) ? "" : data; } },
@@ -262,6 +270,12 @@
                                     return (!data) ? "" : '<a>ver documento</a>';
                                 }
                             },
+                             {
+                                 "targets": 5, "class": "text-center", "title": "Eliminar", "render": function (data) {
+                                     return (!data) ? "" : '<a>ver documento</a>';
+                                 }
+                             }
+
 
                         ]
                     });

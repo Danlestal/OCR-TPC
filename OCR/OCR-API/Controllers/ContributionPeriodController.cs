@@ -31,6 +31,8 @@ namespace OCR_API.Controllers
             insertionService.Insert(value);
         }
 
+       
+
         [HttpGet]
         [ApiAuthenticationFilter(true)]
         [Route("ContributionPeriods")]
@@ -49,7 +51,7 @@ namespace OCR_API.Controllers
         [ApiAuthenticationFilter(true)]
         [Route("ContributionPeriods/{healthCareid}", Name = "ContributorDetails")]
         [ResponseType(typeof(IEnumerable<ContributionPeriodDTO>))]
-        public IHttpActionResult Get(int healthCareid)
+        public IHttpActionResult Get(string healthCareid)
         {
             return Ok(readService.ReadContributorDetails(healthCareid));
         }
@@ -63,10 +65,10 @@ namespace OCR_API.Controllers
         [ApiAuthenticationFilter(true)]
         [Route("ContributionPeriodsList/{healthCareidList}", Name = "ContributorsDetails")]
         [ResponseType(typeof(IEnumerable<ContributionPeriodDTO>))]
-        public IHttpActionResult GetList(int[] healthCareidList)
+        public IHttpActionResult GetList(string[] healthCareidList)
         {
             List<ContributionPeriodDTO> result = new List<ContributionPeriodDTO>();
-            foreach (int id in healthCareidList)
+            foreach (string id in healthCareidList)
             {
                 result.AddRange(readService.ReadContributorDetails(id));
             }

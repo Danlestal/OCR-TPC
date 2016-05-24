@@ -27,6 +27,7 @@ namespace OCR_API.InternalService
                 contributor.RazonSocial = dataToInsert.SocialReason;
                 contributor.CNAE = dataToInsert.CNAE;
                 contributor.NIF = dataToInsert.NIF;
+                contributor.PathAbsolutoArchivo = dataToInsert.PathAbsoluto;
                 dbContext.Contributors.Add(contributor);
             }
 
@@ -38,7 +39,6 @@ namespace OCR_API.InternalService
                     FinPeriodo = newPeriod.PeriodEnd,
                     ComienzoPeriodo = newPeriod.PeriodStart,
                     HighResImagenId = newPeriod.HighResFileId,
-                    PathAbsolutoArchivo = newPeriod.FileAbsolutePath
                 };
 
                 dbContext.Periods.Add(newContributionPeriod);
@@ -49,5 +49,6 @@ namespace OCR_API.InternalService
             dbContext.SaveChanges();
             return true;
         }
+        
     }
 }

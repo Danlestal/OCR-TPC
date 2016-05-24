@@ -44,15 +44,19 @@ namespace WatcherCmd.Files
 
         private void ProcContributionFile(string inputPath)
         {
+            Console.WriteLine("PROCESANDO ARCHIVO: " + inputPath);
             string inputFile = Path.GetFileName(inputPath);
             int inputFilePages = PDFToImageConverter.GetPdfPages(inputPath);
 
 
             PDFToImageConverter coverter = new PDFToImageConverter();
-            double firstContributor = 0;
+            string firstContributor = string.Empty;
+
+            string destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\" + firstContributor + "_" + System.DateTime.Today.ToString("ddMMyyyy") + ".pdf";
 
             for (int i = 0; i < inputFilePages; i++)
             {
+                Console.WriteLine("pagina " + i);
                 string outputFile = Path.GetFileNameWithoutExtension(inputPath) + "-" + i + ".tiff";
                 string outputPngFile = Path.GetFileNameWithoutExtension(inputPath) + "-" + i + ".png";
 
@@ -76,14 +80,19 @@ namespace WatcherCmd.Files
 
                 string uploadResult = UploadFile(fileOutputPngPath);
 
-                string fileUrl = uploadResult.Split('@')[0];
-                string fileAbsolutePath = uploadResult.Split('@')[1];
+                string fileUrl = string.Empty;
+                string fileAbsolutePath = string.Empty;
 
-
+                if (!string.IsNullOrEmpty(uploadResult))
+                {
+                    fileUrl = uploadResult.Split('@')[0];
+                    fileAbsolutePath = uploadResult.Split('@')[1];
+                }
 
                 ContributionPeriodDataDTO dataToSend = new ContributionPeriodDataDTO();
                 dataToSend.ContributorId = ContributorPersonalData.ParseCotizationAccount(data.Text);
-                firstContributor = dataToSend.ContributorId;
+                destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\" + dataToSend.ContributorId + "_" + System.DateTime.Today.ToString("ddMMyyyy") + ".pdf";
+                dataToSend.PathAbsoluto = destinationPath;
                 dataToSend.CNAE = ContributorPersonalData.ParseCNAE(data.Text);
                 dataToSend.SocialReason = ContributorPersonalData.ParseSocialReason(data.Text);
                 dataToSend.NIF = ContributorPersonalData.ParseNIF(data.Text);
@@ -105,12 +114,17 @@ namespace WatcherCmd.Files
 
             }
 
-            string destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\" + firstContributor + "_" + System.DateTime.Today.ToString("ddMMyyyy") + ".pdf";
+            
 
+
+            Console.WriteLine("moviendo archivo a " + destinationPath);
             if (File.Exists(destinationPath))
                 File.Delete(destinationPath);
 
             File.Move(inputPath, destinationPath);
+
+            Console.WriteLine("FIN PROCESO");
+            Console.WriteLine("-----------");
         }
 
         private string UploadFile(string outputPath)
@@ -129,7 +143,20 @@ namespace WatcherCmd.Files
             serverStream.Write(fileStream, 0, fileStream.Length);
             serverStream.Close();
 
-           WebResponse response =  request.GetResponse();
+            WebResponse response = null;
+            try
+            {
+                response = request.GetResponse();
+            }
+            catch (WebException a)
+            {
+                Console.WriteLine(a.Response);
+                Console.WriteLine(a.Message);
+                Console.WriteLine(a.InnerException);
+                return "";
+            }
+
+
             string result = string.Empty;
             using (var reader = new StreamReader(response.GetResponseStream()))
             {
