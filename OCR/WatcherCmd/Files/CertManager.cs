@@ -8,6 +8,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Threading;
 using WatcherCmd.Files.Interface;
 
 namespace WatcherCmd.Files
@@ -44,12 +45,16 @@ namespace WatcherCmd.Files
 
         private void ProcContributionFile(string inputPath)
         {
+            Thread.Sleep(500);
+            PDFToImageConverter coverter = new PDFToImageConverter();
+
+
             Console.WriteLine("PROCESANDO ARCHIVO: " + inputPath);
             string inputFile = Path.GetFileName(inputPath);
-            int inputFilePages = PDFToImageConverter.GetPdfPages(inputPath);
+            int inputFilePages = coverter.GetPdfPages(inputPath);
 
 
-            PDFToImageConverter coverter = new PDFToImageConverter();
+           
             string firstContributor = string.Empty;
 
             string destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\" + firstContributor + "_" + System.DateTime.Today.ToString("ddMMyyyy") + ".pdf";

@@ -13,14 +13,14 @@ namespace OCR_API.Controllers
     public class ContributionPeriodController : ApiController
     {
 
-        private ContributionPeriodInsertService insertionService;
-        private ContributorReadService readService;
+        private ContributionPeriodInsertService periodsService;
+        private ContributorReadService contributorsService;
 
         public ContributionPeriodController()
         {
             var context = new OCR_TPC_Context();
-            insertionService = new ContributionPeriodInsertService(context);
-            readService = new ContributorReadService(context);
+            periodsService = new ContributionPeriodInsertService(context);
+            contributorsService = new ContributorReadService(context);
         }
 
         // POST: api/ContributionPeriod
@@ -28,7 +28,7 @@ namespace OCR_API.Controllers
         [ApiAuthenticationFilter(true)]
         public void Post(ContributionPeriodDataDTO value)
         {
-            insertionService.Insert(value);
+            periodsService.Insert(value);
         }
 
        
@@ -39,7 +39,7 @@ namespace OCR_API.Controllers
         [ResponseType(typeof(IEnumerable<ContributionPeriodDTO>))]
         public IHttpActionResult GetFixed()
         {
-            return Ok(readService.ReadWithLimit());
+            return Ok(contributorsService.ReadWithLimit());
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace OCR_API.Controllers
         [ResponseType(typeof(IEnumerable<ContributionPeriodDTO>))]
         public IHttpActionResult Get(string healthCareid)
         {
-            return Ok(readService.ReadContributorDetails(healthCareid));
+            return Ok(contributorsService.ReadContributorDetails(healthCareid));
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace OCR_API.Controllers
             List<ContributionPeriodDTO> result = new List<ContributionPeriodDTO>();
             foreach (string id in healthCareidList)
             {
-                result.AddRange(readService.ReadContributorDetails(id));
+                result.AddRange(contributorsService.ReadContributorDetails(id));
             }
             return Ok(result);
         }

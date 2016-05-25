@@ -25,7 +25,7 @@ namespace OCR
             filters.Add(filter);
         }
 
-        public static int GetPdfPages(string inputPath)
+        public int GetPdfPages(string inputPath)
         {
             if (!File.Exists(inputPath))
             {
@@ -34,7 +34,9 @@ namespace OCR
 
             var doc = new PdfDocument();
             doc.LoadFromFile(inputPath, FileFormat.PDF);
-            return doc.Pages.Count;
+            int result =  doc.Pages.Count;
+            doc.Dispose();
+            return result;
         }
 
         public static void ConvertToImage(string inputPath, string outputPath, int resX, int resY, ImageFormat format)

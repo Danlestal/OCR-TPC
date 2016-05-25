@@ -163,7 +163,7 @@
                             },
                             {
                                 "targets": 5, "class": "text-center", "title": "Eliminar", "render": function (data) {
-                                    return (!data) ? "" : '<a>ver documento</a>';
+                                    return '<span class="glyphicon glyphicon-erase"></span>';
                                 }
                             }
                         ]
@@ -195,7 +195,17 @@
                                 modal.style.display = "none";
                             }
 
+                        }  else if (colIdx == 5)
+                        {
+                            var rowIdx = table
+                            .cell(this)
+                            .index().row;
+
+                            var data = table.row(rowIdx).data();
+                            deleteContributor(data);
+                            
                         }
+
                     });
                 }
             });
@@ -270,13 +280,11 @@
                                     return (!data) ? "" : '<a>ver documento</a>';
                                 }
                             },
-                             {
-                                 "targets": 5, "class": "text-center", "title": "Eliminar", "render": function (data) {
-                                     return (!data) ? "" : '<span class="glyphicon glyphicon-erase" style="cursor:pointer"></span>';
-                                 }
-                             }
-
-
+                            {
+                                "targets": 5, "class": "text-center", "title": "Eliminar", "render": function (data) {
+                                    return '<span class="glyphicon glyphicon-erase"></span>';
+                                }
+                            }
                         ]
                     });
                 },
@@ -314,15 +322,15 @@
                         modal.style.display = "none";
                     }
 
-                } else if (colIdx == 5)
-                {
+                } else if (colIdx == 5) {
                     var rowIdx = table
                     .cell(this)
                     .index().row;
 
                     var data = table.row(rowIdx).data();
-                    alert(data.healthCareId);
-                }
+                    deleteContributor(data);
+
+                } 
             });
 
 
@@ -338,6 +346,26 @@
                 sendFile(file);
             }
         });
+
+        function deleteContributor(data) {
+            if (window.confirm("¿está seguro que quiere borrar la cuenta " + data.HealthCareId + "?")) {
+                var urldelete = apiUrl + "/Contributors/" + data.HealthCareId;
+                $.ajax({
+                    url: urldelete,
+                    type: 'GET',
+                    dataType: 'json',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0")
+                    },
+                    success: function (response) {
+
+                    }, error: function () {
+                        //alert("Se encontró algún problema");
+                    }
+                });
+
+            }
+        };
 
         function sendFile(file) {
 

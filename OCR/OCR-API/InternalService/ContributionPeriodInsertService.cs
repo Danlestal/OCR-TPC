@@ -49,6 +49,5 @@ namespace OCR_API.InternalService
             dbContext.SaveChanges();
             return true;
         }
-        
     }
 }

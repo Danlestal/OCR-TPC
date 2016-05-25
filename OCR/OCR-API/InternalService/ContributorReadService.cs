@@ -44,6 +44,13 @@ namespace OCR_API.InternalService
             return result;
         }
 
+        internal void DeleteByHealthCareId(string healthcareid)
+        {
+            Contribuidor toRemove = dbContext.Contributors.FirstOrDefault(s => s.CuentaCotizacion == healthcareid);
+            dbContext.Contributors.Remove(toRemove);
+            dbContext.SaveChanges();
+        }
+
         public List<ContributionPeriodDTO> ReadContributorDetails(string healthCareId)
         {
             List<ContributionPeriodDTO> result = new List<ContributionPeriodDTO>();
@@ -67,13 +74,6 @@ namespace OCR_API.InternalService
 
             return result;
         }
-
-        public void Delete(int id)
-        {
-            Contribuidor toRemove =  dbContext.Contributors.FirstOrDefault(s => s.ContribuidorId == id);
-            dbContext.Contributors.Remove(toRemove);
-            dbContext.SaveChanges();
-
-        }
+        
     }
 }
