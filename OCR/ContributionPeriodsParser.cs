@@ -57,8 +57,7 @@ namespace OCR
 
                 if (periodStart > periodEnd)
                 {
-                    Console.WriteLine("Dato incorrecto detectado.");
-                    return null;
+                    throw new ContributionPeriodCreationException();
                 }
 
 

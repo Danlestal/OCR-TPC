@@ -35,13 +35,15 @@ namespace OCR_API.DataLayer
 
         public virtual ICollection<PeriodoContribucion> PeriodosContribucion { get; set; }
 
-        public void AddContributionPeriod(PeriodoContribucion newPeriod)
+        public bool AddContributionPeriod(PeriodoContribucion newPeriod)
         {
             if (!PeriodosContribucion.Contains(newPeriod))
             {
                 PeriodosContribucion.Add(newPeriod);
+                return true;
             }
 
+            return false;
         }
     }
 }

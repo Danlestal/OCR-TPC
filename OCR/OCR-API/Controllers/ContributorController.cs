@@ -37,9 +37,10 @@ namespace OCR_API.Controllers
         [HttpDelete]
         [Route("Contributors/{healthcareid}")]
         [ApiAuthenticationFilter(true)]
-        public void Delete(string healthcareid)
+        public IHttpActionResult Delete(string healthcareid)
         {
             contributorService.DeleteByHealthCareId(healthcareid);
+            return Ok();
         }
 
 

@@ -41,9 +41,10 @@ namespace OCR_API.InternalService
                     HighResImagenId = newPeriod.HighResFileId,
                 };
 
-                dbContext.Periods.Add(newContributionPeriod);
-
-                contributor.AddContributionPeriod(newContributionPeriod);
+                if (contributor.AddContributionPeriod(newContributionPeriod))
+                {
+                    dbContext.Periods.Add(newContributionPeriod);
+                }
             }
 
             dbContext.SaveChanges();

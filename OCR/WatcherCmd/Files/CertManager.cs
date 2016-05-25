@@ -76,7 +76,16 @@ namespace WatcherCmd.Files
                 OcrData data = reader.Read(fileOutputPath);
 
                 ContributionPeriodsParser parser = new ContributionPeriodsParser();
-                List<ContributionPeriod> results = parser.Parse(data.Text);
+
+                List<ContributionPeriod> results;
+                try
+                { 
+                    results = parser.Parse(data.Text);
+                }
+                catch (ContributionPeriodCreationException)
+                {
+                    break;
+                }
 
                 if (results.Count == 0)
                 {
@@ -95,7 +104,14 @@ namespace WatcherCmd.Files
                 }
 
                 ContributionPeriodDataDTO dataToSend = new ContributionPeriodDataDTO();
-                dataToSend.ContributorId = ContributorPersonalData.ParseCotizationAccount(data.Text);
+                try {
+                    dataToSend.ContributorId = ContributorPersonalData.ParseCotizationAccount(data.Text);
+                }
+                catch (ContributionPeriodCreationException)
+                {
+                    break;
+                }
+
                 destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\" + dataToSend.ContributorId + "_" + System.DateTime.Today.ToString("ddMMyyyy") + ".pdf";
                 dataToSend.PathAbsoluto = destinationPath;
                 dataToSend.CNAE = ContributorPersonalData.ParseCNAE(data.Text);

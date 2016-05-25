@@ -14,11 +14,17 @@ namespace OCR
             {
                 string result = match.Groups[1].Value.Trim();
                 result = result.Replace(" ", "");
-                return result;
+                result = result.Trim();
 
+                if (result.Length != 11)
+                {
+                    throw new ContributionPeriodCreationException("The text do not have the required format");
+                }
+
+                return result;
             }
 
-            throw new ArgumentException("The text do not have the required format");
+            throw new ContributionPeriodCreationException("The text do not have the required format");
         }
 
 
