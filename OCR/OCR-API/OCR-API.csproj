@@ -329,6 +329,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="InternalService\ContributionPerioPerYeardDTO.cs" />
+    <Compile Include="InternalService\ContributorsDuringYearDTO.cs" />
     <Compile Include="InternalService\InsertLaboralLifeService.cs" />
     <Compile Include="InternalService\VerificationServices.cs" />
     <Compile Include="InternalService\BusinessServices.cs" />

@@ -1,0 +1,45 @@
+﻿   #myImg {
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #myImg:hover {opacity: 0.7;}
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 5%; /* Location of the box */
+            padding-left:65%;
+            box-shadow: 0px 0px 50px 2px #000;
+        }
+        /* Modal Content (image) */
+        .modal-content {
+            width:99%;
+        }
+        /* Add Animation */
+        .modal-content, #caption {
+            -webkit-animation-name: zoom;
+            -webkit-animation-duration: 0.6s;
+            animation-name: zoom;
+            animation-duration: 0.6s;
+        }
+        /* The Close Button */
+        .myclose {
+            position: absolute;
+            float:right;
+            top: 15px;
+            right: 15px;
+            color: #000;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            opacity: .4;
+        }
+        .myclose:hover,
+        .myclose:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }

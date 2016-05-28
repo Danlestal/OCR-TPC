@@ -62,6 +62,9 @@ namespace WatcherCmd.Files
             for (int i = 0; i < inputFilePages; i++)
             {
                 Console.WriteLine("pagina " + i);
+                ContributionPeriodDataDTO dataToSend = new ContributionPeriodDataDTO();
+
+
                 string outputFile = Path.GetFileNameWithoutExtension(inputPath) + "-" + i + ".tiff";
                 string outputPngFile = Path.GetFileNameWithoutExtension(inputPath) + "-" + i + ".png";
 
@@ -78,19 +81,7 @@ namespace WatcherCmd.Files
                 ContributionPeriodsParser parser = new ContributionPeriodsParser();
 
                 List<ContributionPeriod> results;
-                try
-                { 
-                    results = parser.Parse(data.Text);
-                }
-                catch (ContributionPeriodCreationException)
-                {
-                    break;
-                }
-
-                if (results.Count == 0)
-                {
-                    break;
-                }
+                results = parser.Parse(data.Text);
 
                 string uploadResult = UploadFile(fileOutputPngPath);
 
@@ -103,13 +94,15 @@ namespace WatcherCmd.Files
                     fileAbsolutePath = uploadResult.Split('@')[1];
                 }
 
-                ContributionPeriodDataDTO dataToSend = new ContributionPeriodDataDTO();
-                try {
+                
+                try
+                {
                     dataToSend.ContributorId = ContributorPersonalData.ParseCotizationAccount(data.Text);
                 }
-                catch (ContributionPeriodCreationException)
+                catch (ContributionPeriodCreationException a )
                 {
-                    break;
+                    dataToSend.Valid = false;
+                    dataToSend.Error = a.Message;
                 }
 
                 destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\" + dataToSend.ContributorId + "_" + System.DateTime.Today.ToString("ddMMyyyy") + ".pdf";
@@ -132,7 +125,6 @@ namespace WatcherCmd.Files
 
                 APIClient client = new APIClient(_apiUrl);
                 client.Post("ContributionPeriods", dataToSend);
-
             }
 
             

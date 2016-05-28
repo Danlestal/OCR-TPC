@@ -27,7 +27,6 @@ namespace OCR
             throw new ContributionPeriodCreationException("The text do not have the required format");
         }
 
-
         public static string ParseSocialReason(string text)
         {
             var idRegex = new Regex(Constants.SocialReasonRegExp);

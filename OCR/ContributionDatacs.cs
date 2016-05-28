@@ -16,9 +16,10 @@ namespace OCR
         public string SocialReason { get; set; }
         public string CNAE { get; set; }
         public string NIF { get; set; }
-
         public string PathAbsoluto { get; set; }
-    
+        public bool Valid { get; set; }
+        public string Error { get; set; }
+
 
         public List<ContributionPeriodDTO> ContributionPeriodsDTO { get; set; }
         

@@ -42,6 +42,27 @@ namespace OCR_API.Controllers
             return Ok(contributorsService.ReadWithLimit());
         }
 
+
+        [HttpGet]
+        [ApiAuthenticationFilter(true)]
+        [Route("ContributionPeriods/PerYear")]
+        [ResponseType(typeof(IEnumerable<ContributionPeriodDTO>))]
+        public IHttpActionResult GetContributionPeriodsPerYear()
+        {
+            return Ok(contributorsService.ReadPerYear());
+        }
+
+
+        [HttpGet]
+        [ApiAuthenticationFilter(true)]
+        [Route("ContributionPeriods/PerYear/{healthCareid}")]
+        [ResponseType(typeof(IEnumerable<ContributionPeriodDTO>))]
+        public IHttpActionResult GetSpecificContributionPeriodsPerYear(string healthCareId)
+        {
+            return Ok(contributorsService.ReadPerYear(healthCareId));
+        }
+
+
         /// <summary>
         /// Gets the contribution periods
         /// </summary>

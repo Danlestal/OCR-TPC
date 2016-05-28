@@ -6,16 +6,19 @@ namespace OCR
     public class ContributionPeriod
     {
 
-        public ContributionPeriod(DateTime periodStart, DateTime periodEnd, double moneyContribution)
+        public ContributionPeriod(DateTime periodStart, DateTime periodEnd, double moneyContribution, bool valid)
         {
             PeriodStart = periodStart;
             PeriodEnd = periodEnd;
             MoneyContribution = moneyContribution;
+            ValidPeriod = valid;
         }
 
         public DateTime PeriodStart { get; private set; }
         public DateTime PeriodEnd { get; private set; }
         public double MoneyContribution { get; private set; }
+        public bool ValidPeriod { get; private set; }
+
 
         /// <summary>
         /// Converts the object into a Json string.

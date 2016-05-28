@@ -39,7 +39,7 @@ namespace OCRTests
         public void ParseContributionPeriod_Success()
         {
             var parser = new ContributionPeriodsParser();
-            ContributionPeriod expected = new ContributionPeriod(new DateTime(2011, 1, 1), new DateTime(2011, 12, 1), 99920.66);
+            ContributionPeriod expected = new ContributionPeriod(new DateTime(2011, 1, 1), new DateTime(2011, 12, 1), 99920.66, true);
             ContributionPeriod obtained = parser.ParseContributionPeriod("Enero 2011 a Diciembre 2011 99.920,66");
 
             Assert.AreEqual(obtained, expected);

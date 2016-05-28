@@ -142,6 +142,7 @@
     <Content Include="css\images\sort_asc.png" />
     <Content Include="css\images\sort_both.png" />
     <Content Include="css\images\sort_desc.png" />
+    <Content Include="css\OurStyles.css" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -159,7 +160,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Index.cshtml" />
+    <Content Include="Index.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="scripts\3rdParty\ai.0.15.0-build58334.js" />
     <Content Include="scripts\3rdParty\ai.0.15.0-build58334.min.js" />
     <Content Include="scripts\3rdParty\jquery-ui-1.11.4.js" />

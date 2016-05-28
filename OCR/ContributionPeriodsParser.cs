@@ -41,7 +41,7 @@ namespace OCR
 
         public ContributionPeriod ParseContributionPeriod(string textToParse)
         {
-            //Enero 2011 a Diciembre 2011 99.920,66
+            bool validPeriod = true;
 
             Regex contributionPeriodRegex = new Regex(Constants.PeriodRegExp);
 
@@ -57,15 +57,17 @@ namespace OCR
 
                 if (periodStart > periodEnd)
                 {
-                    throw new ContributionPeriodCreationException();
+                    validPeriod = false;
+                }
+
+                if (periodStart.Year != periodEnd.Year)
+                {
+                    validPeriod = false;
                 }
 
 
                 double contribution = ParseMoneyOnSpanishFormat(match.Groups[5].Value);
-               
-
-
-                return new ContributionPeriod(periodStart, periodEnd, contribution);
+                return new ContributionPeriod(periodStart, periodEnd, contribution, validPeriod);
             }
         }
 

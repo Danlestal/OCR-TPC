@@ -1,59 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <style>
-        #myImg {
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        #myImg:hover {opacity: 0.7;}
-
-        /* The Modal (background) */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
-            padding-top: 5%; /* Location of the box */
-            padding-left:65%;
-            box-shadow: 0px 0px 50px 2px #000;
-        }
-
-        /* Modal Content (image) */
-        .modal-content {
-            width:99%;
-        }
-
-        /* Add Animation */
-        .modal-content, #caption {
-            -webkit-animation-name: zoom;
-            -webkit-animation-duration: 0.6s;
-            animation-name: zoom;
-            animation-duration: 0.6s;
-        }
-
-        /* The Close Button */
-        .myclose {
-            position: absolute;
-            float:right;
-            top: 15px;
-            right: 15px;
-            color: #000;
-            font-size: 40px;
-            font-weight: bold;
-            transition: 0.3s;
-            opacity: .4;
-        }
-
-        .myclose:hover,
-        .myclose:focus {
-            color: #bbb;
-            text-decoration: none;
-            cursor: pointer;
-        }
-    </style>
-
+    <link type="text/css" rel="stylesheet" href="~/css/OurStyles.css" />
     <link type="text/css" rel="stylesheet" href="./css/3rdParty/jquery-ui.min.css" />
     <link type="text/css" rel="stylesheet" href="./css/3rdParty/jquery.datatables.min.css" />
     <link type="text/css" rel="stylesheet" href="./css/3rdParty/bootstrap.min.css" />
@@ -73,24 +21,22 @@
 
     <div class="container" style="margin-top:50px">
 
-        <div class="row">
-            <span style="display:inline; margin-top:10px">
+        <div id="IdSearchWidget">
+            <div  class="row">
                 <div class="ui-widget">
                     <label for="healthCareId">Introduzca cta. Seguridad Social: </label>
                     <input id="healthCareId">
-                    <button id="selectIdButton" class="ui-button-icon-only">Seleccionar</button>
                     <button id="searchForIdButton" class="ui-button-icon-only">Buscar</button>
                 </div>
-            </span>
-        </div>
-        <div class="row ui-widget" style="margin-top:10px">
-            <label for="selectedIds" style="display:inline">Cta Seguridad Social seleccionadas: </label>
-            <output id="selectedIds"></output>
-            <div id="showSelectedIds" class="row" style="margin-top:10px"></div>
-        </div>
+            </div>
+            <div class="row ui-widget" style="margin-top:10px">
+                <label for="selectedIds" style="display:inline">Cta Seguridad Social seleccionadas: </label>
+                <output id="selectedIds"></output>
+                <div id="showSelectedIds" class="row" style="margin-top:10px"></div>
+            </div>
+        </div>            
             
-            <!-- The Modal -->
-        <div id="myModal" class="modal">
+        <div id="MyModal" class="modal">
             <span class="myclose">×</span>
             <img class="modal-content" id="img01">
             <div id="caption"></div>
@@ -98,36 +44,93 @@
 
         <hr />
 
-        <div class="row form-inline the-box" style="width:80%; padding-top:15px; margin-left: auto; margin-right: auto">
+        <div id="MyDataTable" class="row form-inline the-box" style="width:80%; padding-top:15px; margin-left: auto; margin-right: auto">
             <div id="divGrid" class="col-sm-12" style="padding:30px,0,0,0">
                 <table id="jsGrid" class="dataTable table table-hover table-bordered table-responsive display pretty" cellspacing="0" style="text-align:center">
-                    <thead>
-                        <tr>
-                            <th>Cuenta de cotización</th>
-                            <th>Comienzo de cotización</th>
-                            <th>Fin de cotización</th>
-                            <th>Dinero Contribuido</th>
-                            <th>Muestra de Escaneo</th>
-                            <th>Eliminar</th>
-                        </tr>
-                    </thead>
-
                 </table>
             </div>
         </div>
 
         <hr />
-        <div class="row" style="display:inline-block">
+        <div id="ExcelDialog" class="row" style="display:inline-block">
             <b>Archivo .xls </b> <input type="file" class="upload" id="f_UploadXls"><br />
         </div>
-
+        ba
         <div id="verifyModal"></div>
     </div>
 
     <script>
         var apiUrl = '@System.Configuration.ConfigurationManager.AppSettings["APIBaseUrl"]';
         var table;
-        var url = apiUrl + "/ContributionPeriods";
+        var url = apiUrl + "/ContributionPeriods/PerYear";
+
+        function loadDataSuccess(response)
+        {
+
+            var columns = [{ "data": "CuentaCotizacion" }];
+            var columnsDefs = [{
+                "targets": 0, "class": "text-center", "title": "Cuenta de cotización", "render": function (data)
+                {
+                    return (!data) ? "" : data;
+                }
+            }];
+
+            var i = 0;
+            for (i = 0; i < response.YearsList.length; i++) { 
+                columns.push({ "data": response.YearsList[i] })
+                columnsDefs.push({ "targets": i + 1, "class": "text-center", "title": response.YearsList[i], "render": function (data) { return (!data) ? "" : data; } })
+            }
+
+            columns.push({ "data": "HighResFileId" });
+            columns.push({ "data": "Delete", "class": "text-center" });
+            columnsDefs.push({ "targets": i + 1, "class": "text-center", "title": "Muestra de Documento", "render": function (data) { return (!data) ? "" : '<a class="ShowDocument">ver documento</a>';}});
+            columnsDefs.push({ "targets": i + 2, "class": "text-center DeleteItem", "title": "Eliminar", "render": function (data) { return '<span class="glyphicon glyphicon-erase DeleteItem"></span>'; } });
+
+            table = $('#jsGrid').DataTable({
+                "data": response.Data,
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+                },
+                "columns": columns,
+                "columnDefs": columnsDefs
+            });
+
+            $('#jsGrid tbody').on('click', 'td', function () {
+                var colIdx = table
+                        .cell(this)
+                        .index().column;
+
+                if (this.childNodes[0].className.indexOf("ShowDocument") >= 0) {
+
+                    var rowIdx = table
+                    .cell(this)
+                    .index().row;
+
+                    var modal = document.getElementById('MyModal');
+                    var modalImg = document.getElementById("img01");
+                    // Get the <span> element that closes the modal
+                    var span = document.getElementsByClassName("myclose")[0];
+
+                    var data = table.row(rowIdx).data();
+                    modal.style.display = "block";
+                    modalImg.src = data.HighResFileId;
+                    // When the user clicks on <span> (x), close the modal
+                    span.onclick = function () {
+                        modal.style.display = "none";
+                    }
+
+                } else if (this.childNodes[0].className.indexOf("DeleteItem") >= 0) {
+                    var rowIdx = table
+                    .cell(this)
+                    .index().row;
+
+                    var data = table.row(rowIdx).data();
+                    deleteContributor(data);
+
+                }
+
+            });
+        }
 
         $(document).ready(function () {
 
@@ -138,82 +141,9 @@
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0")
                 },
-                success: function (response) {
-
-                    table = $('#jsGrid').DataTable({
-                        "data": response,
-                        "language": {
-                            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
-                        },
-                        "columns": [
-                            { "data": "HealthCareId" },
-                            { "data": "PeriodStart" },
-                            { "data": "PeriodEnd" },
-                            { "data": "MoneyContribution" },
-                            { "data": "HighResFileId" },
-                            { "data": "Delete", "class": "text-center" }
-                        ],
-                        "columnDefs": [
-                            { "targets": 0, "class": "text-center", "title": "Cuenta de cotización", "render": function (data) { return (!data) ? "" : data; } },
-                            { "targets": 1, "class": "text-center", "title": "Comienzo de cotización", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
-                            { "targets": 2, "class": "text-center", "title": "Fin de cotización", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
-                            { "targets": 3, "class": "text-center", "title": "Dinero Contribuido", "render": function (data) { return (!data) ? "" : data; } },
-                            {
-                                "targets": 4, "class": "text-center", "title": "Muestra de Documento", "render": function (data) {
-                                    return (!data) ? "" : '<a>ver documento</a>';
-                                }
-                            },
-                            {
-                                "targets": 5, "class": "text-center", "title": "Eliminar", "render": function (data) {
-                                    return '<span class="glyphicon glyphicon-erase"></span>';
-                                }
-                            }
-                        ]
-                    });
-                    $('#jsGrid tbody').on('click', 'td', function () {
-
-                        debugger;
-
-                        var colIdx = table
-                                .cell(this)
-                                .index().column;
-
-                        if (colIdx == 4) {
-
-                            var rowIdx = table
-                            .cell(this)
-                            .index().row;
-
-                            var modal = document.getElementById('myModal');
-                            var modalImg = document.getElementById("img01");
-                            // Get the <span> element that closes the modal
-                            var span = document.getElementsByClassName("myclose")[0];
-
-                            var data = table.row(rowIdx).data();
-                            modal.style.display = "block";
-                            modalImg.src = data.HighResFileId;
-                            // When the user clicks on <span> (x), close the modal
-                            span.onclick = function () {
-                                modal.style.display = "none";
-                            }
-
-                        }  else if (colIdx == 5)
-                        {
-                            var rowIdx = table
-                            .cell(this)
-                            .index().row;
-
-                            var data = table.row(rowIdx).data();
-                            deleteContributor(data);
-                            
-                        }
-
-                    });
-                }
+                success: loadDataSuccess,
+                
             });
-
-
-
 
         });
 
@@ -237,19 +167,11 @@
 
             event.preventDefault();
 
-            var healthCareId = $("#selectedIds").val();
-            $("#selectedIds").val('');
+            var healthCareId = $("#healthCareId").val();
             if (healthCareId === '')
                 return;
 
-            //healthCareId = healthCareId.replace(/\s/g, '');
-
-            if (healthCareId.indexOf(',') > -1) {
-                url = apiUrl + "/ContributionPeriodsList/" + healthCareId;
-            } else {
-                url = apiUrl + "/ContributionPeriods/" + healthCareId;f
-            }
-
+            url = apiUrl + "/ContributionPeriods/PerYear/" + healthCareId;
             $.ajax({
                 url: url,
                 type: 'GET',
@@ -257,85 +179,13 @@
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0")
                 },
-                success: function (response) {
-
-                    table = $('#jsGrid').DataTable({
-                        "language": {
-                            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
-                        },
-                        "data": response,
-                        "columns": [
-                            { "data": "HealthCareId" },
-                            { "data": "PeriodStart", "class": "text-center" },
-                            { "data": "PeriodEnd", "class": "text-center" },
-                            { "data": "MoneyContribution", "class": "text-center" },
-                            { "data": "HighResFileId", "class": "text-center" },
-                            { "data": "Delete", "class": "text-center" }
-                        ],
-                        "columnDefs": [
-                            { "targets": 0, "class": "text-center", "title": "Cuenta de cotización", "render": function (data) { return (!data) ? "" : data; } },
-                            { "targets": 1, "class": "text-center", "title": "Comienzo de cotización", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
-                            { "targets": 2, "class": "text-center", "title": "Fin de cotización", "render": function (data) { return (!data) ? "" : data.split('T')[0]; } },
-                            { "targets": 3, "class": "text-center", "title": "Dinero Contribuido", "render": function (data) { return (!data) ? "" : data; } },
-                            {
-                                "targets": 4, "class": "text-center", "title": "Muestra de Documento", "render": function (data) {
-                                    return (!data) ? "" : '<a>ver documento</a>';
-                                }
-                            },
-                            {
-                                "targets": 5, "class": "text-center", "title": "Eliminar", "render": function (data) {
-                                    return '<span class="glyphicon glyphicon-erase"></span>';
-                                }
-                            }
-                        ]
-                    });
-                },
+                success: loadDataSuccess,
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR);
                     console.log(textStatus);
                     console.log(errorThrown);
                 }
             });
-
-            $('#jsGrid tbody').on('click', 'td', function () {
-
-                debugger;
-
-                var colIdx = table
-                        .cell(this)
-                        .index().column;
-
-                if (colIdx == 4) {
-
-                    var rowIdx = table
-                    .cell(this)
-                    .index().row;
-
-                    var modal = document.getElementById('myModal');
-                    var modalImg = document.getElementById("img01");
-                    // Get the <span> element that closes the modal
-                    var span = document.getElementsByClassName("myclose")[0];
-
-                    var data = table.row(rowIdx).data();
-                    modal.style.display = "block";
-                    modalImg.src = data.HighResFileId;
-                    // When the user clicks on <span> (x), close the modal
-                    span.onclick = function () {
-                        modal.style.display = "none";
-                    }
-
-                } else if (colIdx == 5) {
-                    var rowIdx = table
-                    .cell(this)
-                    .index().row;
-
-                    var data = table.row(rowIdx).data();
-                    deleteContributor(data);
-
-                } 
-            });
-
-
         });
 
         var _URL = window.URL || window.webkitURL;
@@ -353,16 +203,20 @@
             if (window.confirm("¿está seguro que quiere borrar la cuenta " + data.HealthCareId + "?")) {
                 var urldelete = apiUrl + "/Contributors/" + data.HealthCareId;
                 $.ajax({
+                    type: 'delete',
                     url: urldelete,
-                    type: 'GET',
                     dataType: 'json',
+                    contentType: false,
+                    processData: false,
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0")
                     },
                     success: function (response) {
-
+                        alert("Se eliminó el registro.");
+                        location.reload();
                     }, error: function () {
                         //alert("Se encontró algún problema");
+                        location.reload();
                     }
                 });
 
