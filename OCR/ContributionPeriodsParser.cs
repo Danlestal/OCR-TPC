@@ -27,7 +27,7 @@ namespace OCR
             for (; counter < lines.Length; ++counter)
             {
                 if (lines[counter].Trim() == string.Empty)
-                    break;
+                    continue;
                 else
                 {
                     ContributionPeriod parsedPeriod = ParseContributionPeriod(lines[counter]);
@@ -52,8 +52,17 @@ namespace OCR
             }
             else
             {
-                DateTime periodStart = new DateTime(Int32.Parse(match.Groups[2].Value), ParseSpanishMonth(match.Groups[1].Value), 1);
-                DateTime periodEnd = new DateTime(Int32.Parse(match.Groups[4].Value), ParseSpanishMonth(match.Groups[3].Value), 1);
+                DateTime periodStart;
+                DateTime periodEnd;
+                try
+                {
+                    periodStart = new DateTime(Int32.Parse(match.Groups[2].Value), ParseSpanishMonth(match.Groups[1].Value), 1);
+                    periodEnd = new DateTime(Int32.Parse(match.Groups[4].Value), ParseSpanishMonth(match.Groups[3].Value), 1);
+                }
+                catch(Exception)
+                {
+                    return null;
+                }
 
                 if (periodStart > periodEnd)
                 {

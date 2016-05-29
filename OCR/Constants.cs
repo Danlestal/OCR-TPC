@@ -8,7 +8,7 @@ namespace OCR
 {
     public class Constants
     {
-        public static string PeriodRegExp = "(.*) (.*) a (.*) (.*) (.*)";
+        public static string PeriodRegExp = @"(.*) (\d\d\d\d) a (.*) (\d\d\d\d) (.*)";
         public static string IDRegExp = "a la Seguridad Social: (.*)";
         public static string SocialReasonRegExp = "Razón Social: (.*)";
         public static string CNAERegExp = "CNAE .*: (.*)";

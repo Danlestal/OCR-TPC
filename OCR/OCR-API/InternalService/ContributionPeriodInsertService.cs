@@ -39,6 +39,7 @@ namespace OCR_API.InternalService
                     FinPeriodo = newPeriod.PeriodEnd,
                     ComienzoPeriodo = newPeriod.PeriodStart,
                     HighResImagenId = newPeriod.HighResFileId,
+                    Valido = newPeriod.Valid
                 };
 
                 if (contributor.AddContributionPeriod(newContributionPeriod))

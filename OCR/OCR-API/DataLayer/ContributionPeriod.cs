@@ -23,6 +23,8 @@ namespace OCR_API.DataLayer
         [ForeignKey("ContributorRefId")]
         public virtual Contribuidor Contributor { get; set; }
 
+        public bool Valido { get; internal set; }
+
         public override bool Equals(object obj)
         {
             PeriodoContribucion target = obj as PeriodoContribucion;

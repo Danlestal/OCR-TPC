@@ -1,4 +1,4 @@
-﻿using Common.Logging;
+﻿
 using Newtonsoft.Json;
 using OCR;
 using System;
@@ -14,15 +14,13 @@ namespace WatcherCmd.Files
 {
     public class VidaLaboralManager : IManager
     {
-        private readonly ILog _logger;
         private readonly IWatcher _watcher;
         private APIClient _apiClient;
         private string _apiUrl;
 
 
-        public VidaLaboralManager(ILog logger, IWatcher watcher, APIClient client)
+        public VidaLaboralManager(ILogger logger, IWatcher watcher, APIClient client)
         {
-            _logger = logger;
             _watcher = watcher;
             _apiClient = client;
             _apiUrl = ConfigurationManager.AppSettings["ApiURL"];

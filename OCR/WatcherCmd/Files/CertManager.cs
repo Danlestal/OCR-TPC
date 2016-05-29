@@ -1,27 +1,27 @@
-﻿using Common.Logging;
-using Newtonsoft.Json;
-using OCR;
+﻿using OCR;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Threading;
 using WatcherCmd.Files.Interface;
 
+
 namespace WatcherCmd.Files
 {
     public class CertManager : IManager
     {
-        private readonly ILog _logger;
         private readonly IWatcher _watcher;
         private APIClient _apiClient;
         private string _apiUrl;
+        private ILogger _logger;
 
 
-        public CertManager(ILog logger, IWatcher watcher, APIClient client)
+        public CertManager(ILogger logger, IWatcher watcher, APIClient client)
         {
             _logger = logger;
             _watcher = watcher;
@@ -48,8 +48,8 @@ namespace WatcherCmd.Files
             Thread.Sleep(500);
             PDFToImageConverter coverter = new PDFToImageConverter();
 
-
-            Console.WriteLine("PROCESANDO ARCHIVO: " + inputPath);
+            
+            _logger.Log("PROCESANDO ARCHIVO: " + inputPath);
             string inputFile = Path.GetFileName(inputPath);
             int inputFilePages = coverter.GetPdfPages(inputPath);
 
@@ -61,7 +61,7 @@ namespace WatcherCmd.Files
 
             for (int i = 0; i < inputFilePages; i++)
             {
-                Console.WriteLine("pagina " + i);
+                _logger.Log("pagina " + i);
                 ContributionPeriodDataDTO dataToSend = new ContributionPeriodDataDTO();
 
 
@@ -99,10 +99,9 @@ namespace WatcherCmd.Files
                 {
                     dataToSend.ContributorId = ContributorPersonalData.ParseCotizationAccount(data.Text);
                 }
-                catch (ContributionPeriodCreationException a )
+                catch (ContributionPeriodCreationException)
                 {
                     dataToSend.Valid = false;
-                    dataToSend.Error = a.Message;
                 }
 
                 destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\" + dataToSend.ContributorId + "_" + System.DateTime.Today.ToString("ddMMyyyy") + ".pdf";
@@ -110,6 +109,11 @@ namespace WatcherCmd.Files
                 dataToSend.CNAE = ContributorPersonalData.ParseCNAE(data.Text);
                 dataToSend.SocialReason = ContributorPersonalData.ParseSocialReason(data.Text);
                 dataToSend.NIF = ContributorPersonalData.ParseNIF(data.Text);
+
+                if ( results.Any(s => s.ValidPeriod == false))
+                {
+                    dataToSend.Valid = false;
+                }
 
                 foreach (ContributionPeriod period in results)
                 {
@@ -130,14 +134,14 @@ namespace WatcherCmd.Files
             
 
 
-            Console.WriteLine("moviendo archivo a " + destinationPath);
+            _logger.Log("moviendo archivo a " + destinationPath);
             if (File.Exists(destinationPath))
                 File.Delete(destinationPath);
 
             File.Move(inputPath, destinationPath);
 
-            Console.WriteLine("FIN PROCESO");
-            Console.WriteLine("-----------");
+            _logger.Log("FIN PROCESO");
+            _logger.Log("-----------");
         }
 
         private string UploadFile(string outputPath)
@@ -163,9 +167,9 @@ namespace WatcherCmd.Files
             }
             catch (WebException a)
             {
-                Console.WriteLine(a.Response);
-                Console.WriteLine(a.Message);
-                Console.WriteLine(a.InnerException);
+                _logger.Log(a.Response.ToString());
+                _logger.Log(a.Message.ToString());
+                _logger.Log(a.InnerException.ToString());
                 return "";
             }
 

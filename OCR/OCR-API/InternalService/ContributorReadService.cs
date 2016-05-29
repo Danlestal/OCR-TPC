@@ -53,60 +53,14 @@ namespace OCR_API.InternalService
 
         public ContributorsDuringYearDTO ReadPerYear()
         {
-            var result = new ContributorsDuringYearDTO();
-            var yearsList = new List<string>();
-
-            var partialResult = new List<Dictionary<string, string>>();
-            foreach (Contribuidor contribuidor in dbContext.Contributors.Include("PeriodosContribucion").OrderBy(s => s.CuentaCotizacion))
-            {
-                var data = new Dictionary<string, string>();
-                data.Add("CuentaCotizacion", contribuidor.CuentaCotizacion.ToString());
-
-                foreach (PeriodoContribucion periodo in contribuidor.PeriodosContribucion)
-                {
-                    if (!data.Keys.Contains("HighResFileId"))
-                        data.Add("HighResFileId", contribuidor.PeriodosContribucion.First().HighResImagenId);
-
-                    data.Add(periodo.ComienzoPeriodo.Year.ToString(), periodo.Dinero.ToString());
-                    if (!yearsList.Contains(periodo.ComienzoPeriodo.Year.ToString()))
-                        yearsList.Add(periodo.ComienzoPeriodo.Year.ToString());
-                }
-                partialResult.Add(data);
-            }
-
-            yearsList.Sort();
-            result.YearsList = yearsList.ToArray();
-            result.Data = partialResult;
-            return result;
+            IQueryable<Contribuidor> itemsRead = dbContext.Contributors.Include("PeriodosContribucion").OrderBy(s => s.CuentaCotizacion);
+            return BuildContributorsDuringYearDTO(itemsRead);
         }
 
         public ContributorsDuringYearDTO ReadPerYear(string healthCareId)
         {
-            var result = new ContributorsDuringYearDTO();
-            var yearsList = new List<string>();
-
-            var partialResult = new List<Dictionary<string, string>>();
-            foreach (Contribuidor contribuidor in dbContext.Contributors.Include("PeriodosContribucion").OrderBy(s => s.CuentaCotizacion).Where(s=>s.CuentaCotizacion.StartsWith(healthCareId)))
-            {
-                var data = new Dictionary<string, string>();
-                data.Add("CuentaCotizacion", contribuidor.CuentaCotizacion.ToString());
-
-                foreach (PeriodoContribucion periodo in contribuidor.PeriodosContribucion)
-                {
-                    if (!data.Keys.Contains("HighResFileId"))
-                        data.Add("HighResFileId", contribuidor.PeriodosContribucion.First().HighResImagenId);
-
-                    data.Add(periodo.ComienzoPeriodo.Year.ToString(), periodo.Dinero.ToString());
-                    if (!yearsList.Contains(periodo.ComienzoPeriodo.Year.ToString()))
-                        yearsList.Add(periodo.ComienzoPeriodo.Year.ToString());
-                }
-                partialResult.Add(data);
-            }
-
-            yearsList.Sort();
-            result.YearsList = yearsList.ToArray();
-            result.Data = partialResult;
-            return result;
+            IQueryable<Contribuidor> itemsRead = dbContext.Contributors.Include("PeriodosContribucion").OrderBy(s => s.CuentaCotizacion).Where(s => s.CuentaCotizacion.StartsWith(healthCareId));
+            return BuildContributorsDuringYearDTO(itemsRead);
         }
 
         public List<ContributionPeriodDTO> ReadContributorDetails(string healthCareId)
@@ -132,6 +86,39 @@ namespace OCR_API.InternalService
 
             return result;
         }
-        
+
+        private ContributorsDuringYearDTO BuildContributorsDuringYearDTO(IQueryable<Contribuidor> items)
+        {
+            var result = new ContributorsDuringYearDTO();
+            var yearsList = new List<string>();
+
+            var partialResult = new List<Dictionary<string, string>>();
+            foreach (Contribuidor contribuidor in items)
+            {
+                var data = new Dictionary<string, string>();
+                data.Add("CuentaCotizacion", contribuidor.CuentaCotizacion.ToString());
+                data.Add("Valido", "true");
+
+                foreach (PeriodoContribucion periodo in contribuidor.PeriodosContribucion)
+                {
+                    if (!data.Keys.Contains("HighResFileId"))
+                        data.Add("HighResFileId", contribuidor.PeriodosContribucion.First().HighResImagenId);
+
+                    if (!periodo.Valido)
+                        data["Valido"] = "false";
+
+                    data.Add(periodo.ComienzoPeriodo.Year.ToString(), periodo.Dinero.ToString());
+                    if (!yearsList.Contains(periodo.ComienzoPeriodo.Year.ToString()))
+                        yearsList.Add(periodo.ComienzoPeriodo.Year.ToString());
+                }
+                partialResult.Add(data);
+            }
+
+            yearsList.Sort();
+            result.YearsList = yearsList.ToArray();
+            result.Data = partialResult;
+            return result;
+
+        }
     }
 }

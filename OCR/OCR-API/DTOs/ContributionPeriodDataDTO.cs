@@ -11,9 +11,9 @@ namespace OCR_API.DTOs
         public string ContributorId { get; set; }
         public string SocialReason { get; set; }
         public string CNAE { get; set; }
-        public string NIF { get; internal set; }
+        public string NIF { get; set; }
         public string PathAbsoluto { get; set; }
-    
+        public bool Valid { get; set; }
 
         public List<ContributionPeriodDTO> ContributionPeriodsDTO { get; set; }
         
@@ -27,5 +27,6 @@ namespace OCR_API.DTOs
         public double MoneyContribution { get; set; }
         public string HighResFileId { get; set; }
         public string FileAbsolutePath { get; set; }
+        public bool Valid { get; internal set; }
     }
 }

@@ -10,6 +10,7 @@ namespace OCR
         public ContributionPeriodDataDTO()
         {
             ContributionPeriodsDTO = new List<ContributionPeriodDTO>();
+            Valid = true;
         }
 
         public string ContributorId { get; set; }
@@ -18,8 +19,6 @@ namespace OCR
         public string NIF { get; set; }
         public string PathAbsoluto { get; set; }
         public bool Valid { get; set; }
-        public string Error { get; set; }
-
 
         public List<ContributionPeriodDTO> ContributionPeriodsDTO { get; set; }
         
