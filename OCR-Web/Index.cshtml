@@ -24,15 +24,12 @@
         <div id="IdSearchWidget">
             <div  class="row">
                 <div class="ui-widget">
-                    <label for="healthCareId">Introduzca cta. Seguridad Social: </label>
+                    <label for="healthCareId">Introduzca primeros digitos de la cuenta: </label>
                     <input id="healthCareId">
-                    <button id="searchForIdButton" class="ui-button-icon-only">Buscar</button>
+                    <!--<input id="ShowOnlyErrors" type="checkbox" name="" value="False"/>Mostrar Solo errores <br />-->
+                    <button id="searchForIdButton" class="ui-button-icon-only">Filtrar</button>
+                    
                 </div>
-            </div>
-            <div class="row ui-widget" style="margin-top:10px">
-                <label for="selectedIds" style="display:inline">Cta Seguridad Social seleccionadas: </label>
-                <output id="selectedIds"></output>
-                <div id="showSelectedIds" class="row" style="margin-top:10px"></div>
             </div>
         </div>            
             
@@ -81,11 +78,31 @@
                 columnsDefs.push({ "targets": i + 1, "class": "text-center", "title": response.YearsList[i], "render": function (data) { return (!data) ? "" : data; } })
             }
 
+            columns.push({ "data": "Valido" });
             columns.push({ "data": "HighResFileId" });
             columns.push({ "data": "Delete", "class": "text-center" });
-            columnsDefs.push({ "targets": i + 1, "class": "text-center", "title": "Muestra de Documento", "render": function (data) { return (!data) ? "" : '<a class="ShowDocument">ver documento</a>';}});
-            columnsDefs.push({ "targets": i + 2, "class": "text-center DeleteItem", "title": "Eliminar", "render": function (data) { return '<span class="glyphicon glyphicon-erase DeleteItem"></span>'; } });
 
+            i++;
+            columnsDefs.push({
+                "targets": i, "class": "text-center", "title": "Valido", "render": function (data)
+                {
+                    if (!data)
+                        return "";
+                    else {
+                        if (data == "False") {
+                            return '<span class="glyphicon glyphicon-remove"></span>'
+                        }
+                        else {
+                            return '<span class="glyphicon glyphicon-ok"></span>'
+                        }
+                    }
+                }
+            });
+            i++;
+            columnsDefs.push({ "targets": i, "class": "text-center", "title": "Muestra de Documento", "render": function (data) { return (!data) ? "" : '<a class="ShowDocument">ver documento</a>'; } });
+            i++;
+            columnsDefs.push({ "targets": i, "class": "text-center DeleteItem", "title": "Eliminar", "render": function (data) { return '<span class="glyphicon glyphicon-erase DeleteItem"></span>'; } });
+            
             table = $('#jsGrid').DataTable({
                 "data": response.Data,
                 "language": {
@@ -94,17 +111,14 @@
                 "columns": columns,
                 "columnDefs": columnsDefs
             });
+       
+
 
             $('#jsGrid tbody').on('click', 'td', function () {
-                var colIdx = table
-                        .cell(this)
-                        .index().column;
 
                 if (this.childNodes[0].className.indexOf("ShowDocument") >= 0) {
 
-                    var rowIdx = table
-                    .cell(this)
-                    .index().row;
+                    var rowIdx = table.cell(this).index().row;
 
                     var modal = document.getElementById('MyModal');
                     var modalImg = document.getElementById("img01");
@@ -120,10 +134,7 @@
                     }
 
                 } else if (this.childNodes[0].className.indexOf("DeleteItem") >= 0) {
-                    var rowIdx = table
-                    .cell(this)
-                    .index().row;
-
+                    var rowIdx = table.cell(this).index().row;
                     var data = table.row(rowIdx).data();
                     deleteContributor(data);
 
@@ -147,31 +158,24 @@
 
         });
 
-        $("#selectIdButton").button().click(function (event) {
-
-            var healthCareId = $("#healthCareId").val();//.replace(/\s/g, "%20");
-
-            if ($("#selectedIds").val() != "") {
-                $("#selectedIds").val($("#selectedIds").val() + ", " + healthCareId);
-            } else {
-                $("#selectedIds").val(healthCareId);
-            }
-
-            $("#healthCareId").val("");
-        });
-
         $("#searchForIdButton").button().click(function (event) {
             var url;
-            debugger;
             table.destroy();
 
             event.preventDefault();
 
             var healthCareId = $("#healthCareId").val();
-            if (healthCareId === '')
-                return;
+            if (healthCareId !== '')
+                url = apiUrl + "/ContributionPeriods/PerYear/" + healthCareId;
+            else
+                url = apiUrl + "/ContributionPeriods/PerYear";
 
-            url = apiUrl + "/ContributionPeriods/PerYear/" + healthCareId;
+            if ($("#ShowOnlyErrors:checked").length > 0)
+            {
+                url = url + "?showOnlyErrors=true";
+            }
+
+
             $.ajax({
                 url: url,
                 type: 'GET',

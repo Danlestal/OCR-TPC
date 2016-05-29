@@ -80,8 +80,7 @@ namespace WatcherCmd.Files
 
                 ContributionPeriodsParser parser = new ContributionPeriodsParser();
 
-                List<ContributionPeriod> results;
-                results = parser.Parse(data.Text);
+               
 
                 string uploadResult = UploadFile(fileOutputPngPath);
 
@@ -110,10 +109,14 @@ namespace WatcherCmd.Files
                 dataToSend.SocialReason = ContributorPersonalData.ParseSocialReason(data.Text);
                 dataToSend.NIF = ContributorPersonalData.ParseNIF(data.Text);
 
+
+                List<ContributionPeriod> results;
+                results = parser.Parse(data.Text);
                 if ( results.Any(s => s.ValidPeriod == false))
                 {
                     dataToSend.Valid = false;
                 }
+                results.RemoveAll(s => s.ValidPeriod == false);
 
                 foreach (ContributionPeriod period in results)
                 {
@@ -123,7 +126,8 @@ namespace WatcherCmd.Files
                         PeriodEnd = period.PeriodEnd,
                         PeriodStart = period.PeriodStart,
                         HighResFileId = fileUrl,
-                        FileAbsolutePath = fileAbsolutePath
+                        FileAbsolutePath = fileAbsolutePath,
+                        Valid = period.ValidPeriod
                     });
                 }
 

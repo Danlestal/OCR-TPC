@@ -28,6 +28,7 @@ namespace OCR_API.InternalService
                 contributor.CNAE = dataToInsert.CNAE;
                 contributor.NIF = dataToInsert.NIF;
                 contributor.PathAbsolutoArchivo = dataToInsert.PathAbsoluto;
+                contributor.Valido = dataToInsert.Valid.ToString();
                 dbContext.Contributors.Add(contributor);
             }
 

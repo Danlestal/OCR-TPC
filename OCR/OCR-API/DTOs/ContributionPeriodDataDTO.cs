@@ -27,6 +27,6 @@ namespace OCR_API.DTOs
         public double MoneyContribution { get; set; }
         public string HighResFileId { get; set; }
         public string FileAbsolutePath { get; set; }
-        public bool Valid { get; internal set; }
+        public bool Valid { get; set; }
     }
 }

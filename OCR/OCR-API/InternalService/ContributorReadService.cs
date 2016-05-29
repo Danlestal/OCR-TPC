@@ -57,9 +57,16 @@ namespace OCR_API.InternalService
             return BuildContributorsDuringYearDTO(itemsRead);
         }
 
-        public ContributorsDuringYearDTO ReadPerYear(string healthCareId)
+        public ContributorsDuringYearDTO ReadPerYear(string healthCareId, bool showOnlyErrors=false)
         {
-            IQueryable<Contribuidor> itemsRead = dbContext.Contributors.Include("PeriodosContribucion").OrderBy(s => s.CuentaCotizacion).Where(s => s.CuentaCotizacion.StartsWith(healthCareId));
+            IQueryable<Contribuidor> itemsRead = dbContext.Contributors.Include("PeriodosContribucion").OrderBy(s => s.CuentaCotizacion);
+
+            if (!String.IsNullOrEmpty(healthCareId))
+                itemsRead = itemsRead.Where(s => s.CuentaCotizacion.StartsWith(healthCareId));
+
+            if (showOnlyErrors)
+                itemsRead = itemsRead.Where(s => s.Valido == "False");
+
             return BuildContributorsDuringYearDTO(itemsRead);
         }
 
@@ -97,7 +104,7 @@ namespace OCR_API.InternalService
             {
                 var data = new Dictionary<string, string>();
                 data.Add("CuentaCotizacion", contribuidor.CuentaCotizacion.ToString());
-                data.Add("Valido", "true");
+                data.Add("Valido", contribuidor.Valido);
 
                 foreach (PeriodoContribucion periodo in contribuidor.PeriodosContribucion)
                 {
@@ -108,6 +115,8 @@ namespace OCR_API.InternalService
                         data["Valido"] = "false";
 
                     data.Add(periodo.ComienzoPeriodo.Year.ToString(), periodo.Dinero.ToString());
+
+                    
                     if (!yearsList.Contains(periodo.ComienzoPeriodo.Year.ToString()))
                         yearsList.Add(periodo.ComienzoPeriodo.Year.ToString());
                 }
