@@ -26,7 +26,7 @@
                 <div class="ui-widget">
                     <label for="healthCareId">Introduzca primeros digitos de la cuenta: </label>
                     <input id="healthCareId">
-                    <!--<input id="ShowOnlyErrors" type="checkbox" name="" value="False"/>Mostrar Solo errores <br />-->
+                    <input id="ShowOnlyErrors" type="checkbox" name="" value="False"/>Mostrar Solo errores <br />
                     <button id="searchForIdButton" class="ui-button-icon-only">Filtrar</button>
                     
                 </div>
@@ -63,6 +63,7 @@
 
         function loadDataSuccess(response)
         {
+            $('#jsGrid').empty();
 
             var columns = [{ "data": "CuentaCotizacion" }];
             var columnsDefs = [{
@@ -103,10 +104,18 @@
             i++;
             columnsDefs.push({ "targets": i, "class": "text-center DeleteItem", "title": "Eliminar", "render": function (data) { return '<span class="glyphicon glyphicon-erase DeleteItem"></span>'; } });
             
+            var dataForTable = [];
+            if (response.Data.length > 0) {
+                dataForTable = response.Data;
+            }
+          
+
+
             table = $('#jsGrid').DataTable({
-                "data": response.Data,
+                "data": dataForTable,
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+                    "infoEmpty": "No records available - Got it?"
                 },
                 "columns": columns,
                 "columnDefs": columnsDefs
@@ -159,7 +168,7 @@
         });
 
         $("#searchForIdButton").button().click(function (event) {
-            var url;
+            var url = "";
             table.destroy();
 
             event.preventDefault();

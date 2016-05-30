@@ -47,9 +47,9 @@ namespace OCR_API.Controllers
         [ApiAuthenticationFilter(true)]
         [Route("ContributionPeriods/PerYear")]
         [ResponseType(typeof(IEnumerable<ContributionPeriodDTO>))]
-        public IHttpActionResult GetContributionPeriodsPerYear()
+        public IHttpActionResult GetContributionPeriodsPerYear(bool showOnlyErrors = false)
         {
-            return Ok(contributorsService.ReadPerYear());
+            return Ok(contributorsService.ReadPerYear(showOnlyErrors));
         }
 
 

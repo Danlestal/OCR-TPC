@@ -51,9 +51,14 @@ namespace OCR_API.InternalService
             dbContext.SaveChanges();
         }
 
-        public ContributorsDuringYearDTO ReadPerYear()
+        public ContributorsDuringYearDTO ReadPerYear(bool showOnlyErrors = false)
         {
             IQueryable<Contribuidor> itemsRead = dbContext.Contributors.Include("PeriodosContribucion").OrderBy(s => s.CuentaCotizacion);
+
+            if (showOnlyErrors)
+                itemsRead = itemsRead.Where(s => s.Valido == "False");
+
+
             return BuildContributorsDuringYearDTO(itemsRead);
         }
 
@@ -114,7 +119,7 @@ namespace OCR_API.InternalService
                     if (!periodo.Valido)
                         data["Valido"] = "false";
 
-                    data.Add(periodo.ComienzoPeriodo.Year.ToString(), periodo.Dinero.ToString());
+                    data.Add(periodo.ComienzoPeriodo.Year.ToString(), periodo.Dinero.ToString("N"));
 
                     
                     if (!yearsList.Contains(periodo.ComienzoPeriodo.Year.ToString()))
