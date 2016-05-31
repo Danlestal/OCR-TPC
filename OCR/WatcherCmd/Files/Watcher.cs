@@ -25,7 +25,6 @@ namespace WatcherCmd.Files
 
         private void PrepareWatcherInExceptionSafeMode(string folderToWatch)
         {
- 
             try
             {
                 PrepareWatcher(folderToWatch);
@@ -48,7 +47,7 @@ namespace WatcherCmd.Files
             _watcher = new FileSystemWatcher();
             _watcher.Path = directoryPathToWatch;
             _watcher.IncludeSubdirectories = true;
-            _watcher.InternalBufferSize = 4 * 1024;
+            _watcher.InternalBufferSize = 8 * 1024;
             _watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName;
             _watcher.Created += FileDetected; 
             _watcher.IncludeSubdirectories = true;
