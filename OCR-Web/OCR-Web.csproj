@@ -143,11 +143,13 @@
     <Content Include="css\images\sort_both.png" />
     <Content Include="css\images\sort_desc.png" />
     <Content Include="css\OurStyles.css" />
+    <Content Include="Index.html" />
+    <Content Include="Login.html" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Login.cshtml" />
+    <None Include="Login.cshtml.old" />
     <None Include="scripts\3rdParty\jquery-2.2.2.intellisense.js" />
     <Content Include="scripts\3rdParty\jquery-2.2.2.js" />
     <Content Include="scripts\3rdParty\jquery-2.2.2.min.js" />
@@ -160,9 +162,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Index.cshtml">
+    <None Include="Index.cshtml.old">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </None>
     <Content Include="scripts\3rdParty\ai.0.15.0-build58334.js" />
     <Content Include="scripts\3rdParty\ai.0.15.0-build58334.min.js" />
     <Content Include="scripts\3rdParty\jquery-ui-1.11.4.js" />

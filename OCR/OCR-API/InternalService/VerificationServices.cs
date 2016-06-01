@@ -52,7 +52,7 @@ namespace OCR_API.InternalService
                     }
                     if (eachRow.GetCell(0) == null)
                     {
-                        break;
+                        continue;
                     }
 
                     result += VerifyRow(eachRow, row);
@@ -63,56 +63,74 @@ namespace OCR_API.InternalService
             if (File.Exists(filePath))
                 File.Delete(filePath);
 
-            return result;
+            if (string.IsNullOrEmpty(result))
+            {
+                return @" < p style = ""color: red"" > Algo raro hay en el formato</p>";
+            }
+            else
+            {
+                return result;
+            }
 
+        }
+
+        private string ReadCellAsAString(ICell cellToRead)
+        {
+            string result = string.Empty;
+            if (cellToRead.CellType == NPOI.SS.UserModel.CellType.Numeric)
+            {
+                return cellToRead.NumericCellValue.ToString();
+            }
+
+            if (cellToRead.CellType == NPOI.SS.UserModel.CellType.String)
+            {
+                return cellToRead.StringCellValue;
+            }
+
+            throw new Exception();
         }
 
         private string VerifyRow(IRow eachRow, int row)
         {
             Contribuidor contributor = new Contribuidor();
 
-            string idContributor = eachRow.GetCell(1).StringCellValue;
-            
-            contributor = dbContext.Contributors.FirstOrDefault(s => s.CuentaCotizacion == idContributor);
+            ICell cell = eachRow.GetCell(1);
 
+            string idContributor = ReadCellAsAString(eachRow.GetCell(1));
+            contributor = dbContext.Contributors.FirstOrDefault(s => s.CuentaCotizacion == idContributor);
             if (contributor == null)
                 return ContributorNotFound(row, idContributor);
 
 
-            if (eachRow.GetCell(2).CellType == CellType.Numeric)
-            {
-                if (contributor.NIF != eachRow.GetCell(2).NumericCellValue.ToString()) 
-                    return NIFNotFound(row, eachRow.GetCell(2).NumericCellValue.ToString());
-            } else
-            {
-                if (contributor.NIF != eachRow.GetCell(2).StringCellValue)
-                    return NIFNotFound(row, eachRow.GetCell(2).StringCellValue);
-            }
+            string contributorNIF = ReadCellAsAString(eachRow.GetCell(2));
+            if (contributor.NIF != contributorNIF)
+                return NIFNotFound(row, contributorNIF.ToString());
 
-            if (contributor.RazonSocial != eachRow.GetCell(3).StringCellValue)
-                return RazonSocialNotFound(row, eachRow.GetCell(3).StringCellValue);
+           string contributorRazonSocial = ReadCellAsAString(eachRow.GetCell(3));
+           if (contributor.RazonSocial != contributorRazonSocial)
+                return RazonSocialNotFound(row, contributorRazonSocial);
 
-            return string.Empty;
+            return Correct(row);
         }
 
         private string ContributorNotFound(int row, string contributor)
         {
-            return @"<p style=""text-danger"">" + "line: " + row.ToString() + " ningún registro para Cta. de Cotización: " + contributor + "</p>";
+            return @"<p style=""color:red"">" + "fila: " + row.ToString() + " ningún registro para Cta. de Cotización: " + contributor + "</p>";
         }
 
         private string NIFNotFound(int row, string nif)
         {
-            return @"<p style=""text-danger"">" + "line: " + row.ToString() + " ningún registro para NIF: " + nif + "</p>";
+            return @"<p style=""color:red"">" + "fila: " + row.ToString() + " ningún registro para NIF: " + nif + "</p>";
         }
 
         private string RazonSocialNotFound(int row, string razonSocial)
         {
-            return @"<p style=""text-danger"">" + "line: " + row.ToString() + " ningún registro para Razón Social" + razonSocial + "</p>";
+            return @"<p style=""color:red"">" + "fila: " + row.ToString() + " ningún registro para Razón Social" + razonSocial + "</p>";
         }
 
         private string Correct(int row)
         {
-            return @"<p style=""text-success"">" + "line: " + row.ToString() + " Verificación Correcta</p>";
+            return @"<p style=""color:green"">" + "fila: " + row.ToString() + " Verificación Correcta</p>";
         }
 
     }

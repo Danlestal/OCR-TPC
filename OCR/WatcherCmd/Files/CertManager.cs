@@ -57,7 +57,7 @@ namespace WatcherCmd.Files
            
             string firstContributor = string.Empty;
 
-            string destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\" + firstContributor + "_" + System.DateTime.Today.ToString("ddMMyyyy") + ".pdf";
+            string destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\" + firstContributor + "_" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + DateTime.Now.Millisecond + ".pdf";
 
             for (int i = 0; i < inputFilePages; i++)
             {
@@ -103,8 +103,9 @@ namespace WatcherCmd.Files
                     dataToSend.Valid = false;
                 }
 
-                destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\" + dataToSend.ContributorId + "_" + System.DateTime.Today.ToString("ddMMyyyy") + ".pdf";
-                dataToSend.PathAbsoluto = destinationPath;
+                destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\" + dataToSend.ContributorId + "_" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + DateTime.Now.Millisecond + ".pdf";
+                string destinationPathAbsoluto = ConfigurationManager.AppSettings["DestinationPathBBDD"] + "\\" + dataToSend.ContributorId + "_" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + DateTime.Now.Millisecond + ".pdf";
+                dataToSend.PathAbsoluto = destinationPathAbsoluto;
                 dataToSend.CNAE = ContributorPersonalData.ParseCNAE(data.Text);
                 dataToSend.SocialReason = ContributorPersonalData.ParseSocialReason(data.Text);
                 dataToSend.NIF = ContributorPersonalData.ParseNIF(data.Text);
@@ -139,8 +140,8 @@ namespace WatcherCmd.Files
 
 
             _logger.Log("moviendo archivo a " + destinationPath);
-            if (File.Exists(destinationPath))
-                File.Delete(destinationPath);
+            //if (File.Exists(destinationPath))
+            //    File.Delete(destinationPath);
 
             File.Move(inputPath, destinationPath);
 

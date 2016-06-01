@@ -15,7 +15,7 @@ namespace OCR
             int counter = 0;
             for (counter = 0; counter < lines.Length; ++counter)
             {
-                if (lines[counter].StartsWith("Periodo Importe"))
+                if (lines[counter].StartsWith("Periodo Importe") || lines[counter].StartsWith("Período Importe"))
                     break;
             }
 
