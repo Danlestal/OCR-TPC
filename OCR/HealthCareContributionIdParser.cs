@@ -14,6 +14,8 @@ namespace OCR
             {
                 string result = match.Groups[1].Value.Trim();
                 result = result.Replace(" ", "");
+                // TODO: Añadido por Juan Luis porque confunde el 7 con la ?
+                result = result.Replace('?', '7');
                 result = result.Trim();
 
                 if (result.Length != 11)
@@ -27,7 +29,7 @@ namespace OCR
             throw new ContributionPeriodCreationException("The text do not have the required format");
         }
 
-        public static string ParseSocialReason(string text)
+        public static string ParseSocialReason(string text, ref bool validData)
         {
             var idRegex = new Regex(Constants.SocialReasonRegExp);
             Match match = idRegex.Match(text);
@@ -35,11 +37,16 @@ namespace OCR
             {
                 return match.Groups[1].Value.Trim();
             }
+            else
+            {
+                validData = false;
+                return null;
+            }
 
             throw new ArgumentException("The text do not have the required format");
         }
 
-        public static string ParseCNAE(string text)
+        public static string ParseCNAE(string text, ref bool validData)
         {
             var idRegex = new Regex(Constants.CNAERegExp);
             Match match = idRegex.Match(text);
@@ -47,17 +54,27 @@ namespace OCR
             {
                 return match.Groups[1].Value.Trim();
             }
+            else
+            {
+                validData = false;
+                return null;
+            }
 
             throw new ArgumentException("The text do not have the required format");
         }
 
-        public static string ParseNIF(string text)
+        public static string ParseNIF(string text, ref bool validData)
         {
             var idRegex = new Regex(Constants.NIFRegExp);
             Match match = idRegex.Match(text);
             if (match.Success)
             {
                 return match.Groups[1].Value.Trim();
+            }
+            else
+            {
+                validData = false;
+                return null;
             }
 
             throw new ArgumentException("The text do not have the required format");

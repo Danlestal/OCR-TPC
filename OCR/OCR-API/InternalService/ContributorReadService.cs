@@ -108,7 +108,7 @@ namespace OCR_API.InternalService
             foreach (Contribuidor contribuidor in items)
             {
                 var data = new Dictionary<string, string>();
-                data.Add("CuentaCotizacion", contribuidor.CuentaCotizacion.ToString());
+                data.Add("CuentaCotizacion", contribuidor.CuentaCotizacion);
                 data.Add("Valido", contribuidor.Valido);
 
                 foreach (PeriodoContribucion periodo in contribuidor.PeriodosContribucion)
@@ -119,9 +119,9 @@ namespace OCR_API.InternalService
                     if (!periodo.Valido)
                         data["Valido"] = "false";
 
-                    data.Add(periodo.ComienzoPeriodo.Year.ToString(), periodo.Dinero.ToString("N"));
+                    if (!data.ContainsKey(periodo.ComienzoPeriodo.Year.ToString()))
+                        data.Add(periodo.ComienzoPeriodo.Year.ToString(), periodo.Dinero.ToString("N"));
 
-                    
                     if (!yearsList.Contains(periodo.ComienzoPeriodo.Year.ToString()))
                         yearsList.Add(periodo.ComienzoPeriodo.Year.ToString());
                 }
