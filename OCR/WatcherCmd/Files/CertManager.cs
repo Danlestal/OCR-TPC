@@ -94,21 +94,28 @@ namespace WatcherCmd.Files
                 }
 
                 
-                try
-                {
-                    dataToSend.ContributorId = ContributorPersonalData.ParseCotizationAccount(data.Text);
-                }
-                catch (ContributionPeriodCreationException)
-                {
-                    dataToSend.Valid = false;
-                }
+               
+                var parseCAccount = ContributorPersonalData.ParseCotizationAccount(data.Text);
+
+                dataToSend.ContributorId = parseCAccount.Item2;
+                dataToSend.Valid = parseCAccount.Item1;
+
 
                 destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\" + dataToSend.ContributorId + "_" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + DateTime.Now.Millisecond + ".pdf";
                 string destinationPathAbsoluto = ConfigurationManager.AppSettings["DestinationPathBBDD"] + "\\" + dataToSend.ContributorId + "_" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + DateTime.Now.Millisecond + ".pdf";
                 dataToSend.PathAbsoluto = destinationPathAbsoluto;
-                dataToSend.CNAE = ContributorPersonalData.ParseCNAE(data.Text);
-                dataToSend.SocialReason = ContributorPersonalData.ParseSocialReason(data.Text);
-                dataToSend.NIF = ContributorPersonalData.ParseNIF(data.Text);
+
+                var cnaeParsingResult = ContributorPersonalData.ParseCNAE(data.Text);
+                dataToSend.CNAE = cnaeParsingResult.Item2;
+                dataToSend.Valid &= cnaeParsingResult.Item1;
+
+                var socialReasonParsingResult = ContributorPersonalData.ParseSocialReason(data.Text);
+                dataToSend.SocialReason = socialReasonParsingResult.Item2;
+                dataToSend.Valid &= socialReasonParsingResult.Item1;
+
+                var nifParsingResult = ContributorPersonalData.ParseNIF(data.Text);
+                dataToSend.NIF = nifParsingResult.Item2;
+                dataToSend.Valid &= nifParsingResult.Item1;
 
 
                 List<ContributionPeriod> results;

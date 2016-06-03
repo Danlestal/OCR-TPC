@@ -6,7 +6,7 @@ namespace OCR
     public class ContributorPersonalData
     {
 
-        public static string ParseCotizationAccount(string text)
+        public static Tuple<bool,string> ParseCotizationAccount(string text)
         {
             var idRegex = new Regex(Constants.IDRegExp);
             Match match = idRegex.Match(text);
@@ -18,66 +18,57 @@ namespace OCR
                 result = result.Replace('?', '7');
                 result = result.Trim();
 
-                if (result.Length != 11)
+                if (!Regex.Match(result, @"\d{11}").Success)
                 {
-                    throw new ContributionPeriodCreationException("The text do not have the required format");
+                    return new Tuple<bool, string>(false, result);
                 }
 
-                return result;
+                return new Tuple<bool, string>(true, result);
             }
 
-            throw new ContributionPeriodCreationException("The text do not have the required format");
+            return new Tuple<bool, string>(false, "CC-NoEncontrada");
         }
 
-        public static string ParseSocialReason(string text, ref bool validData)
+        public static Tuple<bool, string> ParseSocialReason(string text)
         {
             var idRegex = new Regex(Constants.SocialReasonRegExp);
             Match match = idRegex.Match(text);
             if (match.Success)
             {
-                return match.Groups[1].Value.Trim();
+                return new Tuple<bool, string>(true, match.Groups[1].Value.Trim());
             }
             else
             {
-                validData = false;
-                return null;
+                return new Tuple<bool, string>(false, "SocialReasonNotFound");
             }
-
-            throw new ArgumentException("The text do not have the required format");
         }
 
-        public static string ParseCNAE(string text, ref bool validData)
+        public static Tuple<bool, string> ParseCNAE(string text)
         {
             var idRegex = new Regex(Constants.CNAERegExp);
             Match match = idRegex.Match(text);
             if (match.Success)
             {
-                return match.Groups[1].Value.Trim();
+                return new Tuple<bool, string>(true, match.Groups[1].Value.Trim());
             }
             else
             {
-                validData = false;
-                return null;
+                return new Tuple<bool, string>(false, "CNAENotFound");
             }
-
-            throw new ArgumentException("The text do not have the required format");
         }
 
-        public static string ParseNIF(string text, ref bool validData)
+        public static Tuple<bool, string> ParseNIF(string text)
         {
             var idRegex = new Regex(Constants.NIFRegExp);
             Match match = idRegex.Match(text);
             if (match.Success)
             {
-                return match.Groups[1].Value.Trim();
+                return new Tuple<bool, string>(true, match.Groups[1].Value.Trim());
             }
             else
             {
-                validData = false;
-                return null;
+                return new Tuple<bool, string>(false, "NIFNotFound");
             }
-
-            throw new ArgumentException("The text do not have the required format");
         }
     }
 }
