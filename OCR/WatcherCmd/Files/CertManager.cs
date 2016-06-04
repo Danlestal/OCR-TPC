@@ -93,9 +93,18 @@ namespace WatcherCmd.Files
                     fileAbsolutePath = uploadResult.Split('@')[1];
                 }
 
-                
-               
-                var parseCAccount = ContributorPersonalData.ParseCotizationAccount(data.Text);
+
+                var parseCAccount = new Tuple<bool, string>(false,"error");
+                try
+                {
+                    parseCAccount = ContributorPersonalData.ParseCotizationAccount(data.Text);
+                }
+                catch (ArgumentException)
+                {
+                    _logger.Log("ERROR CRITICO, no se ha podido parsear la CC del archivo " + inputPath + ", revisar el archivo.");
+                    destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\error_" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + DateTime.Now.Millisecond + ".pdf";
+                    continue;
+                }
 
                 dataToSend.ContributorId = parseCAccount.Item2;
                 dataToSend.Valid = parseCAccount.Item1;

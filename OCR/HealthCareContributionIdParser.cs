@@ -16,6 +16,7 @@ namespace OCR
                 result = result.Replace(" ", "");
                 // TODO: Añadido por Juan Luis porque confunde el 7 con la ?
                 result = result.Replace('?', '7');
+                result = result.Replace(']', '1');
                 result = result.Trim();
 
                 if (!Regex.Match(result, @"\d{11}").Success)
@@ -26,7 +27,7 @@ namespace OCR
                 return new Tuple<bool, string>(true, result);
             }
 
-            return new Tuple<bool, string>(false, "CC-NoEncontrada");
+            throw new ArgumentException("text", "The text can not be parsed");
         }
 
         public static Tuple<bool, string> ParseSocialReason(string text)
