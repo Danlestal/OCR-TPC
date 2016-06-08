@@ -13,16 +13,20 @@ namespace OCR_API.InternalService
     {
 
         private OCR_TPC_Context dbContext;
+        private int numRegistrosTotales;
+        private int numRegistrosCorrectos;
 
         public VerificationServices(OCR_TPC_Context context)
         {
             dbContext = context;
-
+            numRegistrosTotales = 0;
+            numRegistrosCorrectos = 0;
         }
 
         public string FileVerification(string filePath)
         {
-
+            numRegistrosTotales = 0;
+            numRegistrosCorrectos = 0;
             string result = "";
 
             FileStream _fileStream = new FileStream(filePath, FileMode.Open,
@@ -69,6 +73,8 @@ namespace OCR_API.InternalService
             }
             else
             {
+                result += @" <p style=""color: green""> Num registros correctos: " + numRegistrosCorrectos + "</p>";
+                result += @" <p> Num registros totales: " + numRegistrosTotales + "</p>";
                 return result;
             }
 
@@ -92,6 +98,7 @@ namespace OCR_API.InternalService
 
         private string VerifyRow(IRow eachRow, int row)
         {
+            numRegistrosTotales++;
             Contribuidor contributor = new Contribuidor();
 
             ICell cell = eachRow.GetCell(1);
@@ -99,7 +106,10 @@ namespace OCR_API.InternalService
             string idContributor = ReadCellAsAString(eachRow.GetCell(1));
             contributor = dbContext.Contributors.FirstOrDefault(s => s.CuentaCotizacion == idContributor);
             if (contributor == null)
+            {
                 return ContributorNotFound(row, idContributor);
+            }
+        
 
 
             string contributorNIF = ReadCellAsAString(eachRow.GetCell(2));
@@ -110,7 +120,8 @@ namespace OCR_API.InternalService
            if (contributor.RazonSocial != contributorRazonSocial)
                 return RazonSocialNotFound(row, contributorRazonSocial);
 
-            return Correct(row);
+            numRegistrosCorrectos++;
+            return Correct(row, idContributor);
         }
 
         private string ContributorNotFound(int row, string contributor)
@@ -128,9 +139,9 @@ namespace OCR_API.InternalService
             return @"<p style=""color:red"">" + "fila: " + row.ToString() + " ningún registro para Razón Social" + razonSocial + "</p>";
         }
 
-        private string Correct(int row)
+        private string Correct(int row, string contribuidor)
         {
-            return @"<p style=""color:green"">" + "fila: " + row.ToString() + " Verificación Correcta</p>";
+            return @"<p style=""color:green"">" + "fila: " + row.ToString() + " Verificación Correcta para Cta. de Cotización: " + contribuidor + "</p>";
         }
 
     }
