@@ -43,10 +43,19 @@ namespace WatcherCmd.Files
         private void ProcLaboralLife(string inputPath)
         {
             LaboralLifeParser parser = new LaboralLifeParser();
-            LaboralLifeData data = parser.Parse(inputPath);
 
-            APIClient client = new APIClient(_apiUrl);
-            client.Post("LaboralLife", data);
+            LaboralLifeData data = null;
+            try
+            {
+                data = parser.Parse(inputPath);
+            }
+            catch (Exception){ }
+            
+            if(data != null)
+            {
+                _apiClient.Post("LaboralLife", data);
+            }
+
             File.Delete(inputPath);
         }
     }

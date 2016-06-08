@@ -34,7 +34,7 @@
         </div>
 
         <div id="MyModal" class="modal">
-            <span class="myclose glyphicon glyphicon-remove"></span>
+            <span class="myclose glyphicon glyphicon-remove" style="display:inherit;height: 20px;width: 20px;"></span>
             <img class="modal-content" id="img01">
 
             <div id="caption"></div>
@@ -135,6 +135,10 @@
 
                     var data = table.row(rowIdx).data();
                     modal.style.display = "block";
+                    modal.style.position = "absolute";
+                    modal.align = "right";
+                    modal.style.top = "100px";
+                    modal.style.right = "20px";
                     modalImg.src = data.HighResFileId;
                     span.onclick = function () {
                         modal.style.display = "none";

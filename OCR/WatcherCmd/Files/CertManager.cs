@@ -54,10 +54,10 @@ namespace WatcherCmd.Files
             int inputFilePages = coverter.GetPdfPages(inputPath);
 
 
-           
+            string milisecond = DateTime.Now.Millisecond.ToString();
             string firstContributor = string.Empty;
 
-            string destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\" + firstContributor + "_" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + DateTime.Now.Millisecond + ".pdf";
+            string destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\" + firstContributor + "_" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + milisecond + ".pdf";
 
             for (int i = 0; i < inputFilePages; i++)
             {
@@ -102,7 +102,7 @@ namespace WatcherCmd.Files
                 catch (ArgumentException)
                 {
                     _logger.Log("ERROR CRITICO, no se ha podido parsear la CC del archivo " + inputPath + ", revisar el archivo.");
-                    destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\error_" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + DateTime.Now.Millisecond + ".pdf";
+                    destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\error_" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + milisecond + ".pdf";
                     continue;
                 }
 
@@ -110,8 +110,8 @@ namespace WatcherCmd.Files
                 dataToSend.Valid = parseCAccount.Item1;
 
 
-                destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\" + dataToSend.ContributorId + "_" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + DateTime.Now.Millisecond + ".pdf";
-                string destinationPathAbsoluto = ConfigurationManager.AppSettings["DestinationPathBBDD"] + "\\" + dataToSend.ContributorId + "_" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + DateTime.Now.Millisecond + ".pdf";
+                destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\" + dataToSend.ContributorId + "_" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + milisecond + ".pdf";
+                string destinationPathAbsoluto = ConfigurationManager.AppSettings["DestinationPathBBDD"] + "\\" + dataToSend.ContributorId + "_" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + milisecond + ".pdf";
                 dataToSend.PathAbsoluto = destinationPathAbsoluto;
 
                 var cnaeParsingResult = ContributorPersonalData.ParseCNAE(data.Text);

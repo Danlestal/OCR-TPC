@@ -21,7 +21,7 @@ namespace OCR_API.DataLayer
 
         public string DNI { get; set; }
         
-        public string CuentaCotizacion { get; set; }
+        public string NumeroSeguridadSocial { get; set; }
 
         public virtual ICollection<PeriodoVidaLaboral> PeriodosVidaLaboral { get; set; }
 

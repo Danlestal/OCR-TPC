@@ -88,27 +88,18 @@ namespace OCR
                 data.Name = nameMatch.Groups[1].Value.ToString();
             }
 
-            Regex healthCareId = new Regex(@"mero de la Seguridad Social (.*?)[,\.]");
+            Regex healthCareId = new Regex(Constants.NumSeguridadSocialRegExp);
             Match healthCareIdMatch = healthCareId.Match(laboralLifeText);
             if (!healthCareIdMatch.Success)
             {
-                healthCareId = new Regex(@"mero dela Seguridad Social (.*?)[,\.]");
-                healthCareIdMatch = healthCareId.Match(laboralLifeText);
-                if (!healthCareIdMatch.Success)
-                {
-                    data.HealthCareId = string.Empty;
-                }
-                else
-                {
-                    data.HealthCareId = healthCareIdMatch.Groups[1].Value.ToString();
-                }
+                 data.HealthCareId = string.Empty;
             }
             else
             {
                 data.HealthCareId = healthCareIdMatch.Groups[1].Value.ToString();
             }
 
-            Regex dni = new Regex(@"(\d\d\d\d\d\d\d\d\d[A-Z])");
+            Regex dni = new Regex(Constants.DNIRegExp);
             Match matchDni = dni.Match(laboralLifeText);
             if (!matchDni.Success)
             {

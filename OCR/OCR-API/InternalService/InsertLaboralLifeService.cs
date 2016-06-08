@@ -18,10 +18,10 @@ namespace OCR_API.InternalService
 
         public bool Insert(LaboralLifeDTO dataToInsert)
         {
-            if (dbContext.DatoPersonal.FirstOrDefault( s => s.DNI == dataToInsert.PersonalData.DNI && s.CuentaCotizacion == dataToInsert.PersonalData.HealthCareId) == null)
+            if (dbContext.DatoPersonal.FirstOrDefault( s => s.DNI == dataToInsert.PersonalData.DNI && s.NumeroSeguridadSocial == dataToInsert.PersonalData.HealthCareId) == null)
             {
                 DatoPersonal personal = new DatoPersonal();
-                personal.CuentaCotizacion = dataToInsert.PersonalData.HealthCareId;
+                personal.NumeroSeguridadSocial = dataToInsert.PersonalData.HealthCareId;
                 personal.DNI = dataToInsert.PersonalData.DNI;
                 personal.FechaNacimiento = dataToInsert.PersonalData.BornDate;
                 personal.Nombre = dataToInsert.PersonalData.Name;
