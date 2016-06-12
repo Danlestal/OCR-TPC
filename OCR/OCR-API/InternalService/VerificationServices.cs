@@ -13,19 +13,19 @@ namespace OCR_API.InternalService
     {
 
         private OCR_TPC_Context dbContext;
-        private int numRegistrosTotales;
+        private int numRegistrosErroneos;
         private int numRegistrosCorrectos;
 
         public VerificationServices(OCR_TPC_Context context)
         {
             dbContext = context;
-            numRegistrosTotales = 0;
+            numRegistrosErroneos = 0;
             numRegistrosCorrectos = 0;
         }
 
         public string FileVerification(string filePath)
         {
-            numRegistrosTotales = 0;
+            numRegistrosErroneos = 0;
             numRegistrosCorrectos = 0;
             string result = "";
 
@@ -74,7 +74,7 @@ namespace OCR_API.InternalService
             else
             {
                 result += @" <p style=""color: green""> Num registros correctos: " + numRegistrosCorrectos + "</p>";
-                result += @" <p> Num registros totales: " + numRegistrosTotales + "</p>";
+                result += @" <p> Num registros erroneos: " + numRegistrosErroneos + "</p>";
                 return result;
             }
 
@@ -98,7 +98,7 @@ namespace OCR_API.InternalService
 
         private string VerifyRow(IRow eachRow, int row)
         {
-            numRegistrosTotales++;
+          
             Contribuidor contributor = new Contribuidor();
 
             ICell cell = eachRow.GetCell(1);
@@ -107,6 +107,7 @@ namespace OCR_API.InternalService
             contributor = dbContext.Contributors.FirstOrDefault(s => s.CuentaCotizacion == idContributor);
             if (contributor == null)
             {
+                numRegistrosErroneos++;
                 return ContributorNotFound(row, idContributor);
             }
         
@@ -114,14 +115,21 @@ namespace OCR_API.InternalService
 
             string contributorNIF = ReadCellAsAString(eachRow.GetCell(2));
             if (contributor.NIF != contributorNIF)
+            {
+                numRegistrosErroneos++;
                 return NIFNotFound(row, contributorNIF.ToString());
+            }
 
            string contributorRazonSocial = ReadCellAsAString(eachRow.GetCell(3));
-           if (contributor.RazonSocial != contributorRazonSocial)
+            if (contributor.RazonSocial != contributorRazonSocial)
+            {
+                numRegistrosErroneos++;
                 return RazonSocialNotFound(row, contributorRazonSocial);
 
+            }
+
             numRegistrosCorrectos++;
-            return Correct(row, idContributor);
+            return string.Empty;
         }
 
         private string ContributorNotFound(int row, string contributor)
