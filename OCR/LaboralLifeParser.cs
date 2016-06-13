@@ -161,9 +161,9 @@ namespace OCR
         {
             for (int i = 0; i < tableLines.Length; i++)
             {
-                if (tableLines[i].StartsWith("REFERENCIAS ELECTR"))
+                if (tableLines[i].StartsWith("REFERENCIAS ELECTR") || (tableLines[i].Contains("Resumen de huellas")))
                 {
-                    return i + 1;
+                    return i;
                 }
             }
 

@@ -26,21 +26,24 @@ namespace OCR_API.InternalService
                 personal.FechaNacimiento = dataToInsert.PersonalData.BornDate;
                 personal.Nombre = dataToInsert.PersonalData.Name;
 
-                foreach (var row in dataToInsert.Rows)
-                {
-                    personal.PeriodosVidaLaboral.Add(new PeriodoVidaLaboral()
+                if (dataToInsert.Rows != null)
+                { 
+                    foreach (var row in dataToInsert.Rows)
                     {
-                        Codigo = row.Code,
-                        Compania = row.Company,
-                        CT = row.CT,
-                        CTP = row.CTP,
-                        GC = row.GC,
-                        Dias = row.Days,
-                        FechaDeFin = row.EndDate,
-                        FechaDeInicio = row.StartDate,
-                        FechaDeInicioEfectiva = row.EffectiveStartDate,
-                        Regimen = row.Regimen
-                    });
+                        personal.PeriodosVidaLaboral.Add(new PeriodoVidaLaboral()
+                        {
+                            Codigo = row.Code,
+                            Compania = row.Company,
+                            CT = row.CT,
+                            CTP = row.CTP,
+                            GC = row.GC,
+                            Dias = row.Days,
+                            FechaDeFin = row.EndDate,
+                            FechaDeInicio = row.StartDate,
+                            FechaDeInicioEfectiva = row.EffectiveStartDate,
+                            Regimen = row.Regimen
+                        });
+                    }
                 }
 
                 dbContext.DatoPersonal.Add(personal);

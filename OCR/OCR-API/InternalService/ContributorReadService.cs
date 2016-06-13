@@ -111,6 +111,11 @@ namespace OCR_API.InternalService
                 data.Add("CuentaCotizacion", contribuidor.CuentaCotizacion);
                 data.Add("Valido", contribuidor.Valido);
 
+                if (contribuidor.PeriodosContribucion.Count == 0)
+                {
+                    data.Add("Valido", "False");
+                }
+
                 foreach (PeriodoContribucion periodo in contribuidor.PeriodosContribucion)
                 {
                     if (!data.Keys.Contains("HighResFileId"))
@@ -125,6 +130,7 @@ namespace OCR_API.InternalService
                     if (!yearsList.Contains(periodo.ComienzoPeriodo.Year.ToString()))
                         yearsList.Add(periodo.ComienzoPeriodo.Year.ToString());
                 }
+
                 partialResult.Add(data);
             }
 

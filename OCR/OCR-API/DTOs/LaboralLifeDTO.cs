@@ -7,8 +7,15 @@ namespace OCR_API.DTOs
 {
     public class LaboralLifeDTO
     {
+        public LaboralLifeDTO()
+        {
+            Rows = new List<LaboralLifeRowDTO>();
+        }
+
         public PersonalDataDTO PersonalData { get; set; }
         public List<LaboralLifeRowDTO> Rows { get; set; }
+
+
 
        
     }

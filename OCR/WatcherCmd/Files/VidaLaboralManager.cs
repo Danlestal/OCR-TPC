@@ -15,12 +15,14 @@ namespace WatcherCmd.Files
     public class VidaLaboralManager : IManager
     {
         private readonly IWatcher _watcher;
+        private ILogger _logger;
         private APIClient _apiClient;
         private string _apiUrl;
 
 
         public VidaLaboralManager(ILogger logger, IWatcher watcher, APIClient client)
         {
+            _logger = logger;
             _watcher = watcher;
             _apiClient = client;
             _apiUrl = ConfigurationManager.AppSettings["ApiURL"];
@@ -42,6 +44,7 @@ namespace WatcherCmd.Files
 
         private void ProcLaboralLife(string inputPath)
         {
+            _logger.Log("PROCESANDO ARCHIVO: " + inputPath);
             LaboralLifeParser parser = new LaboralLifeParser();
 
             LaboralLifeData data = null;
@@ -49,12 +52,17 @@ namespace WatcherCmd.Files
             {
                 data = parser.Parse(inputPath);
             }
-            catch (Exception){ }
+            catch (Exception a)
+            {
+                _logger.Log("error en archivo: " + inputPath +"\n Excepcion: " + a.Message);
+            }
             
             if(data != null)
             {
                 _apiClient.Post("LaboralLife", data);
             }
+
+            _logger.Log("FIN PROCESO");
 
             File.Delete(inputPath);
         }

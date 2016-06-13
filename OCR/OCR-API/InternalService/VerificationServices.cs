@@ -1,11 +1,8 @@
-﻿using NPOI.HSSF.UserModel;
-using NPOI.SS.UserModel;
+﻿using NPOI.SS.UserModel;
 using OCR_API.DataLayer;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Web;
 
 namespace OCR_API.InternalService
 {
@@ -67,16 +64,16 @@ namespace OCR_API.InternalService
             if (File.Exists(filePath))
                 File.Delete(filePath);
 
-            if (string.IsNullOrEmpty(result))
-            {
-                return @" < p style = ""color: red"" > Algo raro hay en el formato</p>";
-            }
-            else
-            {
+            //if (string.IsNullOrEmpty(result))
+            //{
+            //    return @" < p style = ""color: red"" > Algo raro hay en el formato</p>";
+            //}
+            //else
+            //{
                 result += @" <p style=""color: green""> Num registros correctos: " + numRegistrosCorrectos + "</p>";
                 result += @" <p> Num registros erroneos: " + numRegistrosErroneos + "</p>";
                 return result;
-            }
+            //}
 
         }
 
@@ -110,23 +107,21 @@ namespace OCR_API.InternalService
                 numRegistrosErroneos++;
                 return ContributorNotFound(row, idContributor);
             }
-        
+            // Estas validaciones no son útiles para el usuario. Dejamos solo la validación de la CCC.
+            //string contributorNIF = ReadCellAsAString(eachRow.GetCell(2));
+            //if (contributor.NIF != contributorNIF)
+            //{
+            //    numRegistrosErroneos++;
+            //    return NIFNotFound(row, contributorNIF.ToString());
+            //}
 
+            //string contributorRazonSocial = ReadCellAsAString(eachRow.GetCell(3));
+            //if (contributor.RazonSocial != contributorRazonSocial)
+            //{
+            //    numRegistrosErroneos++;
+            //    return RazonSocialNotFound(row, contributorRazonSocial);
 
-            string contributorNIF = ReadCellAsAString(eachRow.GetCell(2));
-            if (contributor.NIF != contributorNIF)
-            {
-                numRegistrosErroneos++;
-                return NIFNotFound(row, contributorNIF.ToString());
-            }
-
-           string contributorRazonSocial = ReadCellAsAString(eachRow.GetCell(3));
-            if (contributor.RazonSocial != contributorRazonSocial)
-            {
-                numRegistrosErroneos++;
-                return RazonSocialNotFound(row, contributorRazonSocial);
-
-            }
+            //}
 
             numRegistrosCorrectos++;
             return string.Empty;
