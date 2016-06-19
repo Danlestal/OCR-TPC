@@ -109,12 +109,9 @@ namespace OCR_API.InternalService
             {
                 var data = new Dictionary<string, string>();
                 data.Add("CuentaCotizacion", contribuidor.CuentaCotizacion);
-                data.Add("Valido", contribuidor.Valido);
 
-                if (contribuidor.PeriodosContribucion.Count == 0)
-                {
-                    data.Add("Valido", "False");
-                }
+
+                data.Add("Valido", contribuidor.PeriodosContribucion.Count == 0 ? "False" : contribuidor.Valido);
 
                 foreach (PeriodoContribucion periodo in contribuidor.PeriodosContribucion)
                 {

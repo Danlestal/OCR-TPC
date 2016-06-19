@@ -54,6 +54,14 @@ namespace OCR
             }
             else
             {
+                // SOMETIMES THE CNAE GETS MISPLACED TO THE BEGINNING OF THE LINE
+                var idRegex2 = new Regex(@"(^\d+)", RegexOptions.Multiline);
+                Match match2 = idRegex2.Match(text);
+                if (match2.Success)
+                {
+                    return new Tuple<bool, string>(true, match2.Groups[1].Value.Trim());
+                }
+
                 return new Tuple<bool, string>(false, "CNAENotFound");
             }
         }
@@ -68,6 +76,25 @@ namespace OCR
             }
             else
             {
+                // SOMETIMES THE CNAE GETS MISPLACED TO THE BEGINNING OF THE LINE
+                var idRegex2 = new Regex(@"(^\d.\d\d\d\d\d\d\d\d)", RegexOptions.Multiline);
+                Match match2 = idRegex2.Match(text);
+                if (match2.Success)
+                {
+
+                    string possibleNIF = match2.Groups[1].Value.Trim();
+                    var auxChar = possibleNIF.ToCharArray();
+                    if (auxChar[1] == '8')
+                    {
+                        auxChar[1] = 'B';
+                    }
+
+                    return new Tuple<bool, string>(true, new string(auxChar));
+                }
+
+                
+
+
                 return new Tuple<bool, string>(false, "NIFNotFound");
             }
         }

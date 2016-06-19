@@ -10,7 +10,7 @@ namespace OCR
     {
         public static string PeriodRegExp = @"(.*) (\d\d\d\d) a (.*) (\d\d\d\d) (.*)";
         public static string IDRegExp = @"([\d?\]][\d?\]] [\d?\]][\d?\]][\d?\]][\d?\]][\d?\]][\d?\]][\d?\]] [\d?\]][\d?\]])";
-        public static string SocialReasonRegExp = "Razón Social: (.*)";
+        public static string SocialReasonRegExp = "Raz.n Socia.:(.*)";
         public static string CNAERegExp = "CNAE .*: (.*)";
         public static string NIFRegExp = "Fiscal: (.*)";
         public static string NumSeguridadSocialRegExp = @"([\d][\d][\d][\d][\d][\d][\d][\d][\d][\d][\d][\d])";

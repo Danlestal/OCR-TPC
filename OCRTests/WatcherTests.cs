@@ -1,10 +1,6 @@
-﻿using Common.Logging;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using WatcherCmd.Files.Interface;
 
 namespace WatcherCmd.Files.Tests
 {
