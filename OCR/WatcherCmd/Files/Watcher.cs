@@ -47,7 +47,7 @@ namespace WatcherCmd.Files
             _watcher = new FileSystemWatcher();
             _watcher.Path = directoryPathToWatch;
             _watcher.IncludeSubdirectories = true;
-            _watcher.InternalBufferSize = 32 * 1024;
+            _watcher.InternalBufferSize = 64 * 1024;
             _watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName;
             _watcher.Created += FileDetected; 
             _watcher.IncludeSubdirectories = true;
