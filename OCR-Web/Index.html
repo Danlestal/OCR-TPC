@@ -56,8 +56,8 @@
     </div>
 
     <script>
-        var apiUrl = 'http://localhost:58869';
-        //var apiUrl = 'http://cuotasocrapi.fundacionlaboral.org';
+        //var apiUrl = 'http://localhost:58869';
+        var apiUrl = 'http://cuotasocrapi.fundacionlaboral.org';
         var table;
         var url = apiUrl + "/ContributionPeriods/PerYear";
 
@@ -266,6 +266,8 @@
 
 
                     $('#verifyModal').html("");
+
+                    $('#f_UploadXls').val("");
 
                 },
                 processData: false,

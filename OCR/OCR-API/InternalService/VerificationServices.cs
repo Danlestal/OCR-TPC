@@ -1,6 +1,7 @@
 ﻿using NPOI.SS.UserModel;
 using OCR_API.DataLayer;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -12,6 +13,7 @@ namespace OCR_API.InternalService
         private OCR_TPC_Context dbContext;
         private int numRegistrosErroneos;
         private int numRegistrosCorrectos;
+        private List<Contribuidor> contribuidores;
 
         public VerificationServices(OCR_TPC_Context context)
         {
@@ -22,6 +24,9 @@ namespace OCR_API.InternalService
 
         public string FileVerification(string filePath)
         {
+
+            contribuidores = dbContext.Contributors.ToList();
+
             numRegistrosErroneos = 0;
             numRegistrosCorrectos = 0;
             string result = "";
@@ -64,17 +69,20 @@ namespace OCR_API.InternalService
             if (File.Exists(filePath))
                 File.Delete(filePath);
 
-            //if (string.IsNullOrEmpty(result))
-            //{
-            //    return @" < p style = ""color: red"" > Algo raro hay en el formato</p>";
-            //}
-            //else
-            //{
-                result += @" <p style=""color: green""> Num registros correctos: " + numRegistrosCorrectos + "</p>";
-                result += @" <p> Num registros erroneos: " + numRegistrosErroneos + "</p>";
-                return result;
-            //}
 
+            result += @" <p style=""color: green""> Num registros correctos: " + numRegistrosCorrectos + "</p>";
+            result += @" <p> Num registros erroneos: " + numRegistrosErroneos + "</p>";
+                
+            if (contribuidores.Count > 0)
+            { 
+                result += @" <p style=""color: blue""> Registros en excel pero no importados: " + contribuidores.Count + "</p>";
+                foreach (string cuentaCotizacion in contribuidores.Select(s => s.CuentaCotizacion))
+                {
+                    result += @" <p style=""color: blue""> " + cuentaCotizacion + "</p>";
+                }
+            }
+
+            return result;
         }
 
         private string ReadCellAsAString(ICell cellToRead)
@@ -96,6 +104,7 @@ namespace OCR_API.InternalService
         private string VerifyRow(IRow eachRow, int row)
         {
           
+
             Contribuidor contributor = new Contribuidor();
 
             ICell cell = eachRow.GetCell(1);
@@ -106,6 +115,10 @@ namespace OCR_API.InternalService
             {
                 numRegistrosErroneos++;
                 return ContributorNotFound(row, idContributor);
+            }
+            else
+            {
+                contribuidores.Remove(contributor);
             }
             // Estas validaciones no son útiles para el usuario. Dejamos solo la validación de la CCC.
             //string contributorNIF = ReadCellAsAString(eachRow.GetCell(2));
