@@ -18,6 +18,7 @@ namespace OCR_API.Filters
     {
 
         private OCR_TPC_Context dbContext;
+        private FLCStaffValidation validator;
         private bool isActive;
 
 
@@ -28,6 +29,7 @@ namespace OCR_API.Filters
         public ApiAuthenticationFilter(bool isActive)
         {
             dbContext = new OCR_TPC_Context();
+            validator = new FLCStaffValidation();
             this.isActive = isActive;
         }
 
@@ -56,23 +58,8 @@ namespace OCR_API.Filters
 
         protected bool CheckIdentity(string username, string password, HttpActionContext actionContext)
         {
-            var provider = new BusinessServices(dbContext);
-            if (provider != null)
-            {
-                var user = provider.Authenticate(username, password);
-                if (user != null)
-                {
-                    var basicAuthenticationIdentity = Thread.CurrentPrincipal.Identity as BasicAuthenticationIdentity;
-                    if (basicAuthenticationIdentity != null)
-                    {
-                        basicAuthenticationIdentity.UserId = user.UsuarioId;
-                        return true;
-                    }
-
-                    
-                }
-            }
-            return false;
+            string response = string.Empty;
+            return FLCStaffValidation.ValidateUserFLC(username, password, ref response);
         }
 
 
