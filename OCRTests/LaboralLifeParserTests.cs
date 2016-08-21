@@ -92,7 +92,7 @@ namespace OCRTests
             var personalData = reader.Read("20160428114735-0.png");
 
             LaboralLifeParser parser = new LaboralLifeParser();
-            parser.ParsePersonalData(personalData.Text);
+            parser.ParsePersonalData(personalData.Text, "NombreFichero.pdf");
         }
 
 
@@ -118,7 +118,7 @@ namespace OCRTests
                 PersonalData data = null;
                 try
                 {
-                    data = parser.ParsePersonalData(personalOCRData.Text);
+                    data = parser.ParsePersonalData(personalOCRData.Text, "NombreFichero.pdf");
                 }
                 catch (Exception)
                 {

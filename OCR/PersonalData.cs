@@ -6,5 +6,6 @@
         public string BornDate { get; set;}
         public string DNI { get; set; }
         public string HealthCareId { get; internal set; }
+        public string FileName { get; set; }
     }
 }

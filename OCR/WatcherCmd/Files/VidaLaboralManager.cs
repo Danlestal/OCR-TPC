@@ -51,19 +51,17 @@ namespace WatcherCmd.Files
             try
             {
                 data = parser.Parse(inputPath);
+                if (data != null)
+                {
+                    _apiClient.Post("LaboralLife", data);
+                }
             }
             catch (Exception a)
             {
                 _logger.Log("error en archivo: " + inputPath +"\n Excepcion: " + a.Message);
             }
-            
-            if(data != null)
-            {
-                _apiClient.Post("LaboralLife", data);
-            }
 
             _logger.Log("FIN PROCESO");
-
             File.Delete(inputPath);
         }
     }

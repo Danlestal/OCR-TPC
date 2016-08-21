@@ -25,6 +25,7 @@ namespace OCR_API.InternalService
                 personal.DNI = dataToInsert.PersonalData.DNI;
                 personal.FechaNacimiento = dataToInsert.PersonalData.BornDate;
                 personal.Nombre = dataToInsert.PersonalData.Name;
+                personal.FileName = dataToInsert.PersonalData.FileName;
 
                 if (dataToInsert.Rows != null)
                 { 

@@ -36,7 +36,7 @@ namespace OCR
             PersonalData data = null;
             try
             {
-                data = parser.ParsePersonalData(personalOCRData.Text);
+                data = parser.ParsePersonalData(personalOCRData.Text, Path.GetFileName(file));
             }
             catch (Exception)
             {
@@ -60,10 +60,11 @@ namespace OCR
             return result;
         }
 
-        public PersonalData ParsePersonalData(string laboralLifeText)
+        public PersonalData ParsePersonalData(string laboralLifeText, string fileName)
         {
             PersonalData data = new PersonalData();
 
+            data.FileName = fileName;
             laboralLifeText = laboralLifeText.Replace('\n', ' ');
 
             Regex bornDate = new Regex(@"el (\d+ de .*?\d\d\d\d)");
@@ -175,6 +176,12 @@ namespace OCR
             Regex rowRegex = new Regex(@"(\S*) (\S*) (\D+)(\d\d.\d\d.\d\d\d\d) (\d\d.\d\d.\d\d\d\d) (.*)");
             Match matchResult = rowRegex.Match(text);
             if (!matchResult.Success)
+                return null;
+            // Si no hay Código de Cotización no grabo el registro ya que no sirve.
+            if (string.IsNullOrEmpty(ProCode(matchResult.Groups[2].Value.ToString())))
+                return null;
+            // Si son vacaciones no grabo el registro ya que no sirve.
+            if (ProCompany(matchResult.Groups[3].Value.ToString()).Contains("VACACIONES"))
                 return null;
 
             LaboralLifeRow row = new LaboralLifeRow();

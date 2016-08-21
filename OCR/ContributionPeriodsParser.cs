@@ -67,6 +67,13 @@ namespace OCR
 
         private double ParseMoneyOnSpanishFormat(string contributionString)
         {
+            if (!contributionString.Contains(value: ","))
+            {
+                var longitud = contributionString.Length;
+                contributionString = contributionString.Substring(0, longitud - 3) + "," +
+                                     contributionString.Substring(longitud - 2,2);
+            }
+
             contributionString = contributionString.Replace(".", "");
             Regex moneyRegex = new Regex(@"(\d+[,.]*\d*)");
             Match matchResult = moneyRegex.Match(contributionString);

@@ -23,6 +23,8 @@ namespace OCR_API.DataLayer
         
         public string NumeroSeguridadSocial { get; set; }
 
+        public string FileName { get; set; }
+
         public virtual ICollection<PeriodoVidaLaboral> PeriodosVidaLaboral { get; set; }
 
         public void AddContributionPeriod(PeriodoVidaLaboral newPeriod)

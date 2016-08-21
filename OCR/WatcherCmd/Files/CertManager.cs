@@ -40,7 +40,15 @@ namespace WatcherCmd.Files
 
         private void OnFileDetected(object sender, FileSystemEventArgs e)
         {
-            ProcContributionFile(e.FullPath);
+            try
+            {
+                ProcContributionFile(e.FullPath);
+            }catch(Exception a)
+            {
+                _logger.Log("error en archivo: " + e.FullPath + "\n Excepcion: " + a.Message);
+            }
+
+            _logger.Log("FIN PROCESO");
         }
 
         private void ProcContributionFile(string inputPath)
@@ -152,12 +160,7 @@ namespace WatcherCmd.Files
                 client.Post("ContributionPeriods", dataToSend);
             }
 
-            
-
-
             _logger.Log("moviendo archivo a " + destinationPath);
-            //if (File.Exists(destinationPath))
-            //    File.Delete(destinationPath);
 
             File.Move(inputPath, destinationPath);
 

@@ -26,6 +26,7 @@ namespace OCR_API.DTOs
         public string BornDate { get; set; }
         public string DNI { get; set; }
         public string HealthCareId { get; set; }
+        public string FileName { get; set; }
     }
 
     public class LaboralLifeRowDTO
