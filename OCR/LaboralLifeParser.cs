@@ -20,9 +20,18 @@ namespace OCR
             LaboralLifeParser parser = new LaboralLifeParser();
 
             List<PersonalData> personalDataList = new List<PersonalData>();
-            string outputFileName = Path.GetFileNameWithoutExtension(file) + "-0.png";
-            converter.ConvertToImage(0, file, outputFileName, 512, 512, System.Drawing.Imaging.ImageFormat.Png);
+            string outputFileName = Path.GetFileNameWithoutExtension(file) + "-0.tiff";
 
+            int numberOfPages = converter.GetPdfPages(file);
+            if(numberOfPages == 0)
+            {
+                //NO pages on the pdf.
+                return null;
+            }
+
+
+            //The personalData will always be on the first page
+converter.ConvertToImage(0, file, outputFileName, 512, 512, System.Drawing.Imaging.ImageFormat.Tiff);
             OcrData personalOCRData = null;
             try
             {
@@ -46,16 +55,20 @@ namespace OCR
             if (data != null)
                 result.PersonalData = data;
 
-
-            outputFileName = Path.GetFileNameWithoutExtension(file) + "-1.png";
-            //converter.AddFilter(new BrightnessFilter(0.35f));
-            converter.ConvertToImage(1, file, outputFileName, 512, 512, System.Drawing.Imaging.ImageFormat.Png);
-            try
+            result.Rows = new List<LaboralLifeRow>();
+            for(int i = 0; i < numberOfPages;i++)
             {
+              
+                outputFileName = Path.GetFileNameWithoutExtension(file) + "-" + i + ".tiff";
+                converter.ConvertToImage(i, file, outputFileName, 512, 512, System.Drawing.Imaging.ImageFormat.Tiff);
                 var tableOCRData = reader.Read(outputFileName);
-                result.Rows = parser.ParseTable(tableOCRData.Text);
+
+                if ((tableOCRData != null) && (IsThereTable(tableOCRData.Text)))
+                {
+                    result.Rows.AddRange(parser.ParseTable(tableOCRData.Text));
+                }
+              
             }
-            catch (Exception) { }
 
             return result;
         }
@@ -114,6 +127,12 @@ namespace OCR
             return data;
         }
 
+        public bool IsThereTable(string text)
+        {
+            return (GetTableStartLine(text.Split('\n')) >= 0);
+        }
+
+
         public List<LaboralLifeRow> ParseTable(string tableText)
         {
 
@@ -149,20 +168,20 @@ namespace OCR
         {
             for (int i = 0; i < tableLines.Length; i++)
             {
-                if ( (tableLines[i].StartsWith("REGIMEN")) || (tableLines[i].StartsWith("REG'MEN")))
+                if ( (tableLines[i].StartsWith("REGIMEN")) || (tableLines[i].StartsWith("Régimen")) || (tableLines[i].StartsWith("Regimen")) || (tableLines[i].StartsWith("R'gimen")) || (tableLines[i].StartsWith("REG'MEN")))
                 {
                     return i + 1;
                 }
             }
 
-            throw new TableStartNotFoundException(); 
+            return -1;
         }
 
         private int GetTableEndLine(string[] tableLines)
         {
             for (int i = 0; i < tableLines.Length; i++)
             {
-                if (tableLines[i].StartsWith("REFERENCIAS ELECTR") || (tableLines[i].Contains("Resumen de huellas")))
+                if (tableLines[i].StartsWith("REFERENCIAS ELECTR") || (tableLines[i].Contains("Resumen de huellas")) || (tableLines[i].Contains("Se informa")))
                 {
                     return i;
                 }
@@ -176,7 +195,15 @@ namespace OCR
             Regex rowRegex = new Regex(@"(\S*) (\S*) (\D+)(\d\d.\d\d.\d\d\d\d) (\d\d.\d\d.\d\d\d\d) (.*)");
             Match matchResult = rowRegex.Match(text);
             if (!matchResult.Success)
-                return null;
+            {
+                rowRegex = new Regex(@"(\S*) (\S*) (\D+)(\d\d.\d\d.\d\d) (\d\d.\d\d.\d\d\d\d) (.*)");
+                matchResult = rowRegex.Match(text);
+                if (!matchResult.Success)
+                {
+                    return null;
+                }
+            }
+               
             // Si no hay Código de Cotización no grabo el registro ya que no sirve.
             if (string.IsNullOrEmpty(ProCode(matchResult.Groups[2].Value.ToString())))
                 return null;

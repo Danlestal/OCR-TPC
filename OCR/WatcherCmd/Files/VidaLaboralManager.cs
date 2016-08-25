@@ -8,6 +8,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Threading;
 using WatcherCmd.Files.Interface;
 
 namespace WatcherCmd.Files
@@ -39,6 +40,7 @@ namespace WatcherCmd.Files
 
         private void OnFileDetected(object sender, FileSystemEventArgs e)
         {
+            Thread.Sleep(500);
             ProcLaboralLife(e.FullPath);
         }
 
