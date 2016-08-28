@@ -1,8 +1,7 @@
-﻿using WatcherCmd.Files;
-using System;
-using WatcherCmd.Files.Interface;
-using OCR;
+﻿using OCR;
 using System.Configuration;
+using WatcherCmd.Files;
+using WatcherCmd.Files.Interface;
 
 namespace WatcherCmd.Jobs
 {
@@ -11,7 +10,6 @@ namespace WatcherCmd.Jobs
         
         public WatcherCmdJob()
         {
-        
         }
 
         public string Id { get { return "ManagerProcess"; } }

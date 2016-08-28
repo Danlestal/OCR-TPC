@@ -1,13 +1,7 @@
-﻿
-using Newtonsoft.Json;
-using OCR;
+﻿using OCR;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Net;
-using System.Net.Http.Headers;
 using System.Threading;
 using WatcherCmd.Files.Interface;
 
@@ -63,8 +57,11 @@ namespace WatcherCmd.Files
                 _logger.Log("error en archivo: " + inputPath +"\n Excepcion: " + a.Message);
             }
 
+            string milisecond = DateTime.Now.Millisecond.ToString();
+            string destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\" + data.PersonalData.DNI + "_" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + milisecond + ".pdf";
+            File.Move(inputPath, destinationPath);
             _logger.Log("FIN PROCESO");
-            File.Delete(inputPath);
+            
         }
     }
 }

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace OCR
 {
@@ -29,9 +27,8 @@ namespace OCR
                 return null;
             }
 
-
             //The personalData will always be on the first page
-converter.ConvertToImage(0, file, outputFileName, 512, 512, System.Drawing.Imaging.ImageFormat.Tiff);
+            converter.ConvertToImage(0, file, outputFileName, 512, 512, System.Drawing.Imaging.ImageFormat.Tiff);
             OcrData personalOCRData = null;
             try
             {
@@ -132,7 +129,6 @@ converter.ConvertToImage(0, file, outputFileName, 512, 512, System.Drawing.Imagi
             return (GetTableStartLine(text.Split('\n')) >= 0);
         }
 
-
         public List<LaboralLifeRow> ParseTable(string tableText)
         {
 
@@ -208,7 +204,7 @@ converter.ConvertToImage(0, file, outputFileName, 512, 512, System.Drawing.Imagi
             if (string.IsNullOrEmpty(ProCode(matchResult.Groups[2].Value.ToString())))
                 return null;
             // Si son vacaciones no grabo el registro ya que no sirve.
-            if (ProCompany(matchResult.Groups[3].Value.ToString()).Contains("VACACIONES"))
+            if (ProCompany(matchResult.Groups[3].Value.ToString()).Contains("VACACIONES") || (ProCompany(matchResult.Groups[3].Value.ToString()).Contains("vacaciones")))
                 return null;
 
             LaboralLifeRow row = new LaboralLifeRow();
@@ -263,6 +259,17 @@ converter.ConvertToImage(0, file, outputFileName, 512, 512, System.Drawing.Imagi
                 row.EndDate = dateMatch.Groups[1].Value.ToString();
                 optionalPart = optionalPart.Replace(row.EndDate, "");
             }
+            else
+            {
+                dateRegex = new Regex(@"(\d\d.\d\d.\d\d\)");
+                dateMatch = dateRegex.Match(optionalPart);
+                if (dateMatch.Success)
+                {
+                    row.EndDate = dateMatch.Groups[1].Value.ToString();
+                    optionalPart = optionalPart.Replace(row.EndDate, "");
+                }
+            }
+
 
             var tokens = optionalPart.Split(' ');
 
