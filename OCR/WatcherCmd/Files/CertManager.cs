@@ -191,9 +191,21 @@ namespace WatcherCmd.Files
             }
             catch (WebException a)
             {
-                _logger.Log(a.Response.ToString());
-                _logger.Log(a.Message.ToString());
-                _logger.Log(a.InnerException.ToString());
+                if (a.Response != null)
+                {
+                    _logger.Log(a.Response.ToString());
+                }
+
+                if (a.Message != null)
+                {
+                    _logger.Log(a.Message.ToString());
+                }
+
+                if (a.InnerException != null)
+                {
+                    _logger.Log(a.InnerException.ToString());
+                }
+                
                 return "";
             }
 

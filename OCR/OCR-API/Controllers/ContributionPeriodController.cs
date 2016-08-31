@@ -25,7 +25,6 @@ namespace OCR_API.Controllers
 
         // POST: api/ContributionPeriod
         [Route("ContributionPeriods")]
-        [ApiAuthenticationFilter(true)]
         public void Post(ContributionPeriodDataDTO value)
         {
             periodsService.Insert(value);

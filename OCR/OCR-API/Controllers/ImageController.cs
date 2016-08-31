@@ -30,7 +30,7 @@ namespace OCR_API.Controllers
 
         [HttpPost]
         [Route("UploadFile")]
-        [ApiAuthenticationFilter(true)]
+        //[ApiAuthenticationFilter(true)]
         public HttpResponseMessage Post()
         {
             var task = this.Request.Content.ReadAsStreamAsync();
