@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Web;
+using System.IO;
 
 namespace OCR_API.InternalService
 {
@@ -47,6 +48,7 @@ namespace OCR_API.InternalService
         internal void DeleteByHealthCareId(string healthcareid)
         {
             Contribuidor toRemove = dbContext.Contributors.FirstOrDefault(s => s.CuentaCotizacion == healthcareid);
+            File.Delete(toRemove.PathAbsolutoArchivo);
             dbContext.Contributors.Remove(toRemove);
             dbContext.SaveChanges();
         }
