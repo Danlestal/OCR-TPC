@@ -27,9 +27,18 @@ namespace WatcherCmd.Files
         public void InitializeSystem()
         {
 
+            if (!Directory.Exists(ConfigurationManager.AppSettings["VidaLaboralFolder"]))
+            {
+                Directory.CreateDirectory(ConfigurationManager.AppSettings["VidaLaboralFolder"]);
+            }
+
+            if (!Directory.Exists(ConfigurationManager.AppSettings["VidaLaboralFolder"] + "\\ERROR\\"))
+            {
+                Directory.CreateDirectory(ConfigurationManager.AppSettings["VidaLaboralFolder"] + "\\ERROR\\");
+            }
+
             _watcher.FileDetected += OnFileDetected;
             _watcher.Init(ConfigurationManager.AppSettings["VidaLaboralFolder"]);
-
         }
 
         private void OnFileDetected(object sender, FileSystemEventArgs e)
@@ -55,6 +64,8 @@ namespace WatcherCmd.Files
             catch (Exception a)
             {
                 _logger.Log("error en archivo: " + inputPath +"\n Excepcion: " + a.Message);
+                string errorPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\ERROR\\" + Path.GetFileName(inputPath);
+                File.Move(inputPath, errorPath);
             }
 
             string milisecond = DateTime.Now.Millisecond.ToString();

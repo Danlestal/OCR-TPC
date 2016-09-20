@@ -32,10 +32,20 @@ namespace WatcherCmd.Files
 
         public void InitializeSystem()
         {
+            if (!Directory.Exists(ConfigurationManager.AppSettings["CertFolder"]))
+            {
+                Directory.CreateDirectory(ConfigurationManager.AppSettings["CertFolder"]);
+            }
+
+            string errorFolder = ConfigurationManager.AppSettings["CertFolder"] + "/ERROR";
+            if (!Directory.Exists(errorFolder))
+            {
+                Directory.CreateDirectory(errorFolder);
+            }
 
             _watcher.FileDetected += OnFileDetected;
             _watcher.Init(ConfigurationManager.AppSettings["CertFolder"]);
-
+           
         }
 
         private void OnFileDetected(object sender, FileSystemEventArgs e)
@@ -46,9 +56,17 @@ namespace WatcherCmd.Files
             }catch(Exception a)
             {
                 _logger.Log("error en archivo: " + e.FullPath + "\n Excepcion: " + a.Message);
+                MoveToErrorFolder(e.FullPath);
             }
 
             _logger.Log("FIN PROCESO");
+        }
+
+        private void MoveToErrorFolder(string fullPath)
+        {
+            string destination = Path.GetFileName(fullPath);
+            string destinationFullPath = ConfigurationManager.AppSettings["CertFolder"] + "/ERROR/" + destination;
+            File.Move(fullPath, destinationFullPath);
         }
 
         private void ProcContributionFile(string inputPath)
@@ -60,12 +78,12 @@ namespace WatcherCmd.Files
             _logger.Log("PROCESANDO ARCHIVO: " + inputPath);
             string inputFile = Path.GetFileName(inputPath);
             int inputFilePages = coverter.GetPdfPages(inputPath);
-
-
-            string milisecond = DateTime.Now.Millisecond.ToString();
+            
             string firstContributor = string.Empty;
 
-            string destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\" + firstContributor + "_" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + milisecond + ".pdf";
+            //string destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\" + firstContributor + "_" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + milisecond + ".pdf";
+            string destinationPath = string.Empty;
+            string destinationPathAbsoluto = string.Empty;
 
             for (int i = 0; i < inputFilePages; i++)
             {
@@ -110,7 +128,9 @@ namespace WatcherCmd.Files
                 catch (ArgumentException)
                 {
                     _logger.Log("ERROR CRITICO, no se ha podido parsear la CC del archivo " + inputPath + ", revisar el archivo.");
-                    destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\error_" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + milisecond + ".pdf";
+                    destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\error_" + System.DateTime.Today.ToString("ddMMyyyy") + ".pdf";
+                    destinationPathAbsoluto = ConfigurationManager.AppSettings["DestinationPathBBDD"] + "\\" + dataToSend.ContributorId + "_" + System.DateTime.Today.ToString("ddMMyyyy") + ".pdf";
+                    //destinationPathAbsoluto = ConfigurationManager.AppSettings["DestinationPathBBDD"] + "\\" + destinationPath.Remove(0, ConfigurationManager.AppSettings["DestinationPath"].ToString().Length+1);
                     continue;
                 }
 
@@ -118,8 +138,9 @@ namespace WatcherCmd.Files
                 dataToSend.Valid = parseCAccount.Item1;
 
 
-                destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\" + dataToSend.ContributorId + "_" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + milisecond + ".pdf";
-                string destinationPathAbsoluto = ConfigurationManager.AppSettings["DestinationPathBBDD"] + "\\" + dataToSend.ContributorId + "_" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + milisecond + ".pdf";
+                destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\" + dataToSend.ContributorId + "_" + System.DateTime.Today.ToString("ddMMyyyy") + ".pdf";
+                destinationPathAbsoluto = ConfigurationManager.AppSettings["DestinationPathBBDD"] + "\\" + dataToSend.ContributorId + "_" + System.DateTime.Today.ToString("ddMMyyyy")  + ".pdf";
+                //destinationPathAbsoluto = ConfigurationManager.AppSettings["DestinationPathBBDD"] + "\\" + destinationPath.Remove(0, ConfigurationManager.AppSettings["DestinationPath"].ToString().Length+1);
                 dataToSend.PathAbsoluto = destinationPathAbsoluto;
 
                 var cnaeParsingResult = ContributorPersonalData.ParseCNAE(data.Text);
@@ -151,7 +172,7 @@ namespace WatcherCmd.Files
                         PeriodEnd = period.PeriodEnd,
                         PeriodStart = period.PeriodStart,
                         HighResFileId = fileUrl,
-                        FileAbsolutePath = fileAbsolutePath,
+                        FileAbsolutePath = destinationPathAbsoluto,
                         Valid = period.ValidPeriod
                     });
                 }
