@@ -1,5 +1,6 @@
 ﻿using OCR_API.DataLayer;
 using OCR_API.InternalService;
+using System.Configuration;
 using System.Net;
 using System.Net.Http;
 using System.Web;
@@ -12,7 +13,7 @@ namespace OCR_API.Controllers
     {
         private BusinessServices businessService;
         private OCR_TPC_Context context;
-        
+
         public LogInController()
         {
             context = new OCR_TPC_Context();
@@ -32,14 +33,14 @@ namespace OCR_API.Controllers
 
             string credentials = businessService.LogIn(user, password);
             
-            if (credentials != "")
+            if (credentials != string.Empty)
             {
-                response.StatusCode = HttpStatusCode.BadRequest;
+                response.StatusCode = HttpStatusCode.Created;
                 response.Content = new StringContent(credentials);
                 return response;
             }
 
-            response.StatusCode = HttpStatusCode.Created;
+            response.StatusCode = HttpStatusCode.BadRequest;
             
             return response;
         }

@@ -1,14 +1,9 @@
-﻿using OCR_API.DataLayer;
-using OCR_API.InternalService;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Net;
 using System.Net.Http;
 using System.Security.Principal;
 using System.Text;
 using System.Threading;
-using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
@@ -16,8 +11,6 @@ namespace OCR_API.Filters
 {
     public class ApiAuthenticationFilter : AuthorizationFilterAttribute
     {
-
-        private OCR_TPC_Context dbContext;
         private FLCStaffValidation validator;
         private bool isActive;
 
@@ -28,7 +21,6 @@ namespace OCR_API.Filters
         /// <param name="isActive"></param>
         public ApiAuthenticationFilter(bool isActive)
         {
-            dbContext = new OCR_TPC_Context();
             validator = new FLCStaffValidation();
             this.isActive = isActive;
         }

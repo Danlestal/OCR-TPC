@@ -48,20 +48,29 @@ namespace OCR_API.InternalService
         internal void DeleteByHealthCareId(string healthcareid)
         {
             Contribuidor toRemove = dbContext.Contributors.FirstOrDefault(s => s.CuentaCotizacion == healthcareid);
-            File.Delete(toRemove.PathAbsolutoArchivo);
+            var path = ConfigurationManager.AppSettings["DestinationPath"].ToString() + Path.GetFileName(toRemove.PathAbsolutoArchivo);
+            // We register in a DataTable to delete later on with a process.
+            dbContext.PdfToDelete.Add(new PdfToDelete { PathAbsolutoArchivo = path });
             dbContext.Contributors.Remove(toRemove);
             dbContext.SaveChanges();
         }
 
         public ContributorsDuringYearDTO ReadPerYear(bool showOnlyErrors = false)
         {
-            IQueryable<Contribuidor> itemsRead = dbContext.Contributors.Include("PeriodosContribucion").OrderBy(s => s.CuentaCotizacion);
+            try
+            {
+                IQueryable<Contribuidor> itemsRead = dbContext.Contributors.Include("PeriodosContribucion").OrderBy(s => s.CuentaCotizacion);
 
-            if (showOnlyErrors)
-                itemsRead = itemsRead.Where(s => s.Valido == "False");
+                if (showOnlyErrors)
+                    itemsRead = itemsRead.Where(s => s.Valido == "False");
 
 
-            return BuildContributorsDuringYearDTO(itemsRead);
+                return BuildContributorsDuringYearDTO(itemsRead);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public ContributorsDuringYearDTO ReadPerYear(string healthCareId, bool showOnlyErrors=false)

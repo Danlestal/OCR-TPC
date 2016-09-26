@@ -161,7 +161,7 @@
                 type: 'GET',
                 dataType: 'json',
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0")
+                    xhr.setRequestHeader("Authorization", localStorage.getItem('token'))
                 },
                 success: loadDataSuccess,
 
@@ -192,7 +192,7 @@
                 type: 'GET',
                 dataType: 'json',
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0")
+                    xhr.setRequestHeader("Authorization", localStorage.getItem('token'))
                 },
                 success: loadDataSuccess,
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -224,7 +224,7 @@
                     contentType: false,
                     processData: false,
                     beforeSend: function (xhr) {
-                        xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0")
+                        xhr.setRequestHeader("Authorization", localStorage.getItem('token'))
                     },
                     success: function (response) {
                         alert("Se eliminó el registro.");
@@ -251,7 +251,7 @@
                 contentType: false,
                 processData: false,
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", "Basic YWRtaW46UDNDNG5TMGZ0")
+                    xhr.setRequestHeader("Authorization", localStorage.getItem('token'))
                 },
                 success: function (status) {
                     var newDiv = $(document.createElement('div'));

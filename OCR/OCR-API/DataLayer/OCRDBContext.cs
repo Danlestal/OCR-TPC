@@ -16,6 +16,8 @@ namespace OCR_API.DataLayer
 
         public DbSet<Usuario> Users { get; set; }
 
+        public DbSet<PdfToDelete> PdfToDelete { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<PeriodoContribucion>()
@@ -24,7 +26,6 @@ namespace OCR_API.DataLayer
                     .HasForeignKey(s => s.ContribuidorRefId).WillCascadeOnDelete();
         }
     }
-
 
     public class OCR_TPC_Initializer : CreateDatabaseIfNotExists<OCR_TPC_Context>
     {

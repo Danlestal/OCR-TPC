@@ -66,7 +66,10 @@ namespace WatcherCmd.Files
         {
             string destination = Path.GetFileName(fullPath);
             string destinationFullPath = ConfigurationManager.AppSettings["CertFolder"] + "/ERROR/" + destination;
-            File.Move(fullPath, destinationFullPath);
+            if (!File.Exists(destinationFullPath))
+            {
+                File.Move(fullPath, destinationFullPath);
+            }
         }
 
         private void ProcContributionFile(string inputPath)
@@ -81,7 +84,6 @@ namespace WatcherCmd.Files
             
             string firstContributor = string.Empty;
 
-            //string destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\" + firstContributor + "_" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + milisecond + ".pdf";
             string destinationPath = string.Empty;
             string destinationPathAbsoluto = string.Empty;
 
@@ -130,7 +132,6 @@ namespace WatcherCmd.Files
                     _logger.Log("ERROR CRITICO, no se ha podido parsear la CC del archivo " + inputPath + ", revisar el archivo.");
                     destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\error_" + System.DateTime.Today.ToString("ddMMyyyy") + ".pdf";
                     destinationPathAbsoluto = ConfigurationManager.AppSettings["DestinationPathBBDD"] + "\\" + dataToSend.ContributorId + "_" + System.DateTime.Today.ToString("ddMMyyyy") + ".pdf";
-                    //destinationPathAbsoluto = ConfigurationManager.AppSettings["DestinationPathBBDD"] + "\\" + destinationPath.Remove(0, ConfigurationManager.AppSettings["DestinationPath"].ToString().Length+1);
                     continue;
                 }
 
@@ -140,7 +141,6 @@ namespace WatcherCmd.Files
 
                 destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\" + dataToSend.ContributorId + "_" + System.DateTime.Today.ToString("ddMMyyyy") + ".pdf";
                 destinationPathAbsoluto = ConfigurationManager.AppSettings["DestinationPathBBDD"] + "\\" + dataToSend.ContributorId + "_" + System.DateTime.Today.ToString("ddMMyyyy")  + ".pdf";
-                //destinationPathAbsoluto = ConfigurationManager.AppSettings["DestinationPathBBDD"] + "\\" + destinationPath.Remove(0, ConfigurationManager.AppSettings["DestinationPath"].ToString().Length+1);
                 dataToSend.PathAbsoluto = destinationPathAbsoluto;
 
                 var cnaeParsingResult = ContributorPersonalData.ParseCNAE(data.Text);

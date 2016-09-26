@@ -8,9 +8,7 @@ namespace OCR_API
         public static void Register(HttpConfiguration config)
         {
 
-            config.EnableCors(new EnableCorsAttribute("*", "", ""));
-
-            //app.UseCors(CorsOptions.AllowAll);
+            config.EnableCors(new EnableCorsAttribute("*", "*", "*"));
 
             config.MapHttpAttributeRoutes();
 

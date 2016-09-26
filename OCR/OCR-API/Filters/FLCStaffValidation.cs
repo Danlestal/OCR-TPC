@@ -11,15 +11,19 @@ namespace OCR_API.Filters
         {
             try
             {
-                bool UserOk = false;
-                msg = ValidateUserSP(user, pwd);
-
-                if ((msg == "Usuario conectado correctamente") || (Convert.ToBoolean(ConfigurationManager.AppSettings["desarrollo"])))
+               
+                if (Convert.ToBoolean(ConfigurationManager.AppSettings["desarrollo"]))
                 {
-                    UserOk = true;
+                   return true;
                 }
 
-                return UserOk;
+                msg = ValidateUserSP(user, pwd); 
+                if (msg == "Usuario conectado correctamente")
+                {
+                    return true;
+                }
+
+                return false;
             }
             catch (Exception ex)
             {

@@ -311,6 +311,7 @@
     <Compile Include="DataLayer\Contributor.cs" />
     <Compile Include="DataLayer\DatoPersonal.cs" />
     <Compile Include="DataLayer\OCRDBContext.cs" />
+    <Compile Include="DataLayer\PdfToDelete.cs" />
     <Compile Include="DataLayer\PeriodoVidaLaboral.cs" />
     <Compile Include="DataLayer\User.cs" />
     <Compile Include="DataLayer\VidaLaboralDBContext.cs" />

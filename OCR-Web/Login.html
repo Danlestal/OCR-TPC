@@ -66,6 +66,7 @@
     <script>
         //var apiUrl = '@System.Configuration.ConfigurationManager.AppSettings["APIBaseUrl"]';
         var apiUrl = 'http://cuotasocrapi.fundacionlaboral.org';
+        //var apiUrl = 'http://localhost:58869/';
 
         function validateForm() {
 
@@ -81,7 +82,8 @@
                 type: 'post',
                 url: url,
                 data: { user: user, password: password },
-                success: function (status) {
+                success: function (token) {
+                    localStorage.setItem('token', 'Basic ' + token);
                     window.location.href = "Index.html";
                 },
                 error: function (xhr) {

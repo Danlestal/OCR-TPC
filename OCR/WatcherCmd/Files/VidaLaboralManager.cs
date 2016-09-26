@@ -37,6 +37,11 @@ namespace WatcherCmd.Files
                 Directory.CreateDirectory(ConfigurationManager.AppSettings["VidaLaboralFolder"] + "\\ERROR\\");
             }
 
+            if (!Directory.Exists(ConfigurationManager.AppSettings["DestinationPathVidaLaboral"]))
+            {
+                Directory.CreateDirectory(ConfigurationManager.AppSettings["DestinationPathVidaLaboral"]);
+            }
+
             _watcher.FileDetected += OnFileDetected;
             _watcher.Init(ConfigurationManager.AppSettings["VidaLaboralFolder"]);
         }
@@ -64,15 +69,18 @@ namespace WatcherCmd.Files
             catch (Exception a)
             {
                 _logger.Log("error en archivo: " + inputPath +"\n Excepcion: " + a.Message);
-                string errorPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\ERROR\\" + Path.GetFileName(inputPath);
+                string errorPath = ConfigurationManager.AppSettings["VidaLaboralFolder"] + "\\ERROR\\" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + Path.GetFileName(inputPath);
                 File.Move(inputPath, errorPath);
             }
 
             string milisecond = DateTime.Now.Millisecond.ToString();
-            string destinationPath = ConfigurationManager.AppSettings["DestinationPath"] + "\\" + data.PersonalData.DNI + "_" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + milisecond + ".pdf";
-            File.Move(inputPath, destinationPath);
-            _logger.Log("FIN PROCESO");
+            string destinationPath = ConfigurationManager.AppSettings["DestinationPathVidaLaboral"] + "\\" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + Path.GetFileName(inputPath);
+            if (File.Exists(inputPath))
+            {
+                File.Move(inputPath, destinationPath);
+            }
             
+            _logger.Log("FIN PROCESO");
         }
     }
 }

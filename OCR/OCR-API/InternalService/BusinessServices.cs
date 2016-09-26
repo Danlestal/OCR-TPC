@@ -1,7 +1,9 @@
 ﻿using OCR_API.DataLayer;
+using OCR_API.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace OCR_API.InternalService
@@ -19,20 +21,13 @@ namespace OCR_API.InternalService
 
         public string LogIn(string userName, string password)
         {
-            
-            var user = dbContext.Users.FirstOrDefault(u => u.Nombre == userName);
-            if (user == null)
+            string response = string.Empty;
+            if (FLCStaffValidation.ValidateUserFLC(userName, password, ref response))
             {
-                return "No se encontró el usuario";
+                var plainTextBytes = Encoding.Default.GetBytes(userName+":"+password);
+                return System.Convert.ToBase64String(plainTextBytes);
             }
-            else
-            {
-                user = dbContext.Users.FirstOrDefault(u => u.Nombre == userName && u.Password == password);
-                if (user == null)
-                {
-                    return "Contraseña incorrecta";
-                }
-            }
+           
             return string.Empty;
         }
 
