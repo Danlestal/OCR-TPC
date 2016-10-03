@@ -93,8 +93,10 @@ namespace OCR
 
         public int ParseSpanishMonth(string value)
         {
+            value = value.Replace(".", "");
             for (int i = 0; i < Constants.SpanishMonths.Length; ++i)
             {
+               
                 if(value.ToUpper().CompareTo(Constants.SpanishMonths[i].ToUpper())==0)
                 {
                     return i + 1;

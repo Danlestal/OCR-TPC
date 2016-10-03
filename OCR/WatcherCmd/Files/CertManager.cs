@@ -20,7 +20,6 @@ namespace WatcherCmd.Files
         private string _apiUrl;
         private ILogger _logger;
 
-
         public CertManager(ILogger logger, IWatcher watcher, APIClient client)
         {
             _logger = logger;
@@ -52,6 +51,9 @@ namespace WatcherCmd.Files
         {
             try
             {
+                // Lanzamos el proceso de borrado cada vez que se escanea.
+                Util.DeleteFilesToDelete();
+
                 ProcContributionFile(e.FullPath);
             }catch(Exception a)
             {

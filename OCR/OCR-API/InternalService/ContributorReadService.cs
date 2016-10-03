@@ -48,7 +48,7 @@ namespace OCR_API.InternalService
         internal void DeleteByHealthCareId(string healthcareid)
         {
             Contribuidor toRemove = dbContext.Contributors.FirstOrDefault(s => s.CuentaCotizacion == healthcareid);
-            var path = ConfigurationManager.AppSettings["DestinationPath"].ToString() + Path.GetFileName(toRemove.PathAbsolutoArchivo);
+            var path = ConfigurationManager.AppSettings["DestinationPath"].ToString() + "\\" + Path.GetFileName(toRemove.PathAbsolutoArchivo);
             // We register in a DataTable to delete later on with a process.
             dbContext.PdfToDelete.Add(new PdfToDelete { PathAbsolutoArchivo = path });
             dbContext.Contributors.Remove(toRemove);
