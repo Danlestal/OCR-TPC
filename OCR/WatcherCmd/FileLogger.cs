@@ -5,17 +5,21 @@ namespace WatcherCmd
 {
     public class FileLogger : ILogger
     {
+        private string file;
         private StreamWriter writer;
 
         public FileLogger(string filePath)
         {
-            writer = File.AppendText(filePath);
+            file = filePath;
         }
 
         public void Log(string message)
         {
             string prefix = "LOG (" + System.DateTime.Now.ToString() + "):";
-            writer.WriteLine(prefix + message);
+            using (StreamWriter sw = File.AppendText(file))
+            {
+                sw.WriteLine(prefix + message);
+            }
         }
     }
 }

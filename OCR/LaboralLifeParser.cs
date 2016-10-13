@@ -261,8 +261,8 @@ namespace OCR
             }
             else
             {
-                dateRegex = new Regex(@"(\d\d.\d\d.\d\d\)");
-                dateMatch = dateRegex.Match(optionalPart);
+                Regex auxDateRegex = new Regex(@"(\d\d.\d\d.\d\d)");
+                dateMatch = auxDateRegex.Match(optionalPart);
                 if (dateMatch.Success)
                 {
                     row.EndDate = dateMatch.Groups[1].Value.ToString();

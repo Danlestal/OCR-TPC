@@ -94,6 +94,7 @@ namespace OCR
         public int ParseSpanishMonth(string value)
         {
             value = value.Replace(".", "");
+            value = value.Replace("*", "");
             for (int i = 0; i < Constants.SpanishMonths.Length; ++i)
             {
                

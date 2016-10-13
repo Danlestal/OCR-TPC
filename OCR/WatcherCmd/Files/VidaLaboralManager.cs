@@ -63,6 +63,7 @@ namespace WatcherCmd.Files
                 data = parser.Parse(inputPath);
                 if (data != null)
                 {
+                    //_logger.Log("archivo " + inputPath + "tiene "+ data.Rows.Count + " filas");
                     _apiClient.Post("LaboralLife", data);
                 }
             }
@@ -70,6 +71,12 @@ namespace WatcherCmd.Files
             {
                 _logger.Log("error en archivo: " + inputPath +"\n Excepcion: " + a.Message);
                 string errorPath = ConfigurationManager.AppSettings["VidaLaboralFolder"] + "\\ERROR\\" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + Path.GetFileName(inputPath);
+
+                if (File.Exists(errorPath))
+                {
+                    File.Delete(errorPath);
+                }
+
                 File.Move(inputPath, errorPath);
             }
 
@@ -77,6 +84,11 @@ namespace WatcherCmd.Files
             string destinationPath = ConfigurationManager.AppSettings["DestinationPathVidaLaboral"] + "\\" + System.DateTime.Today.ToString("ddMMyyyy") + "_" + Path.GetFileName(inputPath);
             if (File.Exists(inputPath))
             {
+                if (File.Exists(destinationPath))
+                {
+                    File.Delete(destinationPath);
+                }
+
                 File.Move(inputPath, destinationPath);
             }
             

@@ -23,6 +23,7 @@ namespace WatcherCmd.Jobs
             certManager.InitializeSystem();
 
             var laboralWatcher = new Watcher();
+            //IManager vidaLaboralManager = new VidaLaboralManager(new FileLogger(@"C:\caca\log.txt"), laboralWatcher, client);
             IManager vidaLaboralManager = new VidaLaboralManager(new ConsoleLogger(), laboralWatcher, client);
             vidaLaboralManager.InitializeSystem();
         }
